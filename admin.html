@@ -6,368 +6,445 @@
     <title>Admin Panel - WebAITool</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: sans-serif; background: #1a1a2e; color: white; padding: 20px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #0f172a; color: #e2e8f0; padding: 20px; }
         .header { text-align: center; margin-bottom: 30px; }
-        .header h1 { font-size: 32px; color: #00ce79; }
-        .box { background: #16213e; padding: 25px; border-radius: 12px; margin-bottom: 25px; border: 1px solid #0f3460; }
-        .box h3 { color: #00ce79; margin-bottom: 15px; }
-        input, textarea, select { padding: 10px; border-radius: 6px; border: none; margin: 5px; width: calc(33% - 10px); }
-        textarea { width: calc(100% - 10px); }
-        button { padding: 10px 20px; cursor: pointer; border-radius: 6px; border: none; font-weight: bold; background: #00ce79; color: white; margin: 5px; }
-        button:hover { background: #00a35e; }
-        .edit-btn { background: #3498db; }
-        .del-btn { background: #ff4757; }
+        .header h1 { font-size: 32px; color: #10b981; margin-bottom: 10px; }
+        .status { padding: 12px; border-radius: 8px; margin: 15px 0; text-align: center; display: none; }
+        .status.success { background: #064e3b; color: #10b981; border: 1px solid #10b981; }
+        .status.error { background: #7f1d1d; color: #ef4444; border: 1px solid #ef4444; }
+        .status.info { background: #1e3a8a; color: #60a5fa; border: 1px solid #60a5fa; }
+        .box { background: #1e293b; padding: 25px; border-radius: 12px; margin-bottom: 25px; border: 1px solid #334155; }
+        .box h3 { color: #10b981; margin-bottom: 15px; font-size: 20px; }
+        .box p { color: #94a3b8; margin-bottom: 15px; font-size: 14px; }
+        input, textarea, select { 
+            padding: 12px; 
+            border-radius: 8px; 
+            border: 1px solid #475569; 
+            margin: 8px 5px 8px 0; 
+            width: calc(33.333% - 5px); 
+            background: #0f172a; 
+            color: #e2e8f0;
+            font-size: 14px;
+        }
+        textarea { width: calc(100% - 5px); min-height: 100px; resize: vertical; }
+        input:focus, textarea:focus, select:focus { outline: none; border-color: #10b981; }
+        button { 
+            padding: 12px 24px; 
+            cursor: pointer; 
+            border-radius: 8px; 
+            border: none; 
+            font-weight: 600; 
+            background: #10b981; 
+            color: white; 
+            margin: 8px 5px 8px 0;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        button:hover { background: #059669; transform: translateY(-1px); }
+        button:disabled { background: #475569; cursor: not-allowed; opacity: 0.6; }
+        .edit-btn { background: #3b82f6; }
+        .edit-btn:hover { background: #2563eb; }
+        .del-btn { background: #ef4444; }
+        .del-btn:hover { background: #dc2626; }
+        .cancel-btn { background: #64748b; }
+        .cancel-btn:hover { background: #475569; }
         table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th, td { padding: 12px; border-bottom: 1px solid #0f3460; text-align: left; font-size: 13px; }
-        th { background: #0f3460; color: #00ce79; }
-        .sub-item { padding-left: 30px; background: #0f1e2e; }
-        .preview-img { width: 50px; height: 50px; object-fit: cover; border-radius: 5px; }
-        
-        /* Drag & Drop Styles */
-        .tool-row {
-            cursor: move;
-            transition: background 0.3s;
+        th, td { padding: 14px 12px; text-align: left; border-bottom: 1px solid #334155; font-size: 14px; }
+        th { background: #334155; color: #10b981; font-weight: 600; }
+        tr:hover { background: #334155; }
+        .sub-item { padding-left: 40px; background: #0f172a; }
+        .preview-img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; border: 2px solid #334155; }
+        .tool-row { cursor: move; transition: all 0.3s; }
+        .tool-row:hover { background: #334155; }
+        .tool-row.dragging { opacity: 0.4; }
+        .tool-row.drag-over { border-top: 3px solid #10b981; }
+        .loading { display: none; text-align: center; padding: 20px; color: #10b981; }
+        .loading.show { display: block; }
+        .empty-state { text-align: center; padding: 40px; color: #64748b; }
+        @media (max-width: 768px) { 
+            input, select { width: calc(100% - 5px); } 
+            button { width: 100%; margin: 5px 0; }
+            th, td { padding: 10px 8px; font-size: 13px; }
         }
-        .tool-row:hover {
-            background: #1e2642 !important;
-        }
-        .tool-row.dragging {
-            opacity: 0.5;
-            background: #00ce79 !important;
-        }
-        .tool-row.drag-over {
-            border-top: 3px solid #00ce79;
-        }
-        
-        @media (max-width: 768px) { input, select { width: calc(100% - 10px); } }
     </style>
 </head>
 <body>
     <div class="header">
         <h1>🔐 Admin Control Panel</h1>
-        <p>Separate Parent Menu & Dropdown Sub-Menu Management</p>
+        <p style="color:#94a3b8;">Manage Your WebAITool Content</p>
     </div>
 
-    <!-- SECTION 1: Parent Menu (Top Level - No Links) -->
+    <div id="globalStatus" class="status"></div>
+
+    <!-- Connection Test -->
     <div class="box">
-        <h3>1️⃣ Parent Menu Management (Top Level Container)</h3>
-        <p style="color:#bbb; margin-bottom:10px; font-size:13px;">💡 Parent menus are containers for dropdowns. No link needed.</p>
-        <input type="text" id="parentName" placeholder="Parent Menu Name (e.g., Tools)">
-        <input type="text" id="parentLink" placeholder="Link (Optional, e.g., # or tools.html)">
-        <button onclick="addParentMenu()" id="parentBtn">➕ Add Parent Menu</button>
-        <button onclick="cancelParentEdit()" id="cancelParentBtn" style="display:none; background:#6c757d;">❌ Cancel</button>
-        <table id="parentTable"></table>
+        <h3>🔌 Database Connection</h3>
+        <button onclick="testConnection()" id="testBtn">Test Connection</button>
+        <div id="connectionStatus" class="status"></div>
     </div>
 
-    <!-- SECTION 2: Dropdown Sub-Menu (Under Parent - With Links) -->
+    <!-- Parent Menus -->
     <div class="box">
-        <h3>2️⃣ Dropdown Sub-Menu Management (Under Parent)</h3>
-        <p style="color:#bbb; margin-bottom:10px; font-size:13px;">💡 Sub-menus appear in dropdown under parent menus.</p>
+        <h3>1️⃣ Parent Menu Management</h3>
+        <p>Create top-level menu items (e.g., Home, Tools, Contact)</p>
+        <input type="hidden" id="editParentId">
+        <input type="text" id="parentName" placeholder="Menu Name (e.g., Tools)">
+        <input type="text" id="parentLink" placeholder="Link (Optional, default: #)" value="#">
+        <button onclick="saveParent()" id="parentBtn">➕ Add Parent Menu</button>
+        <button onclick="cancelParentEdit()" id="cancelParentBtn" class="cancel-btn" style="display:none;">✕ Cancel</button>
+        <div class="loading" id="parentLoading">Loading...</div>
+        <table id="parentTable">
+            <thead><tr><th>Menu Name</th><th>Link</th><th>Actions</th></tr></thead>
+            <tbody><tr><td colspan="3" class="empty-state">No parent menus yet</td></tr></tbody>
+        </table>
+    </div>
+
+    <!-- Sub Menus -->
+    <div class="box">
+        <h3>2️⃣ Sub-Menu Management</h3>
+        <p>Create dropdown items under parent menus</p>
+        <input type="hidden" id="editSubId">
         <input type="text" id="subName" placeholder="Sub-Menu Name (e.g., Image Tools)">
         <input type="text" id="subLink" placeholder="Link (Required, e.g., image-tools.html)">
-        <select id="subParent">
-            <option value="">Select Parent Menu</option>
-        </select>
-        <button onclick="addSubMenu()" id="subBtn">➕ Add Sub-Menu</button>
-        <button onclick="cancelSubEdit()" id="cancelSubBtn" style="display:none; background:#6c757d;">❌ Cancel</button>
-        <table id="subTable"></table>
+        <select id="subParent"><option value="">Select Parent Menu</option></select>
+        <button onclick="saveSub()" id="subBtn">➕ Add Sub-Menu</button>
+        <button onclick="cancelSubEdit()" id="cancelSubBtn" class="cancel-btn" style="display:none;">✕ Cancel</button>
+        <div class="loading" id="subLoading">Loading...</div>
+        <table id="subTable">
+            <thead><tr><th>Sub-Menu</th><th>Link</th><th>Parent</th><th>Actions</th></tr></thead>
+            <tbody><tr><td colspan="4" class="empty-state">No sub-menus yet</td></tr></tbody>
+        </table>
     </div>
 
-    <!-- Tools with Image Upload + Drag & Drop -->
+    <!-- Tools -->
     <div class="box">
-        <h3>3️⃣ Tool Categories (Drag & Drop to Reorder)</h3>
-        <p style="color:#bbb; margin-bottom:10px; font-size:13px;">💡 Drag tools to reorder. Changes will reflect on homepage.</p>
-        <input type="text" id="tName" placeholder="Tool Name">
-        <input type="text" id="tIcon" placeholder="Icon" value="🔧">
-        <input type="text" id="tLink" placeholder="Link">
+        <h3>3️⃣ Tool Categories (Drag to Reorder)</h3>
+        <p>Add tool cards that appear on homepage</p>
+        <input type="hidden" id="editToolId">
+        <input type="text" id="tName" placeholder="Tool Name (e.g., Image Tools)">
+        <input type="text" id="tIcon" placeholder="Icon Emoji" value="🔧">
+        <input type="text" id="tLink" placeholder="Link (e.g., image-tools.html)">
         <input type="file" id="tImage" accept="image/*" onchange="previewImage()">
-        <textarea id="tDesc" rows="2" placeholder="Description"></textarea>
-        <select id="parentTool">
-            <option value="">Main Category</option>
-        </select>
-        <div id="imagePreview" style="margin:10px 0;"></div>
-        <button onclick="addTool()" id="toolBtn">➕ Add Tool</button>
-        <button onclick="cancelToolEdit()" id="cancelToolBtn" style="display:none; background:#6c757d;">❌ Cancel</button>
-        <div id="toolTableContainer"></div>
+        <label style="display:block; margin:10px 0; color:#94a3b8;">
+            <input type="checkbox" id="removeImage" style="width:auto; margin-right:8px;">
+            Remove existing image
+        </label>
+        <textarea id="tDesc" placeholder="Tool Description"></textarea>
+        <select id="parentTool"><option value="">Main Category</option></select>
+        <div id="imagePreview" style="margin:15px 0;"></div>
+        <button onclick="saveTool()" id="toolBtn">➕ Add Tool</button>
+        <button onclick="cancelToolEdit()" id="cancelToolBtn" class="cancel-btn" style="display:none;">✕ Cancel</button>
+        <div class="loading" id="toolLoading">Loading...</div>
+        <div id="toolTableContainer">
+            <table>
+                <thead><tr><th>☰</th><th>Image</th><th>Icon</th><th>Name</th><th>Link</th><th>Actions</th></tr></thead>
+                <tbody><tr><td colspan="6" class="empty-state">No tools yet</td></tr></tbody>
+            </table>
+        </div>
     </div>
 
-    <!-- Cards Per Row -->
+    <!-- Settings -->
     <div class="box">
-        <h3>4️⃣ Cards Per Row</h3>
+        <h3>4️⃣ Display Settings</h3>
+        <label style="display:block; margin-bottom:10px; color:#94a3b8;">Cards Per Row:</label>
         <select id="cardsPerRow" onchange="saveCardsPerRow()">
             <option value="2">2 Cards</option>
             <option value="3">3 Cards</option>
             <option value="4">4 Cards</option>
+            <option value="5">5 Cards</option>
         </select>
-        <p style="margin-top:10px;">Current: <span id="currentCards"></span></p>
+        <p style="margin-top:15px; color:#94a3b8;">Current: <span id="currentCards">3 cards</span></p>
     </div>
 
     <!-- Footer -->
     <div class="box">
         <h3>5️⃣ Footer Text</h3>
-        <textarea id="footerText" rows="2"></textarea>
-        <button onclick="saveFooter()">💾 Save</button>
+        <textarea id="footerText" rows="3" placeholder="© 2024 WebAITool.net"></textarea>
+        <button onclick="saveFooter()">💾 Save Footer</button>
     </div>
 
-    <button style="background:#6c5ce7;" onclick="window.location.href='index.html'">👁️ View Site</button>
-    <button style="background:#f1c40f; color:black;" onclick="resetAll()">🔄 Reset</button>
+    <!-- Actions -->
+    <div style="text-align:center; margin-top:30px;">
+        <button style="background:#6366f1;" onclick="window.open('index.html', '_blank')">👁️ Preview Site</button>
+        <button style="background:#8b5cf6;" onclick="loadAll()">🔄 Refresh Data</button>
+    </div>
 
     <script>
-        let editingParentIndex = null;
-        let editingSubIndex = null;
-        let editingToolIndex = null;
+        const API = 'api.php';
+        let editingParentId = null;
+        let editingSubId = null;
+        let editingToolId = null;
         let currentImageBase64 = '';
 
-        if (!localStorage.getItem('initialized')) {
-            localStorage.setItem('parentMenus', JSON.stringify([
-                {name: 'Home', link: 'index.html'},
-                {name: 'Tools', link: '#'},
-                {name: 'Contact', link: 'contact.html'}
-            ]));
-            
-            localStorage.setItem('subMenus', JSON.stringify([
-                {name: 'Image Tools', link: 'image-tools.html', parent: '1'},
-                {name: 'PDF Tools', link: 'pdf-tools.html', parent: '1'},
-                {name: 'QR Tools', link: 'qr-tools.html', parent: '1'}
-            ]));
-            
-            localStorage.setItem('toolItems', JSON.stringify([
-                {name: '🖼️ Image Tools', desc: 'Image processing', link: 'image-tools.html', icon: '🖼️', image: '', parent: ''}
-            ]));
-            
-            localStorage.setItem('cardsPerRow', '3');
-            localStorage.setItem('footerText', '© 2024 WebAITool.net');
-            localStorage.setItem('initialized', 'true');
+        // Show status message
+        function showStatus(message, type = 'info', elementId = 'globalStatus') {
+            const el = document.getElementById(elementId);
+            el.textContent = message;
+            el.className = 'status ' + type + ' show';
+            setTimeout(() => el.classList.remove('show'), 5000);
         }
 
-        function loadTables() {
-            // Parent Menu Table
-            const parents = JSON.parse(localStorage.getItem('parentMenus')) || [];
-            let parentHTML = '<tr><th>Menu Name</th><th>Link (Optional)</th><th>Actions</th></tr>';
-            parents.forEach((p, i) => {
-                parentHTML += `
-                    <tr>
-                        <td><strong>${p.name}</strong></td>
-                        <td>${p.link || '-'}</td>
-                        <td>
-                            <button class="edit-btn" onclick="editParent(${i})">✏️ Edit</button>
-                            <button class="del-btn" onclick="deleteParent(${i})">🗑️ Delete</button>
-                        </td>
-                    </tr>
-                `;
-            });
-            document.getElementById('parentTable').innerHTML = parentHTML;
-
-            // Update parent dropdown for sub-menus
-            const subParentSelect = document.getElementById('subParent');
-            subParentSelect.innerHTML = '<option value="">Select Parent Menu</option>' + 
-                parents.map((p, i) => `<option value="${i}">${p.name}</option>`).join('');
-
-            // Sub-Menu Table
-            const subs = JSON.parse(localStorage.getItem('subMenus')) || [];
-            let subHTML = '<tr><th>Sub-Menu Name</th><th>Link</th><th>Parent</th><th>Actions</th></tr>';
-            subs.forEach((s, i) => {
-                const parentName = parents[parseInt(s.parent)]?.name || 'None';
-                subHTML += `
-                    <tr class="sub-item">
-                        <td>↳ ${s.name}</td>
-                        <td>${s.link}</td>
-                        <td>${parentName}</td>
-                        <td>
-                            <button class="edit-btn" onclick="editSub(${i})">✏️ Edit</button>
-                            <button class="del-btn" onclick="deleteSub(${i})">🗑️ Delete</button>
-                        </td>
-                    </tr>
-                `;
-            });
-            document.getElementById('subTable').innerHTML = subHTML;
-
-            // Tool Table with Drag & Drop
-            const tools = JSON.parse(localStorage.getItem('toolItems')) || [];
-            const parentToolSelect = document.getElementById('parentTool');
-            const mainTools = tools.filter(t => !t.parent || t.parent === '');
-            parentToolSelect.innerHTML = '<option value="">Main Category</option>' + 
-                mainTools.map((t, i) => {
-                    const actualIndex = tools.findIndex(item => item.name === t.name);
-                    return `<option value="${actualIndex}">${t.name}</option>`;
-                }).join('');
-
-            let toolHTML = '<table id="toolTable"><tr><th>Drag</th><th>Image</th><th>Icon</th><th>Name</th><th>Link</th><th>Actions</th></tr>';
-            tools.forEach((t, i) => {
-                const isSubItem = t.parent !== '' && t.parent !== undefined;
-                toolHTML += `
-                    <tr class="tool-row ${isSubItem ? 'sub-item' : ''}" draggable="true" data-index="${i}">
-                        <td style="cursor:move;">☰</td>
-                        <td>${t.image ? `<img src="${t.image}" class="preview-img">` : '-'}</td>
-                        <td>${isSubItem ? '↳ ' : ''}${t.icon}</td>
-                        <td>${t.name}</td>
-                        <td>${t.link}</td>
-                        <td>
-                            <button class="edit-btn" onclick="editTool(${i})">✏️</button>
-                            <button class="del-btn" onclick="deleteTool(${i})">🗑️</button>
-                        </td>
-                    </tr>
-                `;
-            });
-            toolHTML += '</table>';
-            document.getElementById('toolTableContainer').innerHTML = toolHTML;
-
-            // Add drag & drop event listeners
-            addDragAndDrop();
-
-            const cards = localStorage.getItem('cardsPerRow') || '3';
-            document.getElementById('cardsPerRow').value = cards;
-            document.getElementById('currentCards').textContent = cards + ' cards';
-
-            document.getElementById('footerText').value = localStorage.getItem('footerText') || '';
+        // API Call
+        async function apiCall(action, data = {}) {
+            try {
+                const formData = new FormData();
+                formData.append('action', action);
+                for(let key in data) {
+                    formData.append(key, data[key]);
+                }
+                
+                const response = await fetch(API, { method: 'POST', body: formData });
+                const text = await response.text();
+                
+                try {
+                    return JSON.parse(text);
+                } catch(e) {
+                    console.error('Response:', text);
+                    throw new Error('Invalid server response');
+                }
+            } catch(error) {
+                console.error('API Error:', error);
+                throw error;
+            }
         }
 
-        // Drag & Drop Functions
-        let draggedIndex = null;
-
-        function addDragAndDrop() {
-            const rows = document.querySelectorAll('.tool-row');
+        // Test Connection
+        async function testConnection() {
+            const btn = document.getElementById('testBtn');
+            const status = document.getElementById('connectionStatus');
             
-            rows.forEach(row => {
-                row.addEventListener('dragstart', function(e) {
-                    draggedIndex = parseInt(this.dataset.index);
-                    this.classList.add('dragging');
-                });
+            btn.disabled = true;
+            btn.textContent = 'Testing...';
+            status.textContent = 'Connecting to database...';
+            status.className = 'status info show';
+            
+            try {
+                const result = await apiCall('get_parent_menus');
+                status.textContent = '✅ Connected! Found ' + result.length + ' parent menus';
+                status.className = 'status success show';
+                loadAll();
+            } catch(error) {
+                status.textContent = '❌ Connection failed: ' + error.message;
+                status.className = 'status error show';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Test Connection';
+            }
+        }
 
-                row.addEventListener('dragend', function(e) {
-                    this.classList.remove('dragging');
-                    document.querySelectorAll('.tool-row').forEach(r => r.classList.remove('drag-over'));
-                });
+        // Load All Data
+        async function loadAll() {
+            try {
+                const [parents, subs, tools, settings] = await Promise.all([
+                    apiCall('get_parent_menus'),
+                    apiCall('get_sub_menus'),
+                    apiCall('get_tools'),
+                    apiCall('get_settings')
+                ]);
 
-                row.addEventListener('dragover', function(e) {
+                // Parent Table
+                const parentTbody = document.querySelector('#parentTable tbody');
+                if(parents.length > 0) {
+                    parentTbody.innerHTML = parents.map(p => `
+                        <tr>
+                            <td><strong>${escHtml(p.name)}</strong></td>
+                            <td>${escHtml(p.link || '-')}</td>
+                            <td>
+                                <button class="edit-btn" onclick="editParent(${p.id}, '${escHtml(p.name).replace(/'/g, "\\'")}', '${escHtml(p.link).replace(/'/g, "\\'")}')">✏️ Edit</button>
+                                <button class="del-btn" onclick="deleteParent(${p.id})">🗑️</button>
+                            </td>
+                        </tr>
+                    `).join('');
+                } else {
+                    parentTbody.innerHTML = '<tr><td colspan="3" class="empty-state">No parent menus. Add one above!</td></tr>';
+                }
+
+                // Update parent dropdown
+                const parentOpts = parents.map(p => `<option value="${p.id}">${escHtml(p.name)}</option>`).join('');
+                document.getElementById('subParent').innerHTML = '<option value="">Select Parent</option>' + parentOpts;
+
+                // Sub Table
+                const subTbody = document.querySelector('#subTable tbody');
+                if(subs.length > 0) {
+                    subTbody.innerHTML = subs.map(s => {
+                        const parent = parents.find(p => p.id == s.parent_id);
+                        return `
+                            <tr class="sub-item">
+                                <td>↳ ${escHtml(s.name)}</td>
+                                <td>${escHtml(s.link)}</td>
+                                <td>${parent ? escHtml(parent.name) : 'None'}</td>
+                                <td>
+                                    <button class="edit-btn" onclick="editSub(${s.id}, '${escHtml(s.name).replace(/'/g, "\\'")}', '${escHtml(s.link).replace(/'/g, "\\'")}', ${s.parent_id})">✏️</button>
+                                    <button class="del-btn" onclick="deleteSub(${s.id})">🗑️</button>
+                                </td>
+                            </tr>
+                        `;
+                    }).join('');
+                } else {
+                    subTbody.innerHTML = '<tr><td colspan="4" class="empty-state">No sub-menus. Add one above!</td></tr>';
+                }
+
+                // Tool Table
+                const mainTools = tools.filter(t => !t.parent_id);
+                const toolParentOpts = mainTools.map(t => `<option value="${t.id}">${escHtml(t.name)}</option>`).join('');
+                document.getElementById('parentTool').innerHTML = '<option value="">Main Category</option>' + toolParentOpts;
+
+                const toolContainer = document.getElementById('toolTableContainer');
+                if(tools.length > 0) {
+                    let toolHTML = '<table id="toolTable"><thead><tr><th>☰</th><th>Image</th><th>Icon</th><th>Name</th><th>Link</th><th>Actions</th></tr></thead><tbody>';
+                    toolHTML += tools.map(t => {
+                        return `
+                            <tr class="tool-row" draggable="true" data-id="${t.id}">
+                                <td style="cursor:move;">☰</td>
+                                <td>${t.image ? `<img src="${t.image}" class="preview-img">` : '-'}</td>
+                                <td>${t.parent_id ? '↳ ' : ''}${escHtml(t.icon)}</td>
+                                <td>${escHtml(t.name)}</td>
+                                <td>${escHtml(t.link)}</td>
+                                <td>
+                                    <button class="edit-btn" onclick="editToolById(${t.id})">✏️</button>
+                                    <button class="del-btn" onclick="deleteTool(${t.id})">🗑️</button>
+                                </td>
+                            </tr>
+                        `;
+                    }).join('');
+                    toolHTML += '</tbody></table>';
+                    toolContainer.innerHTML = toolHTML;
+                    initDragDrop();
+                } else {
+                    toolContainer.innerHTML = '<table><tbody><tr><td class="empty-state">No tools. Add one above!</td></tr></tbody></table>';
+                }
+
+                // Settings
+                document.getElementById('cardsPerRow').value = settings.cards_per_row || '3';
+                document.getElementById('currentCards').textContent = (settings.cards_per_row || '3') + ' cards';
+                document.getElementById('footerText').value = settings.footer_text || '';
+
+                // Store tools in global variable for edit function
+                window.allTools = tools;
+
+                showStatus('✅ Data loaded successfully!', 'success');
+            } catch(error) {
+                showStatus('❌ Failed to load data: ' + error.message, 'error');
+            }
+        }
+
+        function escHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text || '';
+            return div.innerHTML;
+        }
+
+        // Drag & Drop
+        function initDragDrop() {
+            let draggedId = null;
+            document.querySelectorAll('.tool-row').forEach(row => {
+                row.ondragstart = () => { draggedId = row.dataset.id; row.classList.add('dragging'); };
+                row.ondragend = () => { row.classList.remove('dragging'); document.querySelectorAll('.tool-row').forEach(r => r.classList.remove('drag-over')); };
+                row.ondragover = e => { e.preventDefault(); row.classList.add('drag-over'); };
+                row.ondragleave = () => row.classList.remove('drag-over');
+                row.ondrop = async e => {
                     e.preventDefault();
-                    this.classList.add('drag-over');
-                });
-
-                row.addEventListener('dragleave', function(e) {
-                    this.classList.remove('drag-over');
-                });
-
-                row.addEventListener('drop', function(e) {
-                    e.preventDefault();
-                    const dropIndex = parseInt(this.dataset.index);
-                    
-                    if (draggedIndex !== dropIndex) {
-                        // Reorder tools array
-                        const tools = JSON.parse(localStorage.getItem('toolItems'));
-                        const draggedItem = tools[draggedIndex];
-                        tools.splice(draggedIndex, 1);
-                        tools.splice(dropIndex, 0, draggedItem);
-                        localStorage.setItem('toolItems', JSON.stringify(tools));
-                        loadTables();
+                    row.classList.remove('drag-over');
+                    const dropId = row.dataset.id;
+                    if(draggedId !== dropId) {
+                        try {
+                            const tools = await apiCall('get_tools');
+                            const dragIdx = tools.findIndex(t => t.id == draggedId);
+                            const dropIdx = tools.findIndex(t => t.id == dropId);
+                            const [item] = tools.splice(dragIdx, 1);
+                            tools.splice(dropIdx, 0, item);
+                            await apiCall('reorder_tools', {order: JSON.stringify(tools.map(t => t.id))});
+                            showStatus('✅ Tools reordered!', 'success');
+                            loadAll();
+                        } catch(error) {
+                            showStatus('❌ Reorder failed: ' + error.message, 'error');
+                        }
                     }
-                    
-                    this.classList.remove('drag-over');
-                });
+                };
             });
         }
 
-        // PARENT MENU CRUD
-        function addParentMenu() {
+        // Parent Menu Functions
+        async function saveParent() {
             const name = document.getElementById('parentName').value.trim();
             const link = document.getElementById('parentLink').value.trim() || '#';
+            if(!name) return showStatus('⚠️ Enter menu name!', 'error');
             
-            if (!name) return alert('⚠️ Enter Parent Menu Name!');
-            
-            const parents = JSON.parse(localStorage.getItem('parentMenus')) || [];
-            
-            if (editingParentIndex !== null) {
-                parents[editingParentIndex] = {name, link};
-                editingParentIndex = null;
-                document.getElementById('parentBtn').textContent = '➕ Add Parent Menu';
-                document.getElementById('cancelParentBtn').style.display = 'none';
-                alert('✅ Parent Menu Updated!');
-            } else {
-                parents.push({name, link});
-                alert('✅ Parent Menu Added!');
+            try {
+                if(editingParentId) {
+                    await apiCall('update_parent_menu', {id: editingParentId, name, link});
+                    showStatus('✅ Parent menu updated!', 'success');
+                } else {
+                    await apiCall('add_parent_menu', {name, link});
+                    showStatus('✅ Parent menu added!', 'success');
+                }
+                cancelParentEdit();
+                loadAll();
+            } catch(error) {
+                showStatus('❌ Error: ' + error.message, 'error');
             }
-            
-            localStorage.setItem('parentMenus', JSON.stringify(parents));
-            document.getElementById('parentName').value = '';
-            document.getElementById('parentLink').value = '';
-            loadTables();
         }
 
-        function editParent(i) {
-            const parents = JSON.parse(localStorage.getItem('parentMenus'));
-            document.getElementById('parentName').value = parents[i].name;
-            document.getElementById('parentLink').value = parents[i].link;
-            editingParentIndex = i;
-            document.getElementById('parentBtn').textContent = '💾 Update Parent';
+        function editParent(id, name, link) {
+            editingParentId = id;
+            document.getElementById('parentName').value = name;
+            document.getElementById('parentLink').value = link;
+            document.getElementById('parentBtn').textContent = '💾 Update';
             document.getElementById('cancelParentBtn').style.display = 'inline-block';
         }
 
         function cancelParentEdit() {
-            editingParentIndex = null;
+            editingParentId = null;
             document.getElementById('parentName').value = '';
-            document.getElementById('parentLink').value = '';
+            document.getElementById('parentLink').value = '#';
             document.getElementById('parentBtn').textContent = '➕ Add Parent Menu';
             document.getElementById('cancelParentBtn').style.display = 'none';
         }
 
-        function deleteParent(i) {
-            if (!confirm('🗑️ Delete this parent menu? All sub-menus under it will also be deleted.')) return;
-            
-            const parents = JSON.parse(localStorage.getItem('parentMenus'));
-            const subs = JSON.parse(localStorage.getItem('subMenus')) || [];
-            
-            // Delete all sub-menus under this parent
-            const updatedSubs = subs.filter(s => s.parent != i);
-            localStorage.setItem('subMenus', JSON.stringify(updatedSubs));
-            
-            parents.splice(i, 1);
-            localStorage.setItem('parentMenus', JSON.stringify(parents));
-            
-            alert('✅ Parent Menu & Sub-Menus Deleted!');
-            loadTables();
+        async function deleteParent(id) {
+            if(!confirm('Delete this parent menu and all its sub-menus?')) return;
+            try {
+                await apiCall('delete_parent_menu', {id});
+                showStatus('✅ Deleted!', 'success');
+                loadAll();
+            } catch(error) {
+                showStatus('❌ Delete failed: ' + error.message, 'error');
+            }
         }
 
-        // SUB-MENU CRUD
-        function addSubMenu() {
+        // Sub Menu Functions
+        async function saveSub() {
             const name = document.getElementById('subName').value.trim();
             const link = document.getElementById('subLink').value.trim();
             const parent = document.getElementById('subParent').value;
+            if(!name || !link || !parent) return showStatus('⚠️ Fill all fields!', 'error');
             
-            if (!name || !link) return alert('⚠️ Enter Sub-Menu Name and Link!');
-            if (!parent) return alert('⚠️ Select Parent Menu!');
-            
-            const subs = JSON.parse(localStorage.getItem('subMenus')) || [];
-            
-            if (editingSubIndex !== null) {
-                subs[editingSubIndex] = {name, link, parent};
-                editingSubIndex = null;
-                document.getElementById('subBtn').textContent = '➕ Add Sub-Menu';
-                document.getElementById('cancelSubBtn').style.display = 'none';
-                alert('✅ Sub-Menu Updated!');
-            } else {
-                subs.push({name, link, parent});
-                alert('✅ Sub-Menu Added!');
+            try {
+                if(editingSubId) {
+                    await apiCall('update_sub_menu', {id: editingSubId, name, link, parent});
+                    showStatus('✅ Sub-menu updated!', 'success');
+                } else {
+                    await apiCall('add_sub_menu', {name, link, parent});
+                    showStatus('✅ Sub-menu added!', 'success');
+                }
+                cancelSubEdit();
+                loadAll();
+            } catch(error) {
+                showStatus('❌ Error: ' + error.message, 'error');
             }
-            
-            localStorage.setItem('subMenus', JSON.stringify(subs));
-            document.getElementById('subName').value = '';
-            document.getElementById('subLink').value = '';
-            document.getElementById('subParent').value = '';
-            loadTables();
         }
 
-        function editSub(i) {
-            const subs = JSON.parse(localStorage.getItem('subMenus'));
-            document.getElementById('subName').value = subs[i].name;
-            document.getElementById('subLink').value = subs[i].link;
-            document.getElementById('subParent').value = subs[i].parent;
-            editingSubIndex = i;
-            document.getElementById('subBtn').textContent = '💾 Update Sub-Menu';
+        function editSub(id, name, link, parent) {
+            editingSubId = id;
+            document.getElementById('subName').value = name;
+            document.getElementById('subLink').value = link;
+            document.getElementById('subParent').value = parent;
+            document.getElementById('subBtn').textContent = '💾 Update';
             document.getElementById('cancelSubBtn').style.display = 'inline-block';
         }
 
         function cancelSubEdit() {
-            editingSubIndex = null;
+            editingSubId = null;
             document.getElementById('subName').value = '';
             document.getElementById('subLink').value = '';
             document.getElementById('subParent').value = '';
@@ -375,118 +452,151 @@
             document.getElementById('cancelSubBtn').style.display = 'none';
         }
 
-        function deleteSub(i) {
-            if (!confirm('🗑️ Delete this sub-menu?')) return;
-            
-            const subs = JSON.parse(localStorage.getItem('subMenus'));
-            subs.splice(i, 1);
-            localStorage.setItem('subMenus', JSON.stringify(subs));
-            
-            alert('✅ Sub-Menu Deleted!');
-            loadTables();
+        async function deleteSub(id) {
+            if(!confirm('Delete this sub-menu?')) return;
+            try {
+                await apiCall('delete_sub_menu', {id});
+                showStatus('✅ Deleted!', 'success');
+                loadAll();
+            } catch(error) {
+                showStatus('❌ Delete failed: ' + error.message, 'error');
+            }
         }
 
-        // TOOL CRUD (Same as before)
+        // Tool Functions
         function previewImage() {
             const file = document.getElementById('tImage').files[0];
-            if (!file) return;
+            if(!file) return;
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = e => {
                 currentImageBase64 = e.target.result;
-                document.getElementById('imagePreview').innerHTML = 
-                    `<img src="${currentImageBase64}" style="width:100px; border-radius:8px;">`;
+                document.getElementById('imagePreview').innerHTML = `<img src="${currentImageBase64}" style="max-width:200px; border-radius:8px; border:2px solid #334155;">`;
             };
             reader.readAsDataURL(file);
         }
 
-        function addTool() {
+        async function saveTool() {
             const name = document.getElementById('tName').value.trim();
             const icon = document.getElementById('tIcon').value.trim();
             const link = document.getElementById('tLink').value.trim();
-            const desc = document.getElementById('tDesc').value.trim();
-            const parent = document.getElementById('parentTool').value;
-            if (!name || !link || !desc) return alert('Fill all fields!');
+            const description = document.getElementById('tDesc').value.trim();
+            const parent = document.getElementById('parentTool').value || null;
+            const removeImage = document.getElementById('removeImage').checked;
             
-            const tools = JSON.parse(localStorage.getItem('toolItems')) || [];
+            if(!name || !link || !description) return showStatus('⚠️ Fill all required fields!', 'error');
             
-            if (editingToolIndex !== null) {
-                tools[editingToolIndex] = {name, icon, link, desc, image: currentImageBase64, parent};
-                editingToolIndex = null;
-                document.getElementById('toolBtn').textContent = '➕ Add Tool';
-                document.getElementById('cancelToolBtn').style.display = 'none';
-            } else {
-                tools.push({name, icon, link, desc, image: currentImageBase64, parent});
+            // Determine image value
+            let imageValue = currentImageBase64;
+            if(removeImage) {
+                imageValue = ''; // Empty string to remove image
             }
             
-            localStorage.setItem('toolItems', JSON.stringify(tools));
-            document.getElementById('tName').value = '';
-            document.getElementById('tIcon').value = '🔧';
-            document.getElementById('tLink').value = '';
-            document.getElementById('tDesc').value = '';
-            document.getElementById('tImage').value = '';
-            document.getElementById('parentTool').value = '';
-            document.getElementById('imagePreview').innerHTML = '';
-            currentImageBase64 = '';
-            loadTables();
+            try {
+                if(editingToolId) {
+                    await apiCall('update_tool', {id: editingToolId, name, icon, link, description, image: imageValue, parent});
+                    showStatus('✅ Tool updated!', 'success');
+                } else {
+                    await apiCall('add_tool', {name, icon, link, description, image: imageValue, parent});
+                    showStatus('✅ Tool added!', 'success');
+                }
+                cancelToolEdit();
+                loadAll();
+            } catch(error) {
+                showStatus('❌ Error: ' + error.message, 'error');
+            }
         }
 
-        function editTool(i) {
-            const tools = JSON.parse(localStorage.getItem('toolItems'));
-            document.getElementById('tName').value = tools[i].name;
-            document.getElementById('tIcon').value = tools[i].icon;
-            document.getElementById('tLink').value = tools[i].link;
-            document.getElementById('tDesc').value = tools[i].desc;
-            document.getElementById('parentTool').value = tools[i].parent || '';
-            currentImageBase64 = tools[i].image || '';
-            if (currentImageBase64) {
-                document.getElementById('imagePreview').innerHTML = 
-                    `<img src="${currentImageBase64}" style="width:100px; border-radius:8px;">`;
+        // Fixed editTool function - uses ID directly
+        function editToolById(toolId) {
+            try {
+                const tool = window.allTools.find(t => t.id == toolId);
+                if(!tool) {
+                    showStatus('❌ Tool not found', 'error');
+                    return;
+                }
+                
+                editingToolId = tool.id;
+                document.getElementById('tName').value = tool.name || '';
+                document.getElementById('tIcon').value = tool.icon || '🔧';
+                document.getElementById('tLink').value = tool.link || '';
+                document.getElementById('tDesc').value = tool.description || '';
+                document.getElementById('parentTool').value = tool.parent_id || '';
+                document.getElementById('removeImage').checked = false;
+                currentImageBase64 = tool.image || '';
+                
+                if(currentImageBase64 && currentImageBase64.trim() !== '') {
+                    document.getElementById('imagePreview').innerHTML = `
+                        <img src="${currentImageBase64}" style="max-width:200px; border-radius:8px; border:2px solid #334155;">
+                        <p style="color:#94a3b8; margin-top:10px; font-size:13px;">Current image (check "Remove" box to delete)</p>
+                    `;
+                } else {
+                    document.getElementById('imagePreview').innerHTML = '<p style="color:#64748b;">No image set</p>';
+                }
+                
+                document.getElementById('toolBtn').textContent = '💾 Update Tool';
+                document.getElementById('cancelToolBtn').style.display = 'inline-block';
+                
+                // Scroll to form
+                document.getElementById('tName').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                showStatus('✏️ Editing: ' + tool.name, 'info');
+            } catch(error) {
+                console.error('Edit tool error:', error);
+                showStatus('❌ Error loading tool data', 'error');
             }
-            editingToolIndex = i;
-            document.getElementById('toolBtn').textContent = '💾 Update';
-            document.getElementById('cancelToolBtn').style.display = 'inline-block';
         }
 
         function cancelToolEdit() {
-            editingToolIndex = null;
+            editingToolId = null;
             document.getElementById('tName').value = '';
             document.getElementById('tIcon').value = '🔧';
             document.getElementById('tLink').value = '';
             document.getElementById('tDesc').value = '';
             document.getElementById('tImage').value = '';
             document.getElementById('parentTool').value = '';
+            document.getElementById('removeImage').checked = false;
             document.getElementById('imagePreview').innerHTML = '';
             currentImageBase64 = '';
             document.getElementById('toolBtn').textContent = '➕ Add Tool';
             document.getElementById('cancelToolBtn').style.display = 'none';
         }
 
-        function deleteTool(i) {
-            if (!confirm('Delete?')) return;
-            const tools = JSON.parse(localStorage.getItem('toolItems'));
-            tools.splice(i, 1);
-            localStorage.setItem('toolItems', JSON.stringify(tools));
-            loadTables();
+        async function deleteTool(id) {
+            if(!confirm('Delete this tool?')) return;
+            try {
+                await apiCall('delete_tool', {id});
+                showStatus('✅ Tool deleted!', 'success');
+                loadAll();
+            } catch(error) {
+                showStatus('❌ Delete failed: ' + error.message, 'error');
+            }
         }
 
-        function saveCardsPerRow() {
-            localStorage.setItem('cardsPerRow', document.getElementById('cardsPerRow').value);
-            document.getElementById('currentCards').textContent = document.getElementById('cardsPerRow').value + ' cards';
-            alert('Saved!');
+        // Settings
+        async function saveCardsPerRow() {
+            const value = document.getElementById('cardsPerRow').value;
+            try {
+                await apiCall('update_setting', {key: 'cards_per_row', value});
+                document.getElementById('currentCards').textContent = value + ' cards';
+                showStatus('✅ Settings saved!', 'success');
+            } catch(error) {
+                showStatus('❌ Save failed: ' + error.message, 'error');
+            }
         }
 
-        function saveFooter() {
-            localStorage.setItem('footerText', document.getElementById('footerText').value);
-            alert('Footer saved!');
+        async function saveFooter() {
+            const value = document.getElementById('footerText').value;
+            try {
+                await apiCall('update_setting', {key: 'footer_text', value});
+                showStatus('✅ Footer saved!', 'success');
+            } catch(error) {
+                showStatus('❌ Save failed: ' + error.message, 'error');
+            }
         }
 
-        function resetAll() {
-            if (!confirm('Reset all?')) return;
-            localStorage.clear();
-            location.reload();
-        }
-
-        loadTables();
+        // Auto-load on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            testConnection();
+        });
     </script>
 </body>
 </html>
