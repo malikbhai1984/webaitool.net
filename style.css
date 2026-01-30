@@ -1,4 +1,8 @@
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -8,7 +12,7 @@ body {
     flex-direction: column;
 }
 
-/* Navigation */
+/* ==================== NAVIGATION ==================== */
 nav {
     background: white;
     padding: 18px 5%;
@@ -26,24 +30,60 @@ nav {
     font-weight: 800;
     color: #6c5ce7;
     text-decoration: none;
+    z-index: 101;
+}
+
+/* Hamburger Menu Icon */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 101;
+    transition: all 0.3s ease;
+}
+
+.hamburger span {
+    display: block;
+    width: 30px;
+    height: 3px;
+    background: #6c5ce7;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(9px, 9px);
+    background: #5f4dd1;
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(8px, -8px);
+    background: #5f4dd1;
 }
 
 .menu-list {
     display: flex;
     gap: 25px;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    align-items: center;
 }
 
-.menu-list a {
+.menu-list > a,
+.menu-list > .dropdown {
     text-decoration: none;
     color: #333;
     font-weight: 600;
     font-size: 15px;
 }
 
-.menu-list a:hover {
+.menu-list > a:hover {
     color: #6c5ce7;
 }
 
@@ -59,17 +99,29 @@ nav {
     font-weight: 600;
     font-size: 15px;
     cursor: pointer;
+    background: none;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: all 0.3s;
+}
+
+.dropbtn:hover {
+    background-color: #f8f9fa;
+    color: #6c5ce7;
 }
 
 .dropdown-content {
     display: none;
     position: absolute;
     background-color: white;
-    min-width: 200px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-    z-index: 1;
+    min-width: 220px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    z-index: 1000;
     border-radius: 8px;
-    margin-top: 5px;
+    margin-top: 8px;
+    left: 0;
+    border: 1px solid #e0e0e0;
 }
 
 .dropdown-content a {
@@ -78,27 +130,105 @@ nav {
     text-decoration: none;
     display: block;
     font-size: 14px;
+    transition: all 0.3s;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.dropdown-content a:last-child {
+    border-bottom: none;
 }
 
 .dropdown-content a:hover {
     background-color: #f8f9fa;
     color: #6c5ce7;
-}
-
-/* Keep dropdown open on hover AND click */
-.dropdown:hover .dropdown-content {
-    display: block;
+    padding-left: 20px;
 }
 
 .dropdown.active .dropdown-content {
     display: block;
+    animation: slideDown 0.3s ease;
 }
 
-.dropdown:hover .dropbtn {
+.dropdown.active .dropbtn {
     color: #6c5ce7;
+    background-color: #f8f9fa;
 }
 
-/* Hero Section */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==================== BEAUTIFUL SEARCH BAR ==================== */
+.search-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.search-box {
+    position: relative;
+    width: 100%;
+    max-width: 750px;
+    margin-left: auto; /* Right aligned on desktop */
+}
+
+.search-box input {
+    width: 100%;
+    padding: 22px 70px 22px 28px;
+    font-size: 18px;
+    font-weight: 500;
+    border: 3px solid #e0e0e0;
+    border-radius: 50px;
+    outline: none;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: white;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    color: #2d3436;
+}
+
+.search-box input::placeholder {
+    color: #95a5a6;
+    font-weight: 400;
+}
+
+.search-box input:focus {
+    border-color: #6c5ce7;
+    box-shadow: 0 12px 40px rgba(108, 92, 231, 0.3);
+    transform: translateY(-3px);
+}
+
+.search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    pointer-events: none;
+    box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.search-box input:focus + .search-icon {
+    background: linear-gradient(135deg, #5f4dd1, #9287f7);
+    transform: translateY(-50%) scale(1.15) rotate(10deg);
+    box-shadow: 0 8px 25px rgba(108, 92, 231, 0.5);
+}
+
+/* ==================== HERO SECTION ==================== */
 .hero {
     background: linear-gradient(135deg, #6c5ce7, #a29bfe);
     color: white;
@@ -116,7 +246,7 @@ nav {
     opacity: 0.95;
 }
 
-/* Tools Section */
+/* ==================== TOOLS SECTION ==================== */
 .tools-section {
     max-width: 1200px;
     margin: -40px auto 60px;
@@ -130,10 +260,39 @@ nav {
     margin-bottom: 40px;
 }
 
+/* Tools Grid - Responsive */
 .tools-grid {
     display: grid;
     gap: 25px;
     margin-bottom: 40px;
+}
+
+/* Desktop Large - 4 cards */
+@media (min-width: 1200px) {
+    .tools-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Desktop Medium - 3 cards */
+@media (min-width: 900px) and (max-width: 1199px) {
+    .tools-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Tablet - 2 cards */
+@media (min-width: 600px) and (max-width: 899px) {
+    .tools-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile - 1 card */
+@media (max-width: 599px) {
+    .tools-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 .tool-card {
@@ -186,7 +345,7 @@ nav {
     transform: scale(1.05);
 }
 
-/* Footer */
+/* ==================== FOOTER ==================== */
 footer {
     background: #2d3436;
     color: white;
@@ -199,64 +358,215 @@ footer p {
     font-size: 15px;
 }
 
-/* Container for tool pages */
-.container {
-    max-width: 1200px;
-    margin: -30px auto 50px;
-    padding: 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 25px;
-}
-
-/* Input Styles */
-input[type="text"],
-input[type="email"],
-input[type="number"],
-input[type="file"],
-textarea,
-select {
-    width: 100%;
-    padding: 12px;
-    margin: 8px 0;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    font-size: 14px;
-}
-
-input:focus, textarea:focus, select:focus {
-    outline: none;
-    border-color: #6c5ce7;
-}
-
-button {
-    background: #6c5ce7;
-    color: white;
-    border: none;
-    padding: 12px 25px;
-    margin: 5px 5px 5px 0;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-}
-
-button:hover {
-    background: #5f4dd1;
-}
-
-.result {
-    margin-top: 20px;
-    padding: 20px;
-    background: #f8f9fa;
-    border-radius: 10px;
-    border-left: 4px solid #6c5ce7;
-}
-
-/* Responsive */
+/* ==================== MOBILE RESPONSIVE ==================== */
 @media (max-width: 768px) {
-    .hero h1 { font-size: 32px; }
-    .hero p { font-size: 16px; }
-    .menu-list { flex-direction: column; gap: 10px; }
-    .container { grid-template-columns: 1fr; }
+    nav {
+        padding: 15px 5%;
+    }
+    
+    .logo {
+        font-size: 22px;
+    }
+    
+    /* Show Hamburger on Mobile */
+    .hamburger {
+        display: flex;
+    }
+    
+    /* Hide Menu by Default on Mobile */
+    .menu-list {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: white;
+        flex-direction: column;
+        gap: 0;
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+                    box-shadow 0.5s ease,
+                    padding 0.5s ease;
+        box-shadow: none;
+        z-index: 99;
+        padding: 0;
+    }
+    
+    /* Show Menu when Active */
+    .menu-list.mobile-active {
+        max-height: 600px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        padding: 20px 0;
+    }
+    
+    .menu-list > a,
+    .menu-list > .dropdown {
+        width: 100%;
+        text-align: center;
+        padding: 16px 20px;
+        font-size: 16px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .menu-list > a:last-child {
+        border-bottom: none;
+    }
+    
+    .dropbtn {
+        font-size: 16px;
+        padding: 16px 20px;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .dropdown {
+        width: 100%;
+    }
+    
+    .dropdown-content {
+        position: static;
+        box-shadow: none;
+        border: none;
+        margin-top: 0;
+        background: #f8f9fa;
+    }
+    
+    .dropdown-content a {
+        padding: 14px 40px;
+        font-size: 15px;
+    }
+    
+    /* Search Bar - Center on Mobile */
+    .search-container {
+        padding: 0 15px;
+        margin: 20px auto;
+    }
+    
+    .search-box {
+        max-width: 100%;
+        margin: 0 auto;
+    }
+    
+    .search-box input {
+        padding: 18px 60px 18px 22px;
+        font-size: 16px;
+        border-width: 2px;
+    }
+    
+    .search-icon {
+        width: 46px;
+        height: 46px;
+        right: 8px;
+        font-size: 20px;
+    }
+    
+    .hero h1 { 
+        font-size: 28px;
+        line-height: 1.2;
+    }
+    
+    .hero p { 
+        font-size: 14px; 
+    }
+    
+    .hero {
+        padding: 50px 15px;
+    }
+    
+    .section-title {
+        font-size: 24px;
+    }
+    
+    .tools-section {
+        padding: 0 10px;
+        margin-top: -20px;
+    }
+    
+    .tool-card {
+        padding: 25px 20px;
+    }
+    
+    .tool-icon {
+        font-size: 36px;
+    }
+    
+    .tool-card h3 {
+        font-size: 18px;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .hero h1 {
+        font-size: 36px;
+    }
+    
+    .hero p {
+        font-size: 18px;
+    }
+    
+    nav {
+        padding: 15px 3%;
+    }
+    
+    .search-box {
+        max-width: 600px;
+    }
+}
+
+/* Very Small Mobile */
+@media (max-width: 480px) {
+    .logo {
+        font-size: 20px;
+    }
+    
+    .hamburger span {
+        width: 26px;
+    }
+    
+    .menu-list > a,
+    .dropbtn {
+        font-size: 15px;
+        padding: 15px 20px;
+    }
+    
+    .search-box input {
+        padding: 16px 55px 16px 20px;
+        font-size: 15px;
+    }
+    
+    .search-icon {
+        width: 42px;
+        height: 42px;
+        font-size: 18px;
+    }
+    
+    .hero h1 {
+        font-size: 24px;
+    }
+    
+    .hero p {
+        font-size: 13px;
+    }
+    
+    .section-title {
+        font-size: 20px;
+    }
+    
+    .tool-card {
+        padding: 20px 15px;
+    }
+    
+    .tool-card h3 {
+        font-size: 16px;
+    }
+    
+    .tool-card p {
+        font-size: 13px;
+    }
+    
+    .tool-btn {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
 }
