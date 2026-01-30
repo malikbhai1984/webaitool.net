@@ -5,120 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebAITool - Free Online Tools</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* AI Chat Styles */
-        .chat-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #6c5ce7;
-            color: white;
-            border: none;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            font-size: 28px;
-            cursor: pointer;
-            box-shadow: 0 5px 20px rgba(108,92,231,0.5);
-            z-index: 1000;
-        }
-        .chat-btn:hover {
-            transform: scale(1.1);
-        }
-        .chat-box {
-            position: fixed;
-            bottom: 100px;
-            right: 30px;
-            width: 380px;
-            height: 550px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            display: none;
-            flex-direction: column;
-            z-index: 1000;
-        }
-        .chat-box.active {
-            display: flex;
-        }
-        .chat-header {
-            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
-            color: white;
-            padding: 20px;
-            border-radius: 15px 15px 0 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .chat-header h3 {
-            margin: 0;
-            font-size: 18px;
-        }
-        .close-chat {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-        }
-        .chat-messages {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            background: #f8f9fa;
-        }
-        .chat-message {
-            margin-bottom: 15px;
-            padding: 12px 16px;
-            border-radius: 12px;
-            max-width: 80%;
-            word-wrap: break-word;
-        }
-        .user-message {
-            background: #6c5ce7;
-            color: white;
-            margin-left: auto;
-        }
-        .bot-message {
-            background: white;
-            color: #333;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .chat-input-container {
-            padding: 15px;
-            border-top: 1px solid #e0e0e0;
-            display: flex;
-            gap: 10px;
-            background: white;
-            border-radius: 0 0 15px 15px;
-        }
-        .chat-input {
-            flex: 1;
-            padding: 12px 15px;
-            border: 1px solid #e0e0e0;
-            border-radius: 25px;
-            font-size: 14px;
-        }
-        .chat-input:focus {
-            outline: none;
-            border-color: #6c5ce7;
-        }
-        .send-btn {
-            background: #6c5ce7;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        .send-btn:hover {
-            background: #5f4dd1;
-        }
-    </style>
 </head>
 <body>
-    <nav id="navbar"></nav>
+    <nav id="navbar">
+        <a href="index.html" class="logo">🛠️ WebAITool</a>
+        
+        <!-- Hamburger Icon for Mobile -->
+        <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        
+        <div class="menu-list" id="menuList">
+            <div style="text-align:center; padding:20px; color:#999;">Loading...</div>
+        </div>
+    </nav>
+
+    <!-- Search Bar - Beautiful & Stylish -->
+    <div class="search-container">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search tools, categories, features..." autocomplete="off">
+            <div class="search-icon">🔍</div>
+        </div>
+    </div>
 
     <div class="hero">
         <h1>Complete AI Toolkit</h1>
@@ -127,260 +37,241 @@
 
     <div class="tools-section">
         <h2 class="section-title">Explore Tool Categories</h2>
-        <div class="tools-grid" id="tools-container"></div>
-    </div>
-
-    <footer id="footer"></footer>
-
-    <!-- AI Chat Button -->
-    <button class="chat-btn" onclick="toggleChat()">💬</button>
-
-    <!-- AI Chat Box -->
-    <div class="chat-box" id="chatBox">
-        <div class="chat-header">
-            <h3>🤖 AI Assistant</h3>
-            <button class="close-chat" onclick="toggleChat()">✖</button>
-        </div>
-        <div class="chat-messages" id="chatMessages">
-            <div class="chat-message bot-message">
-                Hello! I'm your AI assistant. How can I help you today?
-            </div>
-        </div>
-        <div class="chat-input-container">
-            <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." onkeypress="if(event.key==='Enter') sendMessage()">
-            <button class="send-btn" onclick="sendMessage()">Send</button>
+        <div class="tools-grid" id="tools-container">
+            <div style="text-align:center; padding:40px; color:#999; grid-column: 1/-1;">Loading tools...</div>
         </div>
     </div>
+
+    <footer id="footer">
+        <p>Loading...</p>
+    </footer>
 
     <script>
-        // Initialize defaults on first load
-        if (!localStorage.getItem('initialized')) {
-            localStorage.setItem('menuItems', JSON.stringify([
-                {name: 'Home', link: 'index.html', parent: ''},
-                {name: 'Privacy', link: 'privacy.html', parent: ''},
-                {name: 'Contact', link: 'contact.html', parent: ''},
-                {name: 'About', link: 'about.html', parent: ''}
-            ]));
-            
-            localStorage.setItem('toolItems', JSON.stringify([
-                {name: '🖼️ Image Tools', desc: 'Resize, compress, convert images', link: 'image-tools.html', icon: '🖼️'},
-                {name: '📱 QR Tools', desc: 'Generate & scan QR codes', link: 'qr-tools.html', icon: '📱'},
-                {name: '📺 YouTube SEO', desc: 'Optimize YouTube content', link: 'youtube-tools.html', icon: '📺'},
-                {name: '📄 PDF Tools', desc: 'Compress, merge, split PDFs', link: 'pdf-tools.html', icon: '📄'},
-                {name: '💼 Business', desc: 'Invoice, resume, calculators', link: 'business-tools.html', icon: '💼'},
-                {name: '💻 Developer', desc: 'JSON, Base64, passwords', link: 'dev-tools.html', icon: '💻'}
-            ]));
-            
-            localStorage.setItem('cardsPerRow', '3');
-            localStorage.setItem('footerText', '© 2024 WebAITool.net | All Rights Reserved');
-            localStorage.setItem('initialized', 'true');
-        }
+        const API = 'api.php';
+        let allToolsData = [];
 
-        // Load Menu with Dropdown Support (Separate Parent & Sub-Menu)
-        const parents = JSON.parse(localStorage.getItem('parentMenus')) || [];
-        const subs = JSON.parse(localStorage.getItem('subMenus')) || [];
-        const navbar = document.getElementById('navbar');
-        
-        // Build menu with dropdowns
-        let menuHTML = '<a href="index.html" class="logo">🛠️ WebAITool</a><div class="menu-list">';
-        
-        parents.forEach((p, index) => {
-            // Find sub-menus for this parent
-            const children = subs.filter(s => s.parent == index);
-            
-            if (children.length > 0) {
-                // Has dropdown
-                menuHTML += `
-                    <div class="dropdown">
-                        <a href="${p.link || '#'}" class="dropbtn">${p.name} ▼</a>
-                        <div class="dropdown-content">
-                            ${children.map(child => `<a href="${child.link}">${child.name}</a>`).join('')}
-                        </div>
-                    </div>
-                `;
-            } else {
-                // No dropdown, regular link
-                menuHTML += `<a href="${p.link}">${p.name}</a>`;
-            }
-        });
-        
-        menuHTML += '</div>';
-        navbar.innerHTML = menuHTML;
-
-        // Add click event to dropdowns to keep them open
-        document.querySelectorAll('.dropdown').forEach(dropdown => {
-            dropdown.addEventListener('click', function(e) {
-                e.stopPropagation();
-                // Toggle active class
-                this.classList.toggle('active');
-                
-                // Close other dropdowns
-                document.querySelectorAll('.dropdown').forEach(other => {
-                    if (other !== this) {
-                        other.classList.remove('active');
+        // API Call Function with cache busting
+        async function apiCall(action) {
+            try {
+                const timestamp = new Date().getTime();
+                const response = await fetch(`${API}?action=${action}&_t=${timestamp}`, {
+                    cache: 'no-store',
+                    headers: {
+                        'Cache-Control': 'no-cache, no-store, must-revalidate',
+                        'Pragma': 'no-cache',
+                        'Expires': '0'
                     }
                 });
-            });
+                const text = await response.text();
+                
+                try {
+                    return JSON.parse(text);
+                } catch(e) {
+                    console.error('JSON Parse Error:', text);
+                    throw new Error('Server error. Check console.');
+                }
+            } catch(error) {
+                console.error('API Error:', error);
+                throw error;
+            }
+        }
+
+        // Toggle Mobile Menu - FIXED VERSION
+        function toggleMobileMenu() {
+            const menuList = document.getElementById('menuList');
+            const hamburger = document.getElementById('hamburgerBtn');
+            
+            menuList.classList.toggle('mobile-active');
+            hamburger.classList.toggle('active');
+            
+            console.log('Menu toggled:', menuList.classList.contains('mobile-active'));
+        }
+
+        // Add click event to hamburger button
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            if(hamburgerBtn) {
+                hamburgerBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleMobileMenu();
+                });
+            }
         });
+
+        // Toggle Dropdown (Click to open/close)
+        function toggleDropdown(id, event) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            const clickedDropdown = document.querySelector(`[data-dropdown="${id}"]`);
+            const allDropdowns = document.querySelectorAll('.dropdown');
+            
+            // Close all other dropdowns
+            allDropdowns.forEach(dropdown => {
+                if(dropdown !== clickedDropdown) {
+                    dropdown.classList.remove('active');
+                }
+            });
+            
+            // Toggle clicked dropdown
+            clickedDropdown.classList.toggle('active');
+        }
 
         // Close dropdowns when clicking outside
-        document.addEventListener('click', function() {
-            document.querySelectorAll('.dropdown').forEach(dropdown => {
-                dropdown.classList.remove('active');
-            });
+        document.addEventListener('click', function(event) {
+            if(!event.target.closest('.dropdown')) {
+                document.querySelectorAll('.dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
         });
 
-        // Load Tools
-        const tools = JSON.parse(localStorage.getItem('toolItems'));
-        const cardsPerRow = localStorage.getItem('cardsPerRow') || '3';
-        const container = document.getElementById('tools-container');
-        
-        if (cardsPerRow === '2') {
-            container.style.gridTemplateColumns = 'repeat(2, 1fr)';
-        } else if (cardsPerRow === '3') {
-            container.style.gridTemplateColumns = 'repeat(3, 1fr)';
-        } else if (cardsPerRow === '4') {
-            container.style.gridTemplateColumns = 'repeat(4, 1fr)';
-        }
-        
-        container.innerHTML = tools.map(t => `
-            <div class="tool-card">
-                <div class="tool-icon">${t.icon}</div>
-                <h3>${t.name}</h3>
-                <p>${t.desc}</p>
-                <a href="${t.link}" class="tool-btn">Open Tools →</a>
-            </div>
-        `).join('');
-
-        // Load Footer
-        document.getElementById('footer').innerHTML = `<p>${localStorage.getItem('footerText')}</p>`;
-
-        // AI Chat Functions
-        function toggleChat() {
-            document.getElementById('chatBox').classList.toggle('active');
-        }
-
-        async function sendMessage() {
-            const input = document.getElementById('chatInput');
-            const message = input.value.trim();
-            if (!message) return;
-
-            const messagesDiv = document.getElementById('chatMessages');
+        // Search Tools Function
+        function searchTools() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
             
-            // Add user message
-            messagesDiv.innerHTML += `<div class="chat-message user-message">${message}</div>`;
-            input.value = '';
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            if(!searchTerm) {
+                displayTools(allToolsData);
+                return;
+            }
+            
+            const filteredTools = allToolsData.filter(tool => {
+                return tool.name.toLowerCase().includes(searchTerm) ||
+                       (tool.description && tool.description.toLowerCase().includes(searchTerm)) ||
+                       (tool.icon && tool.icon.toLowerCase().includes(searchTerm));
+            });
+            
+            displayTools(filteredTools);
+        }
+        
+        // Add event listener for search
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            if(searchInput) {
+                searchInput.addEventListener('keyup', searchTools);
+                searchInput.addEventListener('input', searchTools);
+            }
+        });
+        
+        function displayTools(tools) {
+            const container = document.getElementById('tools-container');
+            
+            if(tools.length > 0) {
+                container.innerHTML = tools.map(tool => {
+                    const hasImage = tool.image && tool.image.trim() !== '';
+                    return `
+                    <div class="tool-card">
+                        ${hasImage ? `
+                            <img src="${tool.image}" 
+                                 style="width:100%; height:150px; object-fit:cover; border-radius:12px; margin-bottom:15px;" 
+                                 alt="${tool.name}"
+                                 onerror="this.style.display='none'">
+                        ` : ''}
+                        <h3>${tool.name}</h3>
+                        <p>${tool.description || 'Explore this tool'}</p>
+                        <a href="${tool.link}" class="tool-btn">Open Tools →</a>
+                    </div>
+                    `;
+                }).join('');
+            } else {
+                container.innerHTML = `
+                    <div style="text-align:center; padding:60px 20px; color:#999; grid-column: 1/-1;">
+                        <div style="font-size:64px; margin-bottom:20px;">🔍</div>
+                        <h3>No Results Found</h3>
+                        <p>Try searching with different keywords</p>
+                    </div>
+                `;
+            }
+        }
 
-            // Show typing indicator
-            messagesDiv.innerHTML += `<div class="chat-message bot-message" id="typing">⏳ AI is typing...</div>`;
-
+        // Load Complete Website
+        async function loadWebsite() {
             try {
-                // Try DeepSeek API
-                const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer sk-f3f8469badbc470884b3122da7b6109c'
-                    },
-                    body: JSON.stringify({
-                        model: 'deepseek-chat',
-                        messages: [
-                            {role: 'system', content: 'You are a helpful assistant for WebAITool website. Provide short, helpful answers.'},
-                            {role: 'user', content: message}
-                        ],
-                        max_tokens: 500,
-                        temperature: 0.7
-                    })
-                });
+                const [parents, subs, tools, settings] = await Promise.all([
+                    apiCall('get_parent_menus'),
+                    apiCall('get_sub_menus'),
+                    apiCall('get_tools'),
+                    apiCall('get_settings')
+                ]);
 
-                // Remove typing indicator
-                const typingElement = document.getElementById('typing');
-                if (typingElement) typingElement.remove();
+                console.log('Data loaded:', {parents, subs, tools, settings});
 
-                if (response.status === 402) {
-                    // API key has no credits - Use fallback responses
-                    const fallbackResponse = getFallbackResponse(message);
-                    messagesDiv.innerHTML += `<div class="chat-message bot-message">${fallbackResponse}</div>`;
-                } else if (!response.ok) {
-                    throw new Error(`API Error: ${response.status}`);
+                // Build Navigation
+                let menuHTML = '';
+                
+                if(parents && parents.length > 0) {
+                    parents.forEach(parent => {
+                        const children = subs.filter(s => s.parent_id == parent.id);
+                        
+                        if (children.length > 0) {
+                            menuHTML += `
+                                <div class="dropdown" data-dropdown="${parent.id}">
+                                    <a href="javascript:void(0)" class="dropbtn" onclick="toggleDropdown(${parent.id}, event)">${parent.name} ▼</a>
+                                    <div class="dropdown-content">
+                                        ${children.map(child => `<a href="${child.link}">${child.name}</a>`).join('')}
+                                    </div>
+                                </div>
+                            `;
+                        } else {
+                            menuHTML += `<a href="${parent.link}">${parent.name}</a>`;
+                        }
+                    });
                 } else {
-                    const data = await response.json();
-                    const botMessage = data.choices && data.choices[0] && data.choices[0].message 
-                        ? data.choices[0].message.content 
-                        : 'Sorry, I could not get a response.';
-                    
-                    messagesDiv.innerHTML += `<div class="chat-message bot-message">${botMessage}</div>`;
+                    menuHTML = '<a href="index.html">Home</a><a href="contact.html">Contact</a>';
                 }
                 
-                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                document.getElementById('menuList').innerHTML = menuHTML;
 
-            } catch (error) {
-                // Remove typing indicator
-                const typingElement = document.getElementById('typing');
-                if (typingElement) typingElement.remove();
+                // Build Tools Grid
+                const container = document.getElementById('tools-container');
                 
-                // Use fallback response on error
-                const fallbackResponse = getFallbackResponse(message);
-                messagesDiv.innerHTML += `<div class="chat-message bot-message">${fallbackResponse}</div>`;
-                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                container.style.display = 'grid';
+                container.style.gridTemplateColumns = 'repeat(4, 1fr)';
+                container.style.gap = '25px';
+                container.style.marginBottom = '40px';
                 
-                console.error('AI Chat Error:', error);
+                const mainTools = tools && tools.length > 0 
+                    ? tools.filter(t => !t.parent_id) 
+                    : [];
+                
+                allToolsData = mainTools;
+                displayTools(mainTools);
+
+                // Set Footer
+                document.getElementById('footer').innerHTML = `
+                    <p>${settings.footer_text || '© 2024 WebAITool.net'}</p>
+                `;
+
+                console.log('✅ Website loaded successfully!');
+
+            } catch(error) {
+                console.error('Load Error:', error);
+                
+                document.getElementById('menuList').innerHTML = `
+                    <div style="color:#ff4757; padding:10px;">
+                        ❌ Error loading menu. Please refresh.
+                    </div>
+                `;
+                
+                document.getElementById('tools-container').innerHTML = `
+                    <div style="text-align:center; padding:60px 20px; color:#ff4757; grid-column: 1/-1;">
+                        <div style="font-size:64px; margin-bottom:20px;">⚠️</div>
+                        <h3>Failed to Load Content</h3>
+                        <p>${error.message}</p>
+                        <button onclick="location.reload()" style="margin-top:20px; padding:12px 24px; background:#6c5ce7; color:white; border:none; border-radius:8px; cursor:pointer;">
+                            🔄 Refresh Page
+                        </button>
+                    </div>
+                `;
+                
+                document.getElementById('footer').innerHTML = `<p>Error loading footer</p>`;
             }
         }
 
-        // Fallback AI responses when API is unavailable
-        function getFallbackResponse(message) {
-            const msg = message.toLowerCase();
-            
-            // Tool-related questions
-            if (msg.includes('tool') || msg.includes('feature')) {
-                return "We offer 40+ free tools including Image Tools (resize, compress), QR Code generators, PDF tools (compress, merge), YouTube SEO tools, Business tools (invoice, resume), and Developer tools (JSON formatter, password generator). All tools work 100% client-side for your privacy!";
-            }
-            
-            // Image tools
-            if (msg.includes('image') || msg.includes('photo') || msg.includes('picture')) {
-                return "Our Image Tools include: Image Resizer, Image Compressor, Reverse Image Search, and Format Converter (JPG/PNG/WebP). All processing happens on your device!";
-            }
-            
-            // PDF tools
-            if (msg.includes('pdf')) {
-                return "PDF Tools available: PDF Compressor, PDF Merger, PDF to Text converter, HTML to PDF, and PDF Page Counter. No file uploads - everything processes locally!";
-            }
-            
-            // QR codes
-            if (msg.includes('qr')) {
-                return "QR Code Tools: Generate QR codes for UPI payments, WhatsApp links, WiFi passwords, vCard business cards, and more. Also includes QR code scanner!";
-            }
-            
-            // Privacy
-            if (msg.includes('privacy') || msg.includes('safe') || msg.includes('secure')) {
-                return "All tools process files 100% on your device (client-side). We never upload your files to any server. Your data stays completely private and secure!";
-            }
-            
-            // Pricing
-            if (msg.includes('price') || msg.includes('cost') || msg.includes('free')) {
-                return "All our tools are completely FREE forever! No registration, no hidden fees, no premium plans. Just use any tool anytime!";
-            }
-            
-            // How to use
-            if (msg.includes('how') || msg.includes('use') || msg.includes('work')) {
-                return "Simply select the tool category from the homepage, upload your file (if needed), adjust settings, and click the process button. All tools are designed to be simple and intuitive!";
-            }
-            
-            // Greetings
-            if (msg.includes('hello') || msg.includes('hi') || msg.includes('hey')) {
-                return "Hello! 👋 I'm here to help you with WebAITool. We have 40+ free tools for images, PDFs, QR codes, YouTube SEO, and more. What would you like to know?";
-            }
-            
-            // Thanks
-            if (msg.includes('thank') || msg.includes('thanks')) {
-                return "You're welcome! Feel free to ask if you need help with any of our tools. Happy to assist! 😊";
-            }
-            
-            // Default response
-            return "I'm here to help! WebAITool offers 40+ free tools including:\n\n🖼️ Image Tools - Resize, compress, convert\n📱 QR Codes - Generate & scan\n📄 PDF Tools - Merge, compress, convert\n📺 YouTube SEO - Thumbnails, analytics\n💼 Business - Invoices, resumes\n💻 Developer - JSON, Base64, passwords\n\nWhat would you like to know more about?";
-        }
+        // Load website when page loads
+        document.addEventListener('DOMContentLoaded', loadWebsite);
+        loadWebsite();
     </script>
 </body>
 </html>
