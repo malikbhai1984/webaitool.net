@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebAITool - Free Online Tools</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
     
     <!--Google Analytics code start here-->
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-S323MFXTYL"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -18,50 +22,65 @@
     <!--Google Analytics code finished here-->
 </head>
 <body>
-    <nav id="navbar">
-        <a href="index.html" class="logo">🛠️ WebAITool</a>
-        
-        <!-- Hamburger Icon for Mobile -->
-        <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-        
-        <div class="menu-list" id="menuList">
-            <div style="text-align:center; padding:20px; color:#999;">Loading...</div>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm" id="navbar">
+        <div class="container-fluid px-4">
+            <a href="index.html" class="navbar-brand logo">🛠️ WebAITool</a>
+            
+            <button class="navbar-toggler hamburger" type="button" id="hamburgerBtn" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="collapse navbar-collapse justify-content-center" id="menuList">
+                <div class="text-center p-3 text-muted">Loading...</div>
+            </div>
         </div>
     </nav>
 
-    <!-- Search Bar - Beautiful & Stylish -->
-    <div class="search-container">
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Search tools, categories, features..." autocomplete="off">
-            <div class="search-icon">🔍</div>
+    <!-- Search Bar -->
+    <div class="container search-container">
+        <div class="row justify-content-end">
+            <div class="col-lg-8 col-md-10">
+                <div class="search-box">
+                    <input type="text" class="form-control" id="searchInput" placeholder="Search tools, categories, features..." autocomplete="off">
+                    <div class="search-icon">🔍</div>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- Hero Section -->
     <div class="hero">
-        <h1>Complete AI Toolkit</h1>
-        <p>40+ Free Tools | No Registration | 100% Private</p>
-    </div>
-
-    <div class="tools-section">
-        <h2 class="section-title">Explore Tool Categories</h2>
-        <div class="tools-grid" id="tools-container">
-            <div style="text-align:center; padding:40px; color:#999; grid-column: 1/-1;">Loading tools...</div>
+        <div class="container">
+            <h1 class="display-4 fw-bold">Complete AI Toolkit</h1>
+            <p class="lead">40+ Free Tools | No Registration | 100% Private</p>
         </div>
     </div>
 
-    <footer id="footer">
-        <p>Loading...</p>
+    <!-- Tools Section -->
+    <div class="container tools-section">
+        <h2 class="section-title text-center mb-5">Explore Tool Categories</h2>
+        <div class="row g-4" id="tools-container">
+            <div class="col-12 text-center p-5 text-muted">Loading tools...</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-4 mt-auto" id="footer">
+        <p class="mb-0">Loading...</p>
     </footer>
 
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JS -->
     <script>
         const API = 'api.php';
         let allToolsData = [];
 
-        // API Call Function with cache busting
+        // API Call Function
         async function apiCall(action) {
             try {
                 const timestamp = new Date().getTime();
@@ -74,43 +93,28 @@
                     }
                 });
                 const text = await response.text();
-                
-                try {
-                    return JSON.parse(text);
-                } catch(e) {
-                    console.error('JSON Parse Error:', text);
-                    throw new Error('Server error. Check console.');
-                }
+                return JSON.parse(text);
             } catch(error) {
                 console.error('API Error:', error);
                 throw error;
             }
         }
 
-        // Toggle Mobile Menu - FIXED VERSION
-        function toggleMobileMenu() {
-            const menuList = document.getElementById('menuList');
-            const hamburger = document.getElementById('hamburgerBtn');
-            
-            menuList.classList.toggle('mobile-active');
-            hamburger.classList.toggle('active');
-            
-            console.log('Menu toggled:', menuList.classList.contains('mobile-active'));
-        }
-
-        // Add click event to hamburger button
+        // Toggle Mobile Menu
         document.addEventListener('DOMContentLoaded', function() {
             const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const menuList = document.getElementById('menuList');
+            
             if(hamburgerBtn) {
                 hamburgerBtn.addEventListener('click', function(e) {
                     e.preventDefault();
-                    e.stopPropagation();
-                    toggleMobileMenu();
+                    menuList.classList.toggle('show');
+                    hamburgerBtn.classList.toggle('active');
                 });
             }
         });
 
-        // Toggle Dropdown (Click to open/close)
+        // Toggle Dropdown
         function toggleDropdown(id, event) {
             event.preventDefault();
             event.stopPropagation();
@@ -118,25 +122,14 @@
             const clickedDropdown = document.querySelector(`[data-dropdown="${id}"]`);
             const allDropdowns = document.querySelectorAll('.dropdown');
             
-            // Close all other dropdowns
             allDropdowns.forEach(dropdown => {
                 if(dropdown !== clickedDropdown) {
                     dropdown.classList.remove('active');
                 }
             });
             
-            // Toggle clicked dropdown
             clickedDropdown.classList.toggle('active');
         }
-
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', function(event) {
-            if(!event.target.closest('.dropdown')) {
-                document.querySelectorAll('.dropdown').forEach(dropdown => {
-                    dropdown.classList.remove('active');
-                });
-            }
-        });
 
         // Search Tools Function
         function searchTools() {
@@ -156,7 +149,7 @@
             displayTools(filteredTools);
         }
         
-        // Add event listener for search
+        // Add search event listener
         document.addEventListener('DOMContentLoaded', function() {
             const searchInput = document.getElementById('searchInput');
             if(searchInput) {
@@ -172,25 +165,29 @@
                 container.innerHTML = tools.map(tool => {
                     const hasImage = tool.image && tool.image.trim() !== '';
                     return `
-                    <div class="tool-card">
-                        ${hasImage ? `
-                            <img src="${tool.image}" 
-                                 style="width:100%; height:150px; object-fit:cover; border-radius:12px; margin-bottom:15px;" 
-                                 alt="${tool.name}"
-                                 onerror="this.style.display='none'">
-                        ` : ''}
-                        <h3>${tool.name}</h3>
-                        <p>${tool.description || 'Explore this tool'}</p>
-                        <a href="${tool.link}" class="tool-btn">Open Tools →</a>
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                        <div class="tool-card card h-100 border-0 shadow-sm">
+                            <div class="card-body text-center">
+                                ${hasImage ? `
+                                    <img src="${tool.image}" class="card-img-top rounded mb-3" 
+                                         style="height:150px; object-fit:cover;" 
+                                         alt="${tool.name}"
+                                         onerror="this.style.display='none'">
+                                ` : ''}
+                                <h3 class="card-title h5">${tool.name}</h3>
+                                <p class="card-text text-muted">${tool.description || 'Explore this tool'}</p>
+                                <a href="${tool.link}" class="btn btn-primary tool-btn">Open Tools →</a>
+                            </div>
+                        </div>
                     </div>
                     `;
                 }).join('');
             } else {
                 container.innerHTML = `
-                    <div style="text-align:center; padding:60px 20px; color:#999; grid-column: 1/-1;">
+                    <div class="col-12 text-center py-5">
                         <div style="font-size:64px; margin-bottom:20px;">🔍</div>
                         <h3>No Results Found</h3>
-                        <p>Try searching with different keywords</p>
+                        <p class="text-muted">Try searching with different keywords</p>
                     </div>
                 `;
             }
@@ -206,10 +203,8 @@
                     apiCall('get_settings')
                 ]);
 
-                console.log('Data loaded:', {parents, subs, tools, settings});
-
                 // Build Navigation
-                let menuHTML = '';
+                let menuHTML = '<ul class="navbar-nav">';
                 
                 if(parents && parents.length > 0) {
                     parents.forEach(parent => {
@@ -217,31 +212,26 @@
                         
                         if (children.length > 0) {
                             menuHTML += `
-                                <div class="dropdown" data-dropdown="${parent.id}">
-                                    <a href="javascript:void(0)" class="dropbtn" onclick="toggleDropdown(${parent.id}, event)">${parent.name} ▼</a>
-                                    <div class="dropdown-content">
-                                        ${children.map(child => `<a href="${child.link}">${child.name}</a>`).join('')}
-                                    </div>
-                                </div>
+                                <li class="nav-item dropdown" data-dropdown="${parent.id}">
+                                    <a class="nav-link dropdown-toggle dropbtn" href="#" onclick="toggleDropdown(${parent.id}, event)">${parent.name}</a>
+                                    <ul class="dropdown-menu dropdown-content">
+                                        ${children.map(child => `<li><a class="dropdown-item" href="${child.link}">${child.name}</a></li>`).join('')}
+                                    </ul>
+                                </li>
                             `;
                         } else {
-                            menuHTML += `<a href="${parent.link}">${parent.name}</a>`;
+                            menuHTML += `<li class="nav-item"><a class="nav-link" href="${parent.link}">${parent.name}</a></li>`;
                         }
                     });
                 } else {
-                    menuHTML = '<a href="index.html">Home</a><a href="contact.html">Contact</a>';
+                    menuHTML += '<li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>';
+                    menuHTML += '<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>';
                 }
                 
+                menuHTML += '</ul>';
                 document.getElementById('menuList').innerHTML = menuHTML;
 
                 // Build Tools Grid
-                const container = document.getElementById('tools-container');
-                
-                container.style.display = 'grid';
-                container.style.gridTemplateColumns = 'repeat(4, 1fr)';
-                container.style.gap = '25px';
-                container.style.marginBottom = '40px';
-                
                 const mainTools = tools && tools.length > 0 
                     ? tools.filter(t => !t.parent_id) 
                     : [];
@@ -251,7 +241,7 @@
 
                 // Set Footer
                 document.getElementById('footer').innerHTML = `
-                    <p>${settings.footer_text || '© 2024 WebAITool.net'}</p>
+                    <p class="mb-0">${settings.footer_text || '© 2024 WebAITool.net'}</p>
                 `;
 
                 console.log('✅ Website loaded successfully!');
@@ -260,19 +250,15 @@
                 console.error('Load Error:', error);
                 
                 document.getElementById('menuList').innerHTML = `
-                    <div style="color:#ff4757; padding:10px;">
-                        ❌ Error loading menu. Please refresh.
-                    </div>
+                    <div class="alert alert-danger">❌ Error loading menu. Please refresh.</div>
                 `;
                 
                 document.getElementById('tools-container').innerHTML = `
-                    <div style="text-align:center; padding:60px 20px; color:#ff4757; grid-column: 1/-1;">
+                    <div class="col-12 text-center py-5">
                         <div style="font-size:64px; margin-bottom:20px;">⚠️</div>
                         <h3>Failed to Load Content</h3>
-                        <p>${error.message}</p>
-                        <button onclick="location.reload()" style="margin-top:20px; padding:12px 24px; background:#6c5ce7; color:white; border:none; border-radius:8px; cursor:pointer;">
-                            🔄 Refresh Page
-                        </button>
+                        <p class="text-danger">${error.message}</p>
+                        <button onclick="location.reload()" class="btn btn-primary mt-3">🔄 Refresh Page</button>
                     </div>
                 `;
                 
@@ -280,7 +266,7 @@
             }
         }
 
-        // Load website when page loads
+        // Load website
         document.addEventListener('DOMContentLoaded', loadWebsite);
         loadWebsite();
     </script>
