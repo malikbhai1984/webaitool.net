@@ -13,6 +13,7 @@
         .status.success { background: #064e3b; color: #10b981; border: 1px solid #10b981; }
         .status.error { background: #7f1d1d; color: #ef4444; border: 1px solid #ef4444; }
         .status.info { background: #1e3a8a; color: #60a5fa; border: 1px solid #60a5fa; }
+        .status.show { display: block; }
         .box { background: #1e293b; padding: 25px; border-radius: 12px; margin-bottom: 25px; border: 1px solid #334155; }
         .box h3 { color: #10b981; margin-bottom: 15px; font-size: 20px; }
         .box p { color: #94a3b8; margin-bottom: 15px; font-size: 14px; }
@@ -85,7 +86,7 @@
 
     <!-- Parent Menus -->
     <div class="box">
-        <h3>1️⃣ Parent Menu Management</h3>
+        <h3>1️⃣ Parent Menu Management (Drag to Reorder)</h3>
         <p>Create top-level menu items (e.g., Home, Tools, Contact)</p>
         <input type="hidden" id="editParentId">
         <input type="text" id="parentName" placeholder="Menu Name (e.g., Tools)">
@@ -94,14 +95,14 @@
         <button onclick="cancelParentEdit()" id="cancelParentBtn" class="cancel-btn" style="display:none;">✕ Cancel</button>
         <div class="loading" id="parentLoading">Loading...</div>
         <table id="parentTable">
-            <thead><tr><th>Menu Name</th><th>Link</th><th>Actions</th></tr></thead>
-            <tbody><tr><td colspan="3" class="empty-state">No parent menus yet</td></tr></tbody>
+            <thead><tr><th>☰</th><th>Menu Name</th><th>Link</th><th>Actions</th></tr></thead>
+            <tbody><tr><td colspan="4" class="empty-state">No parent menus yet</td></tr></tbody>
         </table>
     </div>
 
     <!-- Sub Menus -->
     <div class="box">
-        <h3>2️⃣ Sub-Menu Management</h3>
+        <h3>2️⃣ Sub-Menu Management (Drag to Reorder)</h3>
         <p>Create dropdown items under parent menus</p>
         <input type="hidden" id="editSubId">
         <input type="text" id="subName" placeholder="Sub-Menu Name (e.g., Image Tools)">
@@ -111,8 +112,8 @@
         <button onclick="cancelSubEdit()" id="cancelSubBtn" class="cancel-btn" style="display:none;">✕ Cancel</button>
         <div class="loading" id="subLoading">Loading...</div>
         <table id="subTable">
-            <thead><tr><th>Sub-Menu</th><th>Link</th><th>Parent</th><th>Actions</th></tr></thead>
-            <tbody><tr><td colspan="4" class="empty-state">No sub-menus yet</td></tr></tbody>
+            <thead><tr><th>☰</th><th>Sub-Menu</th><th>Link</th><th>Parent</th><th>Actions</th></tr></thead>
+            <tbody><tr><td colspan="5" class="empty-state">No sub-menus yet</td></tr></tbody>
         </table>
     </div>
 
@@ -187,6 +188,7 @@
         // API Call
         async function apiCall(action, data = {}) {
             try {
+                console.log('🔵 API Call:', action, data);
                 const formData = new FormData();
                 formData.append('action', action);
                 for(let key in data) {
@@ -195,15 +197,18 @@
                 
                 const response = await fetch(API, { method: 'POST', body: formData });
                 const text = await response.text();
+                console.log('📥 API Response:', text);
                 
                 try {
-                    return JSON.parse(text);
+                    const result = JSON.parse(text);
+                    console.log('✅ Parsed Result:', result);
+                    return result;
                 } catch(e) {
-                    console.error('Response:', text);
-                    throw new Error('Invalid server response');
+                    console.error('❌ Parse Error. Response:', text);
+                    throw new Error('Invalid server response: ' + text.substring(0, 100));
                 }
             } catch(error) {
-                console.error('API Error:', error);
+                console.error('❌ API Error:', error);
                 throw error;
             }
         }
@@ -246,7 +251,8 @@
                 const parentTbody = document.querySelector('#parentTable tbody');
                 if(parents.length > 0) {
                     parentTbody.innerHTML = parents.map(p => `
-                        <tr>
+                        <tr class="tool-row" draggable="true" data-id="${p.id}">
+                            <td style="cursor:move;">☰</td>
                             <td><strong>${escHtml(p.name)}</strong></td>
                             <td>${escHtml(p.link || '-')}</td>
                             <td>
@@ -255,8 +261,9 @@
                             </td>
                         </tr>
                     `).join('');
+                    initParentDragDrop();
                 } else {
-                    parentTbody.innerHTML = '<tr><td colspan="3" class="empty-state">No parent menus. Add one above!</td></tr>';
+                    parentTbody.innerHTML = '<tr><td colspan="4" class="empty-state">No parent menus. Add one above!</td></tr>';
                 }
 
                 // Update parent dropdown
@@ -269,7 +276,8 @@
                     subTbody.innerHTML = subs.map(s => {
                         const parent = parents.find(p => p.id == s.parent_id);
                         return `
-                            <tr class="sub-item">
+                            <tr class="tool-row sub-item" draggable="true" data-id="${s.id}">
+                                <td style="cursor:move;">☰</td>
                                 <td>↳ ${escHtml(s.name)}</td>
                                 <td>${escHtml(s.link)}</td>
                                 <td>${parent ? escHtml(parent.name) : 'None'}</td>
@@ -280,8 +288,9 @@
                             </tr>
                         `;
                     }).join('');
+                    initSubDragDrop();
                 } else {
-                    subTbody.innerHTML = '<tr><td colspan="4" class="empty-state">No sub-menus. Add one above!</td></tr>';
+                    subTbody.innerHTML = '<tr><td colspan="5" class="empty-state">No sub-menus. Add one above!</td></tr>';
                 }
 
                 // Tool Table
@@ -309,7 +318,7 @@
                     }).join('');
                     toolHTML += '</tbody></table>';
                     toolContainer.innerHTML = toolHTML;
-                    initDragDrop();
+                    initToolDragDrop();
                 } else {
                     toolContainer.innerHTML = '<table><tbody><tr><td class="empty-state">No tools. Add one above!</td></tr></tbody></table>';
                 }
@@ -334,10 +343,70 @@
             return div.innerHTML;
         }
 
-        // Drag & Drop
-        function initDragDrop() {
+        // Parent Drag & Drop
+        function initParentDragDrop() {
             let draggedId = null;
-            document.querySelectorAll('.tool-row').forEach(row => {
+            document.querySelectorAll('#parentTable .tool-row').forEach(row => {
+                row.ondragstart = () => { draggedId = row.dataset.id; row.classList.add('dragging'); };
+                row.ondragend = () => { row.classList.remove('dragging'); document.querySelectorAll('.tool-row').forEach(r => r.classList.remove('drag-over')); };
+                row.ondragover = e => { e.preventDefault(); row.classList.add('drag-over'); };
+                row.ondragleave = () => row.classList.remove('drag-over');
+                row.ondrop = async e => {
+                    e.preventDefault();
+                    row.classList.remove('drag-over');
+                    const dropId = row.dataset.id;
+                    if(draggedId !== dropId) {
+                        try {
+                            const parents = await apiCall('get_parent_menus');
+                            const dragIdx = parents.findIndex(t => t.id == draggedId);
+                            const dropIdx = parents.findIndex(t => t.id == dropId);
+                            const [item] = parents.splice(dragIdx, 1);
+                            parents.splice(dropIdx, 0, item);
+                            await apiCall('reorder_parent_menus', {order: JSON.stringify(parents.map(t => t.id))});
+                            showStatus('✅ Parent menus reordered!', 'success');
+                            loadAll();
+                        } catch(error) {
+                            showStatus('❌ Reorder failed: ' + error.message, 'error');
+                        }
+                    }
+                };
+            });
+        }
+
+        // Sub Menu Drag & Drop
+        function initSubDragDrop() {
+            let draggedId = null;
+            document.querySelectorAll('#subTable .tool-row').forEach(row => {
+                row.ondragstart = () => { draggedId = row.dataset.id; row.classList.add('dragging'); };
+                row.ondragend = () => { row.classList.remove('dragging'); document.querySelectorAll('.tool-row').forEach(r => r.classList.remove('drag-over')); };
+                row.ondragover = e => { e.preventDefault(); row.classList.add('drag-over'); };
+                row.ondragleave = () => row.classList.remove('drag-over');
+                row.ondrop = async e => {
+                    e.preventDefault();
+                    row.classList.remove('drag-over');
+                    const dropId = row.dataset.id;
+                    if(draggedId !== dropId) {
+                        try {
+                            const subs = await apiCall('get_sub_menus');
+                            const dragIdx = subs.findIndex(t => t.id == draggedId);
+                            const dropIdx = subs.findIndex(t => t.id == dropId);
+                            const [item] = subs.splice(dragIdx, 1);
+                            subs.splice(dropIdx, 0, item);
+                            await apiCall('reorder_sub_menus', {order: JSON.stringify(subs.map(t => t.id))});
+                            showStatus('✅ Sub-menus reordered!', 'success');
+                            loadAll();
+                        } catch(error) {
+                            showStatus('❌ Reorder failed: ' + error.message, 'error');
+                        }
+                    }
+                };
+            });
+        }
+
+        // Tool Drag & Drop
+        function initToolDragDrop() {
+            let draggedId = null;
+            document.querySelectorAll('#toolTable .tool-row').forEach(row => {
                 row.ondragstart = () => { draggedId = row.dataset.id; row.classList.add('dragging'); };
                 row.ondragend = () => { row.classList.remove('dragging'); document.querySelectorAll('.tool-row').forEach(r => r.classList.remove('drag-over')); };
                 row.ondragover = e => { e.preventDefault(); row.classList.add('drag-over'); };
