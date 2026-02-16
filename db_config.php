@@ -26,7 +26,7 @@ try {
 
 // Create tables if they don't exist
 try {
-    // Parent Menus Table (Create first - no dependencies)
+    // Parent Menus Table
     $pdo->exec("CREATE TABLE IF NOT EXISTS parent_menus (
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
@@ -36,7 +36,7 @@ try {
         INDEX idx_position (position)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
 
-    // Sub Menus Table (Depends on parent_menus - NO FOREIGN KEY)
+    // Sub Menus Table
     $pdo->exec("CREATE TABLE IF NOT EXISTS sub_menus (
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
@@ -46,7 +46,7 @@ try {
         INDEX idx_parent (parent_id)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
 
-    // Tool Items Table (No foreign keys)
+    // Tool Items Table
     $pdo->exec("CREATE TABLE IF NOT EXISTS tool_items (
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
@@ -68,6 +68,16 @@ try {
         setting_value TEXT,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         UNIQUE INDEX idx_key (setting_key)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+
+    // Footer Sections Table - NEW for professional footer with multiple sections
+    $pdo->exec("CREATE TABLE IF NOT EXISTS footer_sections (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        title VARCHAR(255) NOT NULL,
+        content TEXT NOT NULL,
+        position INT DEFAULT 0,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        INDEX idx_position (position)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
 
     error_log("✅ Tables created/verified successfully");
@@ -105,12 +115,12 @@ try {
         
         // Insert default tools
         $pdo->exec("INSERT INTO tool_items (name, icon, link, description, position) VALUES 
-            ('🖼️ Image Tools', '🖼️', 'image-tools.html', 'Resize, compress, convert images', 0),
-            ('📱 QR Tools', '📱', 'qr-tools.html', 'Generate & scan QR codes', 1),
-            ('📄 PDF Tools', '📄', 'pdf-tools.html', 'Compress, merge, split PDFs', 2),
-            ('📺 YouTube SEO', '📺', 'youtube-tools.html', 'Optimize YouTube content', 3),
-            ('💼 Business Tools', '💼', 'business-tools.html', 'Invoice, resume, calculators', 4),
-            ('💻 Developer Tools', '💻', 'dev-tools.html', 'JSON, Base64, passwords', 5)");
+            ('Image Tools', '🖼️', 'image-tools.html', 'Resize, compress, convert images', 0),
+            ('QR Tools', '📱', 'qr-tools.html', 'Generate & scan QR codes', 1),
+            ('PDF Tools', '📄', 'pdf-tools.html', 'Compress, merge, split PDFs', 2),
+            ('YouTube SEO', '📺', 'youtube-tools.html', 'Optimize YouTube content', 3),
+            ('Business Tools', '💼', 'business-tools.html', 'Invoice, resume, calculators', 4),
+            ('Developer Tools', '💻', 'dev-tools.html', 'JSON, Base64, passwords', 5)");
         
         error_log("✅ Default data initialized successfully");
     }
