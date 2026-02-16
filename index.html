@@ -5,34 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebAITool - Free Online Tools</title>
     
-    <!-- Preconnect to external domains for faster loading -->
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    <link rel="preconnect" href="https://www.googletagmanager.com">
-    
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     
-    <!-- Inline Critical CSS for instant render -->
-    <style>
-        body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f4f7f6;min-height:100vh;display:flex;flex-direction:column;margin:0}
-        .navbar{padding:18px 0!important;background:#fff!important}
-        .logo{font-size:26px!important;font-weight:800!important;color:#6c5ce7!important;text-decoration:none!important}
-        .hero{background:linear-gradient(135deg,#6c5ce7,#a29bfe);color:#fff;padding:80px 20px;text-align:center}
-        .tool-card{transition:all .3s;border:2px solid transparent!important}
-    </style>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
     
-    <!-- Custom CSS - Load async -->
-    <link rel="stylesheet" href="style.css" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="style.css"></noscript>
     
-    <!--Google Analytics - Async Load-->
+      <!--Google adsense  code start here-->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4467977670160507"
+     crossorigin="anonymous"></script>
+    
+      <!--Google adsense code finished here-->
+    
+    <!--Google Analytics code start here-->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-S323MFXTYL"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-S323MFXTYL');
     </script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-S323MFXTYL"></script>
+    <!--Google Analytics code finished here-->
 </head>
 <body>
     <!-- Navigation -->
@@ -47,10 +42,7 @@
             </button>
             
             <div class="collapse navbar-collapse justify-content-center" id="menuList">
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-                </ul>
+                <div class="text-center p-3 text-muted">Loading...</div>
             </div>
         </div>
     </nav>
@@ -79,68 +71,55 @@
     <div class="container tools-section">
         <h2 class="section-title text-center mb-5">Explore Tool Categories</h2>
         <div class="row g-4" id="tools-container">
-            <div class="col-12 text-center p-5 text-muted">
-                <div class="spinner-border text-primary" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-            </div>
+            <div class="col-12 text-center p-5 text-muted">Loading tools...</div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white text-center py-4 mt-auto" id="footer">
-        <p class="mb-0">© 2024 WebAITool.net</p>
+    <!-- Dynamic Footer - Same ID as other pages -->
+    <footer class="bg-dark text-white text-center py-4 mt-auto" id="site-footer">
+        <p class="mb-0">Loading...</p>
     </footer>
 
-    <!-- Bootstrap JS - Deferred -->
-    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Custom JS - Optimized -->
+    <!-- Custom JS -->
     <script>
         const API = 'api.php';
         let allToolsData = [];
-        let isDataLoaded = false;
 
-        // API Call Function - Optimized with timeout
         async function apiCall(action) {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 5000); // 5s timeout
-            
             try {
-                const response = await fetch(`${API}?action=${action}&_t=${Date.now()}`, {
+                const timestamp = new Date().getTime();
+                const response = await fetch(`${API}?action=${action}&_t=${timestamp}`, {
                     cache: 'no-store',
-                    signal: controller.signal,
                     headers: {
-                        'Cache-Control': 'no-cache',
-                        'Pragma': 'no-cache'
+                        'Cache-Control': 'no-cache, no-store, must-revalidate',
+                        'Pragma': 'no-cache',
+                        'Expires': '0'
                     }
                 });
-                clearTimeout(timeoutId);
-                
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                
                 const text = await response.text();
                 return JSON.parse(text);
             } catch(error) {
-                clearTimeout(timeoutId);
                 console.error('API Error:', error);
-                return null;
+                throw error;
             }
         }
 
-        // Toggle Mobile Menu
-        const hamburgerBtn = document.getElementById('hamburgerBtn');
-        const menuList = document.getElementById('menuList');
-        
-        if(hamburgerBtn) {
-            hamburgerBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                menuList.classList.toggle('show');
-                hamburgerBtn.classList.toggle('active');
-            });
-        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const menuList = document.getElementById('menuList');
+            
+            if(hamburgerBtn) {
+                hamburgerBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    menuList.classList.toggle('show');
+                    hamburgerBtn.classList.toggle('active');
+                });
+            }
+        });
 
-        // Toggle Dropdown
         function toggleDropdown(id, event) {
             event.preventDefault();
             event.stopPropagation();
@@ -154,41 +133,61 @@
                 }
             });
             
-            clickedDropdown?.classList.toggle('active');
+            clickedDropdown.classList.toggle('active');
         }
 
-        // Search Tools Function - Debounced
-        let searchTimeout;
         function searchTools() {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
-                
-                if(!searchTerm) {
-                    displayTools(allToolsData);
-                    return;
-                }
-                
-                const filteredTools = allToolsData.filter(tool => {
-                    return tool.name.toLowerCase().includes(searchTerm) ||
-                           (tool.description && tool.description.toLowerCase().includes(searchTerm)) ||
-                           (tool.icon && tool.icon.toLowerCase().includes(searchTerm));
-                });
-                
-                displayTools(filteredTools);
-            }, 300);
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+            
+            if(!searchTerm) {
+                displayTools(allToolsData);
+                return;
+            }
+            
+            const filteredTools = allToolsData.filter(tool => {
+                return tool.name.toLowerCase().includes(searchTerm) ||
+                       (tool.description && tool.description.toLowerCase().includes(searchTerm)) ||
+                       (tool.icon && tool.icon.toLowerCase().includes(searchTerm));
+            });
+            
+            displayTools(filteredTools);
         }
         
-        // Add search event listener
-        const searchInput = document.getElementById('searchInput');
-        if(searchInput) {
-            searchInput.addEventListener('input', searchTools);
-        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            if(searchInput) {
+                searchInput.addEventListener('keyup', searchTools);
+                searchInput.addEventListener('input', searchTools);
+            }
+        });
         
         function displayTools(tools) {
             const container = document.getElementById('tools-container');
             
-            if(!tools || tools.length === 0) {
+            if(tools.length > 0) {
+                container.innerHTML = tools.map(tool => {
+                    const hasImage = tool.image && tool.image.trim() !== '';
+                    let displayName = tool.name.replace(/[\u{1F300}-\u{1F9FF}]/gu, '').trim();
+                    
+                    return `
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                        <div class="tool-card card h-100 border-0 shadow-sm">
+                            <div class="card-body text-center">
+                                ${hasImage ? `
+                                    <img src="${tool.image}" class="card-img-top rounded mb-3" 
+                                         style="height:150px; object-fit:cover;" 
+                                         alt="${displayName}"
+                                         onerror="this.style.display='none'">
+                                ` : `<div class="tool-icon">${tool.icon}</div>`}
+                                <h3 class="card-title h5">${displayName}</h3>
+                                <p class="card-text text-muted">${tool.description || 'Explore this tool'}</p>
+                                <a href="${tool.link}" class="btn btn-primary tool-btn">Open Tool →</a>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                }).join('');
+            } else {
                 container.innerHTML = `
                     <div class="col-12 text-center py-5">
                         <div style="font-size:64px; margin-bottom:20px;">🔍</div>
@@ -196,57 +195,25 @@
                         <p class="text-muted">Try searching with different keywords</p>
                     </div>
                 `;
-                return;
             }
-            
-            // Use DocumentFragment for better performance
-            const fragment = document.createDocumentFragment();
-            const tempDiv = document.createElement('div');
-            
-            tempDiv.innerHTML = tools.map(tool => {
-                const hasImage = tool.image && tool.image.trim() !== '';
-                return `
-                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-                    <div class="tool-card card h-100 border-0 shadow-sm">
-                        <div class="card-body text-center">
-                            ${hasImage ? `
-                                <img src="${tool.image}" class="card-img-top rounded mb-3" 
-                                     style="height:150px; object-fit:cover;" 
-                                     alt="${tool.name}"
-                                     loading="lazy"
-                                     onerror="this.style.display='none'">
-                            ` : ''}
-                            <h3 class="card-title h5">${tool.name}</h3>
-                            <p class="card-text text-muted">${tool.description || 'Explore this tool'}</p>
-                            <a href="${tool.link}" class="btn btn-primary tool-btn">Open Tools →</a>
-                        </div>
-                    </div>
-                </div>
-                `;
-            }).join('');
-            
-            container.innerHTML = tempDiv.innerHTML;
         }
 
-        // Load Complete Website - Optimized
         async function loadWebsite() {
-            if(isDataLoaded) return;
-            
             try {
-                // Load all data in parallel with fallback
-                const [parents, subs, tools, settings] = await Promise.all([
+                const [parents, subs, tools, settings, footerSections] = await Promise.all([
                     apiCall('get_parent_menus'),
                     apiCall('get_sub_menus'),
                     apiCall('get_tools'),
-                    apiCall('get_settings')
+                    apiCall('get_settings'),
+                    apiCall('get_footer_sections')
                 ]);
 
                 // Build Navigation
+                let menuHTML = '<ul class="navbar-nav">';
+                
                 if(parents && parents.length > 0) {
-                    let menuHTML = '<ul class="navbar-nav">';
-                    
                     parents.forEach(parent => {
-                        const children = subs ? subs.filter(s => s.parent_id == parent.id) : [];
+                        const children = subs.filter(s => s.parent_id == parent.id);
                         
                         if (children.length > 0) {
                             menuHTML += `
@@ -261,52 +228,82 @@
                             menuHTML += `<li class="nav-item"><a class="nav-link" href="${parent.link}">${parent.name}</a></li>`;
                         }
                     });
-                    
-                    menuHTML += '</ul>';
-                    document.getElementById('menuList').innerHTML = menuHTML;
-                }
-
-                // Build Tools Grid
-                if(tools && tools.length > 0) {
-                    const mainTools = tools.filter(t => !t.parent_id);
-                    allToolsData = mainTools;
-                    displayTools(mainTools);
                 } else {
-                    document.getElementById('tools-container').innerHTML = `
-                        <div class="col-12 text-center py-5">
-                            <h3>No Tools Available</h3>
-                            <p class="text-muted">Please check back later</p>
-                        </div>
-                    `;
+                    menuHTML += '<li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>';
+                    menuHTML += '<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>';
+                }
+                
+                menuHTML += '</ul>';
+                document.getElementById('menuList').innerHTML = menuHTML;
+
+                // Build Tools
+                const mainTools = tools && tools.length > 0 
+                    ? tools.filter(t => !t.parent_id) 
+                    : [];
+                
+                allToolsData = mainTools;
+                displayTools(mainTools);
+
+                // Build Footer - Load sections if available
+                const footerElement = document.getElementById('site-footer');
+                
+                if(footerSections && footerSections.length > 0) {
+                    // Has footer sections - build multi-section footer
+                    const colClass = footerSections.length === 1 ? 'col-12' :
+                                    footerSections.length === 2 ? 'col-md-6' :
+                                    footerSections.length === 3 ? 'col-md-4' :
+                                    footerSections.length === 4 ? 'col-md-3' :
+                                    'col-md-2';
+                    
+                    let footerHTML = `<div class="container py-5"><div class="row g-4">`;
+                    footerSections.forEach(section => {
+                        footerHTML += `
+                            <div class="${colClass}">
+                                <div class="footer-section">
+                                    <h5 class="footer-title">${section.title}</h5>
+                                    <div class="footer-content">${section.content}</div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    footerHTML += `</div></div>`;
+                    
+                    if(settings && settings.footer_text) {
+                        footerHTML += `<div class="footer-bottom text-center py-3 border-top border-secondary"><p class="mb-0">${settings.footer_text}</p></div>`;
+                    }
+                    
+                    footerElement.innerHTML = footerHTML;
+                } else {
+                    // No sections - just simple copyright like resume page
+                    if (settings && settings.footer_text) {
+                        footerElement.innerHTML = `<p class="mb-0">${settings.footer_text}</p>`;
+                    }
                 }
 
-                // Set Footer
-                if(settings && settings.footer_text) {
-                    document.getElementById('footer').innerHTML = `<p class="mb-0">${settings.footer_text}</p>`;
-                }
-
-                isDataLoaded = true;
+                console.log('✅ Website loaded!');
 
             } catch(error) {
                 console.error('Load Error:', error);
                 
+                document.getElementById('menuList').innerHTML = `
+                    <div class="alert alert-danger">❌ Error loading menu</div>
+                `;
+                
                 document.getElementById('tools-container').innerHTML = `
                     <div class="col-12 text-center py-5">
                         <div style="font-size:64px; margin-bottom:20px;">⚠️</div>
-                        <h3>Unable to Load Content</h3>
-                        <p class="text-muted">Please check your connection and try again</p>
+                        <h3>Failed to Load</h3>
+                        <p class="text-danger">${error.message}</p>
                         <button onclick="location.reload()" class="btn btn-primary mt-3">🔄 Refresh</button>
                     </div>
                 `;
+                
+                document.getElementById('site-footer').innerHTML = `<p class="mb-0">Error loading footer</p>`;
             }
         }
 
-        // Load website when DOM is ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', loadWebsite);
-        } else {
-            loadWebsite();
-        }
+        // Load immediately without waiting for DOMContentLoaded
+        loadWebsite();
     </script>
 </body>
 </html>
