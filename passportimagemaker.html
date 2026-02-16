@@ -3,99 +3,91 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Free Passport Photo Maker - AI Background Removal</title>
+  <title>Professional Passport Photo Maker Online | All Countries | Free AI Background Removal</title>
   
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- Enhanced SEO Meta Tags -->
+  <meta name="description" content="Create professional passport photos online for 20+ countries including USA, UK, India, Canada, Pakistan. Free AI background removal, custom sizes (2x2, 35x45mm, 51x51mm), and all background colors. Instant download.">
+  <meta name="keywords" content="passport photo maker, passport size photo, online passport photo, visa photo, ID photo, background removal, 2x2 photo, 35x45mm photo, US passport photo, UK passport photo, Indian passport photo, Pakistan passport photo, free passport photo">
+  <meta name="author" content="WebAITool">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://webaitool.net/passportimagemaker.html">
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Professional Passport Photo Maker | Create Photos Online Free">
+  <meta property="og:description" content="Create professional passport photos for any country with AI background removal. Supports all sizes and colors.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://webaitool.net/passportimagemaker.html">
+  
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Professional Passport Photo Maker">
+  <meta name="twitter:description" content="Create professional passport photos online with AI background removal">
+
+  <!-- Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Passport Photo Maker",
+    "applicationCategory": "UtilityApplication",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free online tool to create professional passport photos with automatic AI background removal for all countries",
+    "operatingSystem": "Web Browser",
+    "browserRequirements": "Requires JavaScript. Works on Chrome, Firefox, Safari, Edge.",
+    "featureList": "AI Background Removal, Multiple Country Support, Custom Sizes, Color Selection, Instant Download"
+  }
+  </script>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-S323MFXTYL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-S323MFXTYL');
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap CSS (Required for navbar structure) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Link to style.css for navbar and footer styling -->
+  <link rel="stylesheet" href="style.css">
 
   <style>
-    :root {
-      --brand: #2563eb;
-      --success: #16a34a;
-      --bg-soft: #f9fafb;
-      --border: #e5e7eb;
-      --text-main: #111827;
-      --text-muted: #6b7280;
-    }
-
-    * { box-sizing: border-box; }
+    /* Page-specific styles - navbar/footer from style.css */
     
+    :root {
+      --primary: #6c5ce7;
+      --primary-dark: #5f4dd1;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --background: #f8fafc;
+      --card-bg: #ffffff;
+      --text-primary: #0f172a;
+      --text-secondary: #64748b;
+      --border: #e2e8f0;
+    }
+
+    /* Override body background for this page */
     body {
-      margin: 0;
-      background: var(--bg-soft);
-      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
-      color: var(--text-main);
-      min-height: 100vh;
+      background: #f4f7f6 !important;
     }
 
-    .navbar {
-      background: white;
-      border-bottom: 1px solid var(--border);
-      padding: 15px 0;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+    .page-wrapper {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: calc(100vh - 200px);
+      padding: 20px 0;
     }
-
-    .navbar .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-weight: 800;
-      font-size: 1rem;
-      color: var(--text-main);
-    }
-
-    .top-info {
-      background: white;
-      padding: 30px 20px;
-      text-align: center;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .top-info h1 {
-      font-size: 1.8rem;
-      font-weight: 800;
-      margin-bottom: 15px;
-      color: var(--text-main);
-    }
-
-    .feature-tags {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px;
-      margin-bottom: 15px;
-    }
-
-    .feature-tag {
-      background: #eff6ff;
-      color: #1d4ed8;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      border: 1px solid #bfdbfe;
-    }
-
-    #status {
-      font-size: 0.85rem;
-      padding: 8px 16px;
-      border-radius: 6px;
-      display: inline-block;
-      margin-top: 10px;
-    }
-
-    .status-info { background: #dbeafe; color: #1e40af; }
-    .status-success { background: #d1fae5; color: #065f46; }
-    .status-warning { background: #fef3c7; color: #92400e; }
 
     .container {
       max-width: 1200px;
@@ -103,647 +95,1309 @@
       padding: 20px;
     }
 
-    .editor-grid {
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      animation: fadeInDown 0.6s ease-out;
+      margin-top: 20px;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 800;
+      color: white;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    .subtitle {
+      font-size: 18px;
+      color: rgba(255,255,255,0.95);
+      font-weight: 500;
+    }
+
+    .main-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      margin-bottom: 30px;
+      animation: fadeInUp 0.6s ease-out 0.1s backwards;
+    }
+
+    .upload-section {
+      text-align: center;
+      padding: 40px;
+      border: 3px dashed var(--border);
+      border-radius: 16px;
+      background: var(--background);
+      margin-bottom: 30px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .upload-section:hover {
+      border-color: #6c5ce7;
+      background: #f1f5f9;
+      transform: translateY(-2px);
+    }
+
+    .upload-section.drag-over {
+      border-color: #6c5ce7;
+      background: #eff6ff;
+      transform: scale(1.02);
+    }
+
+    .upload-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+      opacity: 0.4;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    .upload-label {
+      display: inline-block;
+      padding: 14px 32px;
+      background: #6c5ce7;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .upload-label:hover {
+      background: #5f4dd1;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(108, 92, 231, 0.4);
+    }
+
+    .options-grid {
       display: grid;
-      grid-template-columns: 1.5fr 1fr;
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
       margin-bottom: 30px;
     }
 
-    .preview-panel {
-      background: white;
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    }
-
-    .image-box {
-      position: relative;
-      min-height: 500px;
-      background: #f3f4f6;
+    .option-group {
+      background: var(--background);
+      padding: 24px;
       border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      margin-bottom: 15px;
+      border: 1px solid var(--border);
     }
 
-    #mainImage {
-      max-width: 100%;
-      max-height: 600px;
+    .option-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+      font-size: 15px;
+    }
+
+    select, input[type="color"] {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 15px;
+      font-family: inherit;
+      transition: all 0.3s ease;
+      background: white;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: #6c5ce7;
+      box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
+    }
+
+    input[type="color"] {
+      height: 50px;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .color-presets {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .color-preset {
+      width: 100%;
+      height: 36px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: 3px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .color-preset:hover {
+      transform: scale(1.1);
+      border-color: #6c5ce7;
+    }
+
+    .color-preset.active {
+      border-color: #6c5ce7;
+      box-shadow: 0 0 0 2px white, 0 0 0 4px #6c5ce7;
+    }
+
+    .process-btn {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #6c5ce7 0%, #5f4dd1 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+    }
+
+    .process-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(108, 92, 231, 0.4);
+    }
+
+    .process-btn:disabled {
+      background: #cbd5e1;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .status {
+      text-align: center;
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 500;
+      display: none;
+    }
+
+    .status.processing {
+      background: #fef3c7;
+      color: #92400e;
       display: block;
     }
 
-    .image-box.bg-removed {
-      /* This class will be added when background is removed */
+    .status.success {
+      background: #d1fae5;
+      color: #065f46;
+      display: block;
     }
 
-    .controls-panel {
-      background: white;
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    .status.error {
+      background: #fee2e2;
+      color: #991b1b;
+      display: block;
     }
 
-    .control-section {
+    .preview-container {
+      margin-bottom: 30px;
+      margin-top: 0;
+    }
+
+    .preview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
       margin-bottom: 20px;
-      padding: 15px;
-      background: #f9fafb;
-      border-radius: 10px;
+    }
+
+    .preview-box {
+      background: var(--background);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
       border: 2px solid var(--border);
     }
 
-    .control-section.active {
-      border-color: var(--brand);
-      background: #eff6ff;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 12px;
+    .preview-box h3 {
+      font-family: 'Poppins', sans-serif;
       font-weight: 700;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      color: var(--text-muted);
+      margin-bottom: 16px;
+      color: var(--text-primary);
     }
 
-    .step-badge {
-      background: var(--brand);
-      color: white;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
+    .preview-box img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border: 1px solid var(--border);
+      background: white;
+    }
+
+    .image-editor {
+      position: relative;
+      display: inline-block;
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .editor-canvas-container {
+      position: relative;
+      display: inline-block;
+      background: white;
+      border: 2px dashed #6c5ce7;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: move;
+    }
+
+    .editor-canvas-container:active {
+      cursor: grabbing;
+    }
+
+    .editor-canvas {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .editor-controls {
+      margin-top: 15px;
       display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
       align-items: center;
       justify-content: center;
-      font-size: 0.75rem;
     }
 
-    .btn-primary {
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(135deg, #3b82f6, #2563eb);
+    .editor-controls button {
+      padding: 8px 16px;
+      background: #6c5ce7;
       color: white;
       border: none;
-      border-radius: 10px;
-      font-weight: 700;
+      border-radius: 6px;
       cursor: pointer;
-      transition: 0.2s;
+      font-size: 14px;
+      transition: all 0.3s ease;
     }
 
-    .btn-primary:hover {
-      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    .editor-controls button:hover {
+      background: #5f4dd1;
       transform: translateY(-1px);
     }
 
-    .btn-success {
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(135deg, #22c55e, #16a34a);
+    .zoom-slider {
+      width: 200px;
+      margin: 0 10px;
+    }
+
+    .download-btn {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 12px 28px;
+      background: var(--success);
       color: white;
-      border: none;
-      border-radius: 10px;
-      font-weight: 700;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    .btn-success:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    input[type="file"] { display: none; }
-
-    .color-grid {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    .color-btn {
-      width: 100%;
-      aspect-ratio: 1;
-      border: 3px solid transparent;
+      text-decoration: none;
       border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
       cursor: pointer;
-      transition: 0.2s;
     }
 
-    .color-btn:hover { transform: scale(1.1); }
-    
-    .color-btn.active {
-      border-color: var(--brand);
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+    .download-btn:hover {
+      background: #059669;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
     }
 
-    #spinner {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      flex-direction: column;
-      gap: 15px;
+    .info-section {
+      background: white;
+      border-radius: 16px;
+      padding: 35px;
+      margin-top: 30px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      animation: fadeInUp 0.6s ease-out 0.2s backwards;
     }
 
-    .spinner-ring {
-      width: 60px;
-      height: 60px;
-      border: 6px solid rgba(255,255,255,0.3);
-      border-top-color: white;
+    .info-section h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 20px;
+      color: var(--text-primary);
+    }
+
+    .info-section h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      color: #6c5ce7;
+    }
+
+    .info-section p {
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      line-height: 1.8;
+    }
+
+    .info-section ul, .info-section ol {
+      margin: 16px 0 16px 24px;
+      color: var(--text-secondary);
+    }
+
+    .info-section li {
+      margin-bottom: 10px;
+      line-height: 1.7;
+    }
+
+    .country-specs {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .country-card {
+      background: var(--background);
+      padding: 20px;
+      border-radius: 12px;
+      border-left: 4px solid #6c5ce7;
+    }
+
+    .country-card h4 {
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .country-card .spec {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .country-card .spec-label {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .country-card .spec-value {
+      color: var(--text-secondary);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 25px 0;
+    }
+
+    .feature-item {
+      background: var(--background);
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .feature-item h4 {
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .feature-item p {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,0.3);
       border-radius: 50%;
-      animation: spin 1s linear infinite;
+      border-top-color: white;
+      animation: spin 0.8s linear infinite;
+      margin-right: 10px;
+      vertical-align: middle;
     }
 
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
 
-    .spinner-text {
-      color: white;
-      font-weight: 600;
-      font-size: 1.1rem;
-    }
+    @media (max-width: 768px) {
+      .main-card {
+        padding: 24px;
+      }
 
-    .seo-section {
-      background: white;
-      border-radius: 16px;
-      padding: 30px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      margin-top: 30px;
-    }
-
-    .seo-section h2 {
-      font-size: 1.5rem;
-      font-weight: 800;
-      margin-bottom: 15px;
-    }
-
-    .seo-section h3 {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-top: 25px;
-      margin-bottom: 12px;
-    }
-
-    .seo-section ul {
-      padding-left: 25px;
-      line-height: 1.8;
-    }
-
-    .seo-section p {
-      line-height: 1.7;
-      color: #374151;
-    }
-
-    @media (max-width: 968px) {
-      .editor-grid {
+      .options-grid {
         grid-template-columns: 1fr;
+      }
+
+      .preview-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .info-section {
+        padding: 24px;
+      }
+
+      .color-presets {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 8px;
+      }
+
+      .color-preset {
+        height: 32px;
       }
     }
   </style>
 </head>
 <body>
-  <div id="spinner">
-    <div class="spinner-ring"></div>
-    <div class="spinner-text">Processing...</div>
-  </div>
-
-  <nav class="navbar">
-    <div class="container">
-      <div class="logo">🪪 Free Passport Photo Maker</div>
-      <small style="color: #6b7280;">100% Free • No Sign Up</small>
+  <!-- Navigation - Dynamic from API with style.css styling -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm" id="navbar">
+    <div class="container-fluid px-4">
+      <a href="index.html" class="navbar-brand logo">🛠️ WebAITool</a>
+      
+      <button class="navbar-toggler hamburger" type="button" id="hamburgerBtn" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      
+      <div class="collapse navbar-collapse justify-content-center" id="menuList">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        </ul>
+      </div>
     </div>
   </nav>
 
-  <div class="top-info">
-    <h1>FREE PASSPORT PHOTO MAKER WITH AI</h1>
-    <div class="feature-tags">
-      <span class="feature-tag">✅ 195+ Countries</span>
-      <span class="feature-tag">✅ AI Background Removal</span>
-      <span class="feature-tag">✅ Camera & Upload</span>
-      <span class="feature-tag">✅ 300 DPI Quality</span>
-      <span class="feature-tag">✅ Live Preview</span>
-    </div>
-    <div id="status" class="status-info">Upload image to start</div>
-  </div>
+  <!-- Main Content Area -->
+  <div class="page-wrapper">
+    <div class="container">
+      <header>
+        <h1>📸 Professional Passport Photo Maker</h1>
+        <p class="subtitle">Create perfect passport photos for any country in seconds with AI</p>
+      </header>
 
-  <div class="container">
-    <div class="editor-grid">
-      <div class="preview-panel">
-        <div class="image-box" id="imageBox">
-          <img id="mainImage" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400'%3E%3Crect fill='%23e5e7eb' width='600' height='400'/%3E%3Ctext x='50%25' y='50%25' font-size='18' fill='%236b7280' text-anchor='middle'%3EUpload Image%3C/text%3E%3C/svg%3E" alt="Preview">
+    <div class="main-card">
+      <!-- Preview Container at TOP -->
+      <div class="preview-container" id="previewContainer"></div>
+
+      <!-- Upload Section -->
+      <div class="upload-section" id="dropZone">
+        <div class="upload-icon">📷</div>
+        <h3 style="margin-bottom: 10px; font-weight: 700;">Upload Your Photo</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 16px;">
+          Drag & drop your photo here or click to browse<br>
+          <small>Supports JPG, PNG, WebP • Maximum 10MB</small>
+        </p>
+        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+          <label for="imageInput" class="upload-label">📁 Choose Photo</label>
+          <label for="cameraInput" class="upload-label" style="background: #10b981;">📸 Take Photo</label>
         </div>
-        <div style="display:flex;gap:10px;">
-          <button class="btn btn-outline-secondary" style="flex:1;" onclick="rotateImage()">↺ Rotate</button>
-          <button class="btn btn-outline-secondary" style="flex:1;" onclick="resetImage()">🔄 Reset</button>
-        </div>
+        <input type="file" id="imageInput" accept="image/jpeg,image/png,image/webp">
+        <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display: none;">
       </div>
 
-      <div class="controls-panel">
-        <div class="control-section">
-          <div class="section-header">
-            <span class="step-badge">1</span>
-            Upload Photo
-          </div>
-          <input type="file" id="imageInput" accept="image/*" capture="user">
-          <label for="imageInput" class="btn-primary">
-            📷 Choose or Take Photo
-          </label>
-        </div>
-
-        <div class="control-section">
-          <div class="section-header">
-            <span class="step-badge">2</span>
-            Select Country/Size
-          </div>
-          <select id="sizeSelect" class="form-select">
-            <optgroup label="🌍 POPULAR">
-              <option value="1|600|600">🇺🇸 USA Passport/Visa 2×2"</option>
-              <option value="0.777|413|531">🛂 International 35×45mm</option>
-              <option value="0.68|390|567">🇨🇳 China Visa 33×48mm</option>
-              <option value="1|600|600">🇮🇳 India Passport 2×2"</option>
-              <option value="1|600|600">🇵🇰 Pakistan CNIC 2×2"</option>
+      <!-- Options Grid -->
+      <div class="options-grid">
+        <!-- Country/Size Selection -->
+        <div class="option-group">
+          <label for="countrySelect">🌍 Select Country / Photo Size</label>
+          <select id="countrySelect">
+            <optgroup label="🌎 Popular Countries">
+              <option value="usa" selected>🇺🇸 USA (2x2 inch / 51x51mm)</option>
+              <option value="uk">🇬🇧 UK (35x45mm)</option>
+              <option value="india">🇮🇳 India (35x45mm)</option>
+              <option value="canada">🇨🇦 Canada (50x70mm)</option>
+              <option value="australia">🇦🇺 Australia (35x45mm)</option>
+              <option value="schengen">🇪🇺 Schengen Visa (35x45mm)</option>
             </optgroup>
-            <optgroup label="🇪🇺 EUROPE">
-              <option value="0.777|413|531">🇬🇧 UK 35×45mm</option>
-              <option value="0.777|413|531">🇫🇷 France 35×45mm</option>
-              <option value="0.777|413|531">🇩🇪 Germany 35×45mm</option>
-              <option value="0.777|413|531">🇮🇹 Italy 35×45mm</option>
-              <option value="0.777|413|531">🇪🇸 Spain 35×45mm</option>
-              <option value="0.777|413|531">🇳🇱 Netherlands 35×45mm</option>
-              <option value="0.777|413|531">🇧🇪 Belgium 35×45mm</option>
-              <option value="0.777|413|531">🇨🇭 Switzerland 35×45mm</option>
-              <option value="0.777|413|531">🇦🇹 Austria 35×45mm</option>
-              <option value="0.777|413|531">🇸🇪 Sweden 35×45mm</option>
-              <option value="0.777|413|531">🇳🇴 Norway 35×45mm</option>
-              <option value="0.777|413|531">🇩🇰 Denmark 35×45mm</option>
-              <option value="0.777|413|531">🇵🇱 Poland 35×45mm</option>
-              <option value="0.777|413|531">🇬🇷 Greece 35×45mm</option>
-              <option value="0.777|413|531">🇵🇹 Portugal 35×45mm</option>
+            <optgroup label="🇪🇺 European Countries">
+              <option value="germany">🇩🇪 Germany (35x45mm)</option>
+              <option value="france">🇫🇷 France (35x45mm)</option>
+              <option value="spain">🇪🇸 Spain (35x45mm)</option>
+              <option value="italy">🇮🇹 Italy (35x45mm)</option>
+              <option value="netherlands">🇳🇱 Netherlands (35x45mm)</option>
+              <option value="poland">🇵🇱 Poland (35x45mm)</option>
+              <option value="sweden">🇸🇪 Sweden (35x45mm)</option>
             </optgroup>
-            <optgroup label="🌏 ASIA">
-              <option value="0.68|390|567">🇯🇵 Japan 35×45mm</option>
-              <option value="0.777|413|531">🇰🇷 Korea 35×45mm</option>
-              <option value="1|600|600">🇧🇩 Bangladesh 2×2"</option>
-              <option value="0.777|413|531">🇮🇩 Indonesia 35×45mm</option>
-              <option value="0.777|413|531">🇹🇭 Thailand 35×45mm</option>
-              <option value="0.777|413|531">🇻🇳 Vietnam 35×45mm</option>
-              <option value="0.777|413|531">🇵🇭 Philippines 35×45mm</option>
-              <option value="0.777|413|531">🇲🇾 Malaysia 35×45mm</option>
-              <option value="0.777|413|531">🇸🇬 Singapore 35×45mm</option>
-              <option value="1|600|600">🇱🇰 Sri Lanka 2×2"</option>
-              <option value="1|600|600">🇳🇵 Nepal 2×2"</option>
+            <optgroup label="🌏 Asian Countries">
+              <option value="china">🇨🇳 China (33x48mm)</option>
+              <option value="japan">🇯🇵 Japan (35x45mm)</option>
+              <option value="pakistan">🇵🇰 Pakistan (35x45mm)</option>
+              <option value="bangladesh">🇧🇩 Bangladesh (35x45mm)</option>
+              <option value="philippines">🇵🇭 Philippines (35x45mm)</option>
+              <option value="thailand">🇹🇭 Thailand (35x45mm)</option>
+              <option value="singapore">🇸🇬 Singapore (35x45mm)</option>
+              <option value="malaysia">🇲🇾 Malaysia (35x50mm)</option>
             </optgroup>
-            <optgroup label="🌍 MIDDLE EAST">
-              <option value="0.8|472|590">🇸🇦 Saudi Arabia 40×50mm</option>
-              <option value="0.8|472|590">🇦🇪 UAE 40×50mm</option>
-              <option value="0.777|413|531">🇶🇦 Qatar 35×45mm</option>
-              <option value="0.777|413|531">🇰🇼 Kuwait 35×45mm</option>
-              <option value="0.777|413|531">🇴🇲 Oman 35×45mm</option>
-              <option value="0.777|413|531">🇧🇭 Bahrain 35×45mm</option>
-              <option value="0.777|413|531">🇯🇴 Jordan 35×45mm</option>
-              <option value="0.777|413|531">🇹🇷 Turkey 35×45mm</option>
+            <optgroup label="🌍 Middle East & Africa">
+              <option value="uae">🇦🇪 UAE (43x55mm)</option>
+              <option value="saudi">🇸🇦 Saudi Arabia (40x60mm)</option>
+              <option value="qatar">🇶🇦 Qatar (35x45mm)</option>
+              <option value="egypt">🇪🇬 Egypt (40x60mm)</option>
+              <option value="southafrica">🇿🇦 South Africa (35x45mm)</option>
             </optgroup>
-            <optgroup label="🌎 AMERICAS">
-              <option value="1|600|600">🇨🇦 Canada 2×2"</option>
-              <option value="1|600|600">🇲🇽 Mexico 2×2"</option>
-              <option value="0.777|413|531">🇧🇷 Brazil 50×70mm</option>
-              <option value="0.777|413|531">🇦🇷 Argentina 40×40mm</option>
-              <option value="0.777|413|531">🇨🇱 Chile 35×45mm</option>
-              <option value="0.777|413|531">🇨🇴 Colombia 35×45mm</option>
-            </optgroup>
-            <optgroup label="🌍 AFRICA">
-              <option value="0.777|413|531">🇿🇦 South Africa 35×45mm</option>
-              <option value="0.777|413|531">🇳🇬 Nigeria 35×45mm</option>
-              <option value="0.777|413|531">🇰🇪 Kenya 35×45mm</option>
-              <option value="0.777|413|531">🇪🇬 Egypt 35×45mm</option>
-              <option value="0.777|413|531">🇲🇦 Morocco 35×45mm</option>
-            </optgroup>
-            <optgroup label="🌏 OCEANIA">
-              <option value="0.777|413|531">🇦🇺 Australia 35×45mm</option>
-              <option value="0.777|413|531">🇳🇿 New Zealand 35×45mm</option>
+            <optgroup label="📐 Custom Sizes">
+              <option value="custom_2x2">Custom: 2x2 inch (600x600px)</option>
+              <option value="custom_35x45">Custom: 35x45mm (413x531px)</option>
+              <option value="custom_51x51">Custom: 51x51mm (600x600px)</option>
             </optgroup>
           </select>
         </div>
 
-        <div class="control-section">
-          <div class="section-header">
-            <span class="step-badge">3</span>
-            Background Color
+        <!-- Background Color Selection -->
+        <div class="option-group">
+          <label for="bgColorPicker">🎨 Background Color</label>
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <input type="color" id="bgColorPicker" value="#ffffff" style="flex: 1;">
+            <span style="font-size: 13px; color: var(--text-secondary); font-weight: 500;">👆 More colors here</span>
           </div>
-          <div class="color-grid">
-            <div class="color-btn active" data-color="#ffffff" style="background:white;border:1px solid #ddd;" title="White"></div>
-            <div class="color-btn" data-color="#e8f4ff" style="background:#e8f4ff;" title="Light Blue"></div>
-            <div class="color-btn" data-color="#003399" style="background:#003399;" title="Blue"></div>
-            <div class="color-btn" data-color="#FF0000" style="background:#FF0000;" title="Red"></div>
-            <div class="color-btn" data-color="#f0f0f0" style="background:#f0f0f0;" title="Grey"></div>
-            <input type="color" class="color-btn" id="customColor" value="#ffffff">
+          <div class="color-presets">
+            <div class="color-preset active" data-color="#ffffff" style="background: #ffffff; border: 2px solid #ccc;" title="White (USA, India, Pakistan, Bangladesh)"></div>
+            <div class="color-preset" data-color="#f5f5f5" style="background: #f5f5f5;" title="Off White (Canada, Australia)"></div>
+            <div class="color-preset" data-color="#f0f0f0" style="background: #f0f0f0;" title="Light Gray (UK, Germany, EU)"></div>
+            <div class="color-preset" data-color="#e8e8e8" style="background: #e8e8e8;" title="Gray (Schengen Visa)"></div>
+            <div class="color-preset" data-color="#e8f4f8" style="background: #e8f4f8;" title="Light Blue (China, Official Docs)"></div>
+            <div class="color-preset" data-color="#d6eaf8" style="background: #d6eaf8;" title="Sky Blue"></div>
+            <div class="color-preset" data-color="#99ccff" style="background: #99ccff;" title="Blue (China Alternative)"></div>
+            <div class="color-preset" data-color="#87ceeb" style="background: #87ceeb;" title="Light Sky Blue"></div>
+            <div class="color-preset" data-color="#1a73e8" style="background: #1a73e8;" title="Dark Blue (ID Cards)"></div>
+            <div class="color-preset" data-color="#4169e1" style="background: #4169e1;" title="Royal Blue"></div>
+            <div class="color-preset" data-color="#fef5e7" style="background: #fef5e7;" title="Cream (UK Alternative)"></div>
+            <div class="color-preset" data-color="#fff9e6" style="background: #fff9e6;" title="Light Cream"></div>
+            <div class="color-preset" data-color="#faebd7" style="background: #faebd7;" title="Antique White"></div>
+            <div class="color-preset" data-color="#f5f5dc" style="background: #f5f5dc;" title="Beige"></div>
+            <div class="color-preset" data-color="#ffe4e1" style="background: #ffe4e1;" title="Light Pink (Some Asian Countries)"></div>
           </div>
-          <small style="display:block;margin-top:8px;color:#6b7280;font-size:0.75rem;">
-            🎨 AI will remove actual image background!
-          </small>
         </div>
-
-        <button id="downloadBtn" class="btn-success" disabled>
-          💾 Download Photo (300 DPI)
-        </button>
       </div>
+
+      <!-- Process Button -->
+      <button class="process-btn" id="processBtn" disabled>
+        <span id="btnText">Select a Photo to Continue</span>
+      </button>
+
+      <!-- Status Message -->
+      <div class="status" id="statusMessage"></div>
     </div>
 
-    <div class="seo-section">
-      <h2>About Free Passport Photo Maker - 195+ Countries Supported</h2>
-      <p>Create professional passport and visa photos online instantly with our free AI-powered tool supporting over 195 countries and territories worldwide. No registration required, no watermarks, and completely free to use with live preview functionality.</p>
+    <!-- Comprehensive Information Section -->
+    <div class="info-section">
+      <h2>📖 Complete Guide: How to Create Perfect Passport Photos</h2>
       
-      <h3>Supported Photo Formats (All Countries):</h3>
-      <ul>
-        <li><strong>US Visa Photo:</strong> 2×2 inch (51×51mm) - Perfect for US passport and visa applications</li>
-        <li><strong>India Visa Photo:</strong> 2×2 inch format with white background</li>
-        <li><strong>International Passport:</strong> Standard 35×45mm format accepted in most countries</li>
-        <li><strong>China Visa Photo:</strong> 33×48mm with specific requirements</li>
-        <li><strong>European Countries:</strong> 35×45mm standard for UK, France, Germany, Spain, Italy, and more</li>
-        <li><strong>Middle East:</strong> UAE, Saudi Arabia 40×50mm | Other countries 35×45mm</li>
-        <li><strong>Asia-Pacific:</strong> Japan, Korea, Thailand, Vietnam, Malaysia, Singapore and more</li>
-        <li><strong>Africa & Americas:</strong> Full support for all African and American countries</li>
-      </ul>
-
-      <h3>New Features:</h3>
-      <ul>
-        <li>✅ <strong>Live Preview:</strong> See your photo changes in real-time</li>
-        <li>✅ <strong>195+ Countries:</strong> All passport and visa sizes worldwide</li>
-        <li>✅ <strong>AI Background Removal:</strong> Automatically removes background</li>
-        <li>✅ <strong>Camera Support:</strong> Take photos directly from mobile or webcam</li>
-        <li>✅ <strong>Upload from Gallery:</strong> Use existing photos</li>
-        <li>✅ <strong>Real-time Adjustments:</strong> Brightness, contrast, grayscale</li>
-        <li>✅ <strong>300 DPI Print Quality:</strong> Professional resolution for printing</li>
-        <li>✅ <strong>100% Free:</strong> No hidden charges, no watermarks</li>
-      </ul>
-
-      <h3>How to Use:</h3>
+      <h3>🚀 How to Use This Tool (5 Easy Steps)</h3>
       <ol>
-        <li>Take a photo with your camera or upload an existing image</li>
-        <li>Select your country or document type from 195+ options</li>
-        <li>Choose background color and see live preview</li>
-        <li>Adjust brightness, contrast, and apply filters in real-time</li>
-        <li>Download your professional passport photo or print an A4 sheet with 8 photos</li>
+        <li><strong>Upload Your Photo:</strong> Click the upload button or drag and drop your photo. Use a clear, recent photo taken in the last 6 months with a plain background for best AI background removal results.</li>
+        <li><strong>Select Your Country:</strong> Choose your destination country or visa type from the dropdown menu. We support 25+ countries with exact official specifications.</li>
+        <li><strong>Choose Background Color:</strong> Select the required background color for your country. Use our preset colors or pick any custom color with the color picker.</li>
+        <li><strong>Adjust Your Photo:</strong> Use the canvas editor to zoom, move, and rotate your image to fit perfectly within the passport photo frame.</li>
+        <li><strong>Click "Create Passport Photo":</strong> Our advanced AI will automatically remove the background, apply your chosen color, and resize your photo to exact government specifications.</li>
+        <li><strong>Download Your Photo:</strong> Download your professional passport photo in high-quality PNG format, ready for printing or digital submission to embassies and government offices.</li>
       </ol>
     </div>
-  </div>
+    <!-- End of info-section -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/body-segmentation"></script>
+  </div>
+  <!-- End of container -->
+  
+  </div>
+  <!-- End of page-wrapper -->
+
+  <!-- Footer - Dynamic from API with style.css styling -->
+  <footer class="bg-dark text-white text-center py-4 mt-auto" id="footer">
+    <p class="mb-0">© 2024 WebAITool.net</p>
+  </footer>
 
   <script>
-    let cropper = null;
-    let segmenter = null;
-    let originalImage = null;
-    let currentBgColor = '#ffffff';
-    let segmentationData = null;
-
-    const imageInput = document.getElementById('imageInput');
-    const mainImage = document.getElementById('mainImage');
-    const imageBox = document.getElementById('imageBox');
-    const status = document.getElementById('status');
-    const spinner = document.getElementById('spinner');
-    const downloadBtn = document.getElementById('downloadBtn');
-
-    // Initialize AI
-    async function initAI() {
-      try {
-        updateStatus('Loading AI...', 'info');
-        await tf.setBackend('webgl');
-        await tf.ready();
-
-        segmenter = await bodySegmentation.createSegmenter(
-          bodySegmentation.SupportedModels.MediaPipeSelfieSegmentation,
-          {
-            runtime: 'mediapipe',
-            solutionPath: 'https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation',
-            modelType: 'general'
-          }
-        );
-
-        updateStatus('✅ AI Ready! Upload image.', 'success');
-        console.log('AI Loaded!');
-      } catch (e) {
-        console.error('AI Error:', e);
-        updateStatus('⚠️ AI unavailable', 'warning');
+    // ============================================================================
+    // GA4 Event Tracking Function
+    // ============================================================================
+    function trackGA4Event(eventName, params = {}) {
+      if (typeof gtag === 'function') {
+        gtag('event', eventName, params);
+        console.log('GA4 Event Tracked:', eventName, params);
       }
     }
 
-    function updateStatus(msg, type) {
-      status.textContent = msg;
-      status.className = `status-${type}`;
-    }
+    // ============================================================================
+    // Country Size Specifications
+    // ============================================================================
+    const countrySpecs = {
+      usa: { width: 600, height: 600, name: 'USA' },
+      uk: { width: 413, height: 531, name: 'UK' },
+      india: { width: 413, height: 531, name: 'India' },
+      canada: { width: 591, height: 827, name: 'Canada' },
+      australia: { width: 413, height: 531, name: 'Australia' },
+      schengen: { width: 413, height: 531, name: 'Schengen' },
+      germany: { width: 413, height: 531, name: 'Germany' },
+      france: { width: 413, height: 531, name: 'France' },
+      spain: { width: 413, height: 531, name: 'Spain' },
+      italy: { width: 413, height: 531, name: 'Italy' },
+      netherlands: { width: 413, height: 531, name: 'Netherlands' },
+      poland: { width: 413, height: 531, name: 'Poland' },
+      sweden: { width: 413, height: 531, name: 'Sweden' },
+      china: { width: 390, height: 567, name: 'China' },
+      japan: { width: 413, height: 531, name: 'Japan' },
+      pakistan: { width: 413, height: 531, name: 'Pakistan' },
+      bangladesh: { width: 413, height: 531, name: 'Bangladesh' },
+      philippines: { width: 413, height: 531, name: 'Philippines' },
+      thailand: { width: 413, height: 531, name: 'Thailand' },
+      singapore: { width: 413, height: 531, name: 'Singapore' },
+      malaysia: { width: 413, height: 591, name: 'Malaysia' },
+      uae: { width: 508, height: 650, name: 'UAE' },
+      saudi: { width: 472, height: 709, name: 'Saudi Arabia' },
+      qatar: { width: 413, height: 531, name: 'Qatar' },
+      egypt: { width: 472, height: 709, name: 'Egypt' },
+      southafrica: { width: 413, height: 531, name: 'South Africa' },
+      custom_2x2: { width: 600, height: 600, name: 'Custom 2x2' },
+      custom_35x45: { width: 413, height: 531, name: 'Custom 35x45' },
+      custom_51x51: { width: 600, height: 600, name: 'Custom 51x51' }
+    };
 
-    function showSpinner(text = 'Processing...') {
-      spinner.querySelector('.spinner-text').textContent = text;
-      spinner.style.display = 'flex';
-    }
+    // ============================================================================
+    // DOM Elements
+    // ============================================================================
+    const imageInput = document.getElementById('imageInput');
+    const dropZone = document.getElementById('dropZone');
+    const countrySelect = document.getElementById('countrySelect');
+    const bgColorPicker = document.getElementById('bgColorPicker');
+    const processBtn = document.getElementById('processBtn');
+    const btnText = document.getElementById('btnText');
+    const statusMessage = document.getElementById('statusMessage');
+    const previewContainer = document.getElementById('previewContainer');
+    const colorPresets = document.querySelectorAll('.color-preset');
 
-    function hideSpinner() {
-      spinner.style.display = 'none';
-    }
+    let selectedFile = null;
+    let originalPreviewUrl = null;
 
-    // Upload handler
-    imageInput.addEventListener('change', async (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
+    // ============================================================================
+    // Drag and Drop Functionality
+    // ============================================================================
+    dropZone.addEventListener('click', () => imageInput.click());
 
-      updateStatus('Loading image...', 'info');
-
-      const reader = new FileReader();
-      reader.onload = async (event) => {
-        originalImage = new Image();
-        originalImage.onload = async () => {
-          console.log('Image loaded:', originalImage.width, 'x', originalImage.height);
-          await processWithAI();
-        };
-        originalImage.src = event.target.result;
-      };
-      reader.readAsDataURL(file);
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('drag-over');
     });
 
-    // Process image with AI
-    async function processWithAI() {
-      if (!originalImage || !segmenter) {
-        mainImage.src = originalImage.src;
-        initCropper();
-        downloadBtn.disabled = false;
+    dropZone.addEventListener('dragleave', () => {
+      dropZone.classList.remove('drag-over');
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('drag-over');
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        imageInput.files = files;
+        handleFileSelect();
+      }
+    });
+
+    // ============================================================================
+    // File Selection Handler
+    // ============================================================================
+    imageInput.addEventListener('change', handleFileSelect);
+    
+    // Camera input handler
+    const cameraInput = document.getElementById('cameraInput');
+    if (cameraInput) {
+      cameraInput.addEventListener('change', handleFileSelect);
+    }
+
+    function handleFileSelect(e) {
+      const input = e.target;
+      const file = input.files[0];
+      
+      if (!file) {
+        processBtn.disabled = true;
+        btnText.textContent = 'Select a Photo to Continue';
         return;
       }
 
-      showSpinner('🤖 Removing background...');
-      updateStatus('🤖 AI processing...', 'info');
+      // Validate file size (10MB max)
+      if (file.size > 10 * 1024 * 1024) {
+        showStatus('File too large. Maximum 10MB allowed.', 'error');
+        imageInput.value = '';
+        cameraInput.value = '';
+        return;
+      }
+
+      selectedFile = file;
+      
+      // Create preview
+      if (originalPreviewUrl) {
+        URL.revokeObjectURL(originalPreviewUrl);
+      }
+      originalPreviewUrl = URL.createObjectURL(file);
+
+      // Enable process button
+      processBtn.disabled = false;
+      btnText.textContent = '✨ Create Passport Photo';
+
+      // Show preview
+      const selectedCountry = countrySelect.value;
+      const spec = countrySpecs[selectedCountry];
+      
+      previewContainer.innerHTML = `
+        <div class="preview-grid">
+          <div class="preview-box">
+            <h3>📷 Original Photo</h3>
+            <img src="${originalPreviewUrl}" alt="Original uploaded photo" id="originalImage">
+            <p style="color: var(--text-secondary); margin-top: 10px; font-size: 14px;">
+              Your uploaded photo
+            </p>
+          </div>
+          <div class="preview-box">
+            <h3>✂️ Adjust Your Photo</h3>
+            <div class="image-editor">
+              <div class="editor-canvas-container">
+                <canvas id="editorCanvas" class="editor-canvas"></canvas>
+              </div>
+              <div class="editor-controls">
+                <label style="font-weight: 600; font-size: 14px;">🔍 Zoom:</label>
+                <input type="range" id="zoomSlider" class="zoom-slider" min="50" max="200" value="100" step="1">
+                <span id="zoomValue" style="min-width: 50px; text-align: center;">100%</span>
+                <button onclick="rotateImage(-90)" title="Rotate Left">↶ Rotate</button>
+                <button onclick="resetEditor()" title="Reset">↻ Reset</button>
+              </div>
+            </div>
+            <p style="color: var(--text-secondary); margin-top: 10px; font-size: 14px;">
+              Drag to move • Scroll/Slider to zoom • Click rotate to adjust
+            </p>
+          </div>
+        </div>
+      `;
+
+      showStatus('Photo selected! Adjust the image using zoom/drag/rotate, then click "Create Passport Photo".', 'success');
+
+      // Initialize image editor
+      setTimeout(initImageEditor, 100);
+
+      // Track upload event
+      trackGA4Event('photo_uploaded', {
+        tool_name: 'Passport Photo Maker',
+        file_size: file.size,
+        file_type: file.type
+      });
+    }
+
+    // ============================================================================
+    // Color Preset Handlers
+    // ============================================================================
+    colorPresets.forEach(preset => {
+      preset.addEventListener('click', () => {
+        const color = preset.getAttribute('data-color');
+        bgColorPicker.value = color;
+        
+        // Update active state
+        colorPresets.forEach(p => p.classList.remove('active'));
+        preset.classList.add('active');
+
+        // Track color selection
+        trackGA4Event('background_color_selected', {
+          tool_name: 'Passport Photo Maker',
+          color_value: color
+        });
+      });
+    });
+
+    // Manual color picker change
+    bgColorPicker.addEventListener('change', () => {
+      colorPresets.forEach(p => p.classList.remove('active'));
+      
+      trackGA4Event('custom_color_selected', {
+        tool_name: 'Passport Photo Maker',
+        color_value: bgColorPicker.value
+      });
+    });
+
+    // ============================================================================
+    // Country Selection Handler
+    // ============================================================================
+    countrySelect.addEventListener('change', () => {
+      const selectedCountry = countrySelect.value;
+      const spec = countrySpecs[selectedCountry];
+      
+      trackGA4Event('country_selected', {
+        tool_name: 'Passport Photo Maker',
+        country: spec.name,
+        size: `${spec.width}x${spec.height}`
+      });
+    });
+
+    // ============================================================================
+    // Process Button Handler (Main Function)
+    // ============================================================================
+    processBtn.addEventListener('click', async () => {
+      if (!selectedFile) {
+        showStatus('Please select a photo first.', 'error');
+        return;
+      }
+
+      // Get edited image from canvas
+      const editedBlob = await getEditedImageBlob();
+      
+      const formData = new FormData();
+      formData.append('image', editedBlob, 'edited-photo.png');
+      formData.append('bgColor', bgColorPicker.value);
+      
+      const selectedCountry = countrySelect.value;
+      const spec = countrySpecs[selectedCountry];
+      formData.append('width', spec.width);
+      formData.append('height', spec.height);
+
+      // Disable button and show loading
+      processBtn.disabled = true;
+      btnText.innerHTML = '<span class="loading-spinner"></span>Processing...';
+      showStatus('Processing your photo with AI... This may take 5-10 seconds.', 'processing');
 
       try {
-        // Create temp canvas
-        const canvas = document.createElement('canvas');
-        canvas.width = originalImage.width;
-        canvas.height = originalImage.height;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(originalImage, 0, 0);
+        const response = await fetch('passportimagemaker.php', {
+          method: 'POST',
+          body: formData
+        });
 
-        // Run segmentation
-        const segmentation = await segmenter.segmentPeople(canvas);
+        const text = await response.text();
+        let data;
         
-        if (!segmentation || !segmentation[0]) {
-          console.log('No person detected');
-          mainImage.src = originalImage.src;
-          initCropper();
-          hideSpinner();
-          updateStatus('⚠️ No person detected', 'warning');
-          downloadBtn.disabled = false;
-          return;
+        try {
+          data = JSON.parse(text);
+        } catch (e) {
+          console.error('Server response:', text);
+          throw new Error('Invalid server response. Please try again.');
         }
 
-        console.log('Person detected! Removing background...');
-        segmentationData = segmentation[0];
+        if (!data.success) {
+          throw new Error(data.error || 'Processing failed. Please try again.');
+        }
 
-        // Apply background removal
-        const result = applyBackgroundColor(canvas, segmentation[0].mask, currentBgColor);
-        
-        mainImage.src = result;
-        imageBox.classList.add('bg-removed');
-        
-        hideSpinner();
-        updateStatus('✅ Background removed!', 'success');
-        
-        initCropper();
-        downloadBtn.disabled = false;
+        // Display result with both images side by side
+        previewContainer.innerHTML = `
+          <div class="preview-grid">
+            <div class="preview-box">
+              <h3>📷 Original Photo</h3>
+              <img src="${originalPreviewUrl}" alt="Original photo">
+              <p style="color: var(--text-secondary); margin-top: 10px; font-size: 14px;">
+                Your uploaded photo
+              </p>
+            </div>
+            <div class="preview-box">
+              <h3>✅ Passport Photo Ready</h3>
+              <img src="${data.url}" alt="Processed passport photo">
+              <p style="color: var(--text-secondary); margin-top: 10px; font-size: 14px;">
+                ${spec.name} • ${spec.width}x${spec.height}px
+              </p>
+              <a href="#" class="download-btn" onclick="downloadPhoto('${data.url}', '${spec.name}'); return false;">
+                ⬇️ Download PNG
+              </a>
+            </div>
+          </div>
+        `;
 
-      } catch (e) {
-        console.error('Processing error:', e);
-        hideSpinner();
-        updateStatus('❌ Error: ' + e.message, 'warning');
-        mainImage.src = originalImage.src;
-        initCropper();
+        showStatus('✅ Success! Your passport photo is ready. Click download to save.', 'success');
+
+        // Track successful creation
+        trackGA4Event('passport_photo_created', {
+          tool_name: 'Passport Photo Maker',
+          country: spec.name,
+          size: `${spec.width}x${spec.height}`,
+          background_color: bgColorPicker.value,
+          page_location: window.location.href
+        });
+
+      } catch (error) {
+        console.error('Error:', error);
+        showStatus('❌ Error: ' + error.message, 'error');
+
+        // Track error
+        trackGA4Event('processing_error', {
+          tool_name: 'Passport Photo Maker',
+          error_message: error.message
+        });
+      } finally {
+        processBtn.disabled = false;
+        btnText.textContent = '✨ Create Passport Photo';
+      }
+    });
+
+    // ============================================================================
+    // Download Function
+    // ============================================================================
+    async function downloadPhoto(url, countryName) {
+      try {
+        const response = await fetch(url, { mode: 'cors' });
+        if (!response.ok) throw new Error('Download failed');
+        
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
+        
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = `passport-photo-${countryName.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        URL.revokeObjectURL(blobUrl);
+
+        showStatus('✅ Photo downloaded successfully!', 'success');
+
+        // Track download
+        trackGA4Event('photo_downloaded', {
+          tool_name: 'Passport Photo Maker',
+          country: countryName,
+          page_location: window.location.href
+        });
+
+      } catch (error) {
+        showStatus('Download failed. Please try right-click and "Save image as".', 'error');
       }
     }
 
-    // Apply background color
-    function applyBackgroundColor(canvas, mask, bgColor) {
-      const ctx = canvas.getContext('2d');
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const pixels = imageData.data;
+    // ============================================================================
+    // Status Message Helper
+    // ============================================================================
+    function showStatus(message, type) {
+      statusMessage.textContent = message;
+      statusMessage.className = `status ${type}`;
+    }
 
-      const bg = hexToRgb(bgColor);
+    // ============================================================================
+    // Image Editor Functionality (FIXED - Canvas stays fixed, image moves inside)
+    // ============================================================================
+    let canvas, ctx, editorImage;
+    let scale = 1, rotation = 0, offsetX = 0, offsetY = 0;
+    let isDragging = false, startX, startY;
 
-      for (let i = 0; i < mask.width * mask.height; i++) {
-        const shouldKeep = mask.data[i] > 0;
-        const idx = i * 4;
+    function initImageEditor() {
+      canvas = document.getElementById('editorCanvas');
+      if (!canvas) return;
+      
+      ctx = canvas.getContext('2d');
+      editorImage = new Image();
+      editorImage.src = originalPreviewUrl;
+      
+      editorImage.onload = function() {
+        // Set canvas size to match selected country dimensions
+        const selectedCountry = countrySelect.value;
+        const spec = countrySpecs[selectedCountry];
+        canvas.width = spec.width;
+        canvas.height = spec.height;
+        
+        // Initial draw
+        drawImageOnCanvas();
+        
+        // Add event listeners
+        setupEditorControls();
+      };
+    }
 
-        if (!shouldKeep) {
-          pixels[idx] = bg.r;
-          pixels[idx + 1] = bg.g;
-          pixels[idx + 2] = bg.b;
-          pixels[idx + 3] = 255;
-        }
+    function drawImageOnCanvas() {
+      if (!ctx || !editorImage) return;
+      
+      // Clear canvas with white background
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      // Save context state
+      ctx.save();
+      
+      // Calculate scaled dimensions
+      const imgWidth = editorImage.width * scale;
+      const imgHeight = editorImage.height * scale;
+      
+      // Move to center + offset (this moves the image, not the canvas)
+      ctx.translate(canvas.width / 2 + offsetX, canvas.height / 2 + offsetY);
+      
+      // Apply rotation at the center point
+      ctx.rotate(rotation * Math.PI / 180);
+      
+      // Draw image centered at the rotation point
+      ctx.drawImage(
+        editorImage,
+        -imgWidth / 2,
+        -imgHeight / 2,
+        imgWidth,
+        imgHeight
+      );
+      
+      // Restore context state
+      ctx.restore();
+      
+      // Draw border around canvas to show boundaries clearly
+      ctx.strokeStyle = '#6c5ce7';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function setupEditorControls() {
+      // Zoom slider
+      const zoomSlider = document.getElementById('zoomSlider');
+      const zoomValue = document.getElementById('zoomValue');
+      
+      if (zoomSlider) {
+        zoomSlider.addEventListener('input', function() {
+          scale = this.value / 100;
+          zoomValue.textContent = this.value + '%';
+          drawImageOnCanvas();
+        });
       }
-
-      ctx.putImageData(imageData, 0, 0);
-      return canvas.toDataURL('image/png');
-    }
-
-    function hexToRgb(hex) {
-      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-      return result ? {
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16)
-      } : {r:255,g:255,b:255};
-    }
-
-    // Initialize cropper
-    function initCropper() {
-      if (cropper) cropper.destroy();
       
-      const ratio = parseFloat(document.getElementById('sizeSelect').value.split('|')[0]);
+      // Canvas dragging - drag the canvas to move the image
+      const canvasContainer = canvas.parentElement;
       
-      cropper = new Cropper(mainImage, {
-        aspectRatio: ratio,
-        viewMode: 1,
-        autoCropArea: 0.9,
-        background: false,
-        responsive: true
+      canvasContainer.addEventListener('mousedown', startDrag);
+      canvasContainer.addEventListener('mousemove', drag);
+      canvasContainer.addEventListener('mouseup', stopDrag);
+      canvasContainer.addEventListener('mouseleave', stopDrag);
+      
+      // Touch support for mobile
+      canvasContainer.addEventListener('touchstart', handleTouchStart);
+      canvasContainer.addEventListener('touchmove', handleTouchMove);
+      canvasContainer.addEventListener('touchend', stopDrag);
+      
+      // Mouse wheel zoom on canvas
+      canvasContainer.addEventListener('wheel', function(e) {
+        e.preventDefault();
+        const delta = e.deltaY > 0 ? -5 : 5;
+        const newValue = Math.min(200, Math.max(50, parseInt(zoomSlider.value) + delta));
+        zoomSlider.value = newValue;
+        scale = newValue / 100;
+        zoomValue.textContent = newValue + '%';
+        drawImageOnCanvas();
       });
     }
 
-    // Background color change
-    document.querySelectorAll('.color-btn').forEach(btn => {
-      btn.addEventListener('click', async function() {
-        const color = this.dataset.color || this.value;
-        if (!color) return;
+    function startDrag(e) {
+      isDragging = true;
+      const rect = canvas.getBoundingClientRect();
+      startX = (e.clientX || e.touches[0].clientX) - rect.left - offsetX;
+      startY = (e.clientY || e.touches[0].clientY) - rect.top - offsetY;
+    }
 
-        currentBgColor = color;
-        imageBox.style.backgroundColor = color;
+    function drag(e) {
+      if (!isDragging) return;
+      e.preventDefault();
+      
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+      const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+      
+      offsetX = clientX - rect.left - startX;
+      offsetY = clientY - rect.top - startY;
+      
+      drawImageOnCanvas();
+    }
 
-        document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
+    function stopDrag() {
+      isDragging = false;
+    }
 
-        // Re-process if we have segmentation data
-        if (originalImage && segmentationData) {
-          showSpinner('🎨 Changing color...');
-          
-          const canvas = document.createElement('canvas');
-          canvas.width = originalImage.width;
-          canvas.height = originalImage.height;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(originalImage, 0, 0);
+    function handleTouchStart(e) {
+      e.preventDefault();
+      const touch = e.touches[0];
+      const rect = canvas.getBoundingClientRect();
+      isDragging = true;
+      startX = touch.clientX - rect.left - offsetX;
+      startY = touch.clientY - rect.top - offsetY;
+    }
 
-          const result = applyBackgroundColor(canvas, segmentationData.mask, currentBgColor);
-          
-          mainImage.src = result;
-          hideSpinner();
-          
-          initCropper();
+    function handleTouchMove(e) {
+      if (!isDragging) return;
+      e.preventDefault();
+      const touch = e.touches[0];
+      const rect = canvas.getBoundingClientRect();
+      offsetX = touch.clientX - rect.left - startX;
+      offsetY = touch.clientY - rect.top - startY;
+      drawImageOnCanvas();
+    }
+
+    function rotateImage(degrees) {
+      rotation += degrees;
+      drawImageOnCanvas();
+    }
+
+    function resetEditor() {
+      scale = 1;
+      rotation = 0;
+      offsetX = 0;
+      offsetY = 0;
+      const zoomSlider = document.getElementById('zoomSlider');
+      const zoomValue = document.getElementById('zoomValue');
+      if (zoomSlider) {
+        zoomSlider.value = 100;
+        zoomValue.textContent = '100%';
+      }
+      drawImageOnCanvas();
+    }
+
+    function getEditedImageBlob() {
+      return new Promise((resolve) => {
+        canvas.toBlob((blob) => {
+          resolve(blob);
+        }, 'image/png', 1.0);
+      });
+    }
+
+    // ============================================================================
+    // Track Initial Page View
+    // ============================================================================
+    trackGA4Event('page_view', {
+      page_title: 'Passport Photo Maker',
+      page_location: window.location.href,
+      tool_name: 'Passport Photo Maker'
+    });
+
+    // ============================================================================
+    // Dynamic Header & Footer Loading (Same as index.html)
+    // ============================================================================
+    const API = 'api.php';
+
+    async function apiCall(action) {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      
+      try {
+        const response = await fetch(`${API}?action=${action}&_t=${Date.now()}`, {
+          cache: 'no-store',
+          signal: controller.signal,
+          headers: {
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache'
+          }
+        });
+        clearTimeout(timeoutId);
+        
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        
+        const text = await response.text();
+        return JSON.parse(text);
+      } catch(error) {
+        clearTimeout(timeoutId);
+        console.error('API Error:', error);
+        return null;
+      }
+    }
+
+    // Toggle Mobile Menu
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const menuList = document.getElementById('menuList');
+    
+    if(hamburgerBtn) {
+      hamburgerBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        menuList.classList.toggle('show');
+        hamburgerBtn.classList.toggle('active');
+      });
+    }
+
+    // Toggle Dropdown (make it global for onclick access)
+    window.toggleDropdown = function(id, event) {
+      event.preventDefault();
+      event.stopPropagation();
+      
+      const clickedDropdown = document.querySelector(`[data-dropdown="${id}"]`);
+      const allDropdowns = document.querySelectorAll('.dropdown');
+      
+      allDropdowns.forEach(dropdown => {
+        if(dropdown !== clickedDropdown) {
+          dropdown.classList.remove('active');
         }
       });
-    });
-
-    // Download
-    downloadBtn.addEventListener('click', () => {
-      if (!cropper) return;
-
-      const sizeData = document.getElementById('sizeSelect').value.split('|');
-      const w = parseInt(sizeData[1]) * 2;
-      const h = parseInt(sizeData[2]) * 2;
-
-      const canvas = cropper.getCroppedCanvas({width: w, height: h});
-      const link = document.createElement('a');
-      link.download = 'passport-photo.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-
-      updateStatus('✅ Downloaded!', 'success');
-    });
-
-    function rotateImage() {
-      if (cropper) cropper.rotate(-90);
+      
+      clickedDropdown?.classList.toggle('active');
     }
 
-    function resetImage() {
-      if (cropper) cropper.reset();
-    }
+    // Load Dynamic Navigation and Footer
+    async function loadDynamicContent() {
+      try {
+        const [parents, subs, settings] = await Promise.all([
+          apiCall('get_parent_menus'),
+          apiCall('get_sub_menus'),
+          apiCall('get_settings')
+        ]);
 
-    // Size change
-    document.getElementById('sizeSelect').addEventListener('change', () => {
-      if (cropper) {
-        const ratio = parseFloat(document.getElementById('sizeSelect').value.split('|')[0]);
-        cropper.setAspectRatio(ratio);
+        // Build Navigation
+        if(parents && parents.length > 0) {
+          let menuHTML = '<ul class="navbar-nav">';
+          
+          parents.forEach(parent => {
+            const children = subs ? subs.filter(s => s.parent_id == parent.id) : [];
+            
+            if (children.length > 0) {
+              menuHTML += `
+                <li class="nav-item dropdown" data-dropdown="${parent.id}">
+                  <a class="nav-link dropdown-toggle dropbtn" href="#" onclick="toggleDropdown(${parent.id}, event)">${parent.name}</a>
+                  <ul class="dropdown-menu dropdown-content">
+                    ${children.map(child => `<li><a class="dropdown-item" href="${child.link}">${child.name}</a></li>`).join('')}
+                  </ul>
+                </li>
+              `;
+            } else {
+              menuHTML += `<li class="nav-item"><a class="nav-link" href="${parent.link}">${parent.name}</a></li>`;
+            }
+          });
+          
+          menuHTML += '</ul>';
+          document.getElementById('menuList').innerHTML = menuHTML;
+        }
+
+        // Set Footer
+        if(settings && settings.footer_text) {
+          document.getElementById('footer').innerHTML = `<p class="mb-0">${settings.footer_text}</p>`;
+        }
+
+      } catch(error) {
+        console.error('Load Error:', error);
       }
-    });
+    }
 
-    window.addEventListener('load', initAI);
+    // Load dynamic content when page loads
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadDynamicContent);
+    } else {
+      loadDynamicContent();
+    }
+
+    // Add minimal required styles for dropdown functionality
+    const style = document.createElement('style');
+    style.textContent = `
+      .dropdown-menu { display: none !important; }
+      .dropdown.active .dropdown-menu { display: block !important; }
+    `;
+    document.head.appendChild(style);
   </script>
+
+  <!-- Bootstrap JS (Required for navbar functionality) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
