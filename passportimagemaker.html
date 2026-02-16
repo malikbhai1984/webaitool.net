@@ -1,1403 +1,1570 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Professional Passport Photo Maker Online | All Countries | Free AI Background Removal</title>
-  
-  <!-- Enhanced SEO Meta Tags -->
-  <meta name="description" content="Create professional passport photos online for 20+ countries including USA, UK, India, Canada, Pakistan. Free AI background removal, custom sizes (2x2, 35x45mm, 51x51mm), and all background colors. Instant download.">
-  <meta name="keywords" content="passport photo maker, passport size photo, online passport photo, visa photo, ID photo, background removal, 2x2 photo, 35x45mm photo, US passport photo, UK passport photo, Indian passport photo, Pakistan passport photo, free passport photo">
-  <meta name="author" content="WebAITool">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://webaitool.net/passportimagemaker.html">
-  
-  <!-- Open Graph Meta Tags -->
-  <meta property="og:title" content="Professional Passport Photo Maker | Create Photos Online Free">
-  <meta property="og:description" content="Create professional passport photos for any country with AI background removal. Supports all sizes and colors.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://webaitool.net/passportimagemaker.html">
-  
-  <!-- Twitter Card Meta Tags -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Professional Passport Photo Maker">
-  <meta name="twitter:description" content="Create professional passport photos online with AI background removal">
-
-  <!-- Structured Data for SEO -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Passport Photo Maker",
-    "applicationCategory": "UtilityApplication",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    },
-    "description": "Free online tool to create professional passport photos with automatic AI background removal for all countries",
-    "operatingSystem": "Web Browser",
-    "browserRequirements": "Requires JavaScript. Works on Chrome, Firefox, Safari, Edge.",
-    "featureList": "AI Background Removal, Multiple Country Support, Custom Sizes, Color Selection, Instant Download"
-  }
-  </script>
-
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-S323MFXTYL"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-S323MFXTYL');
-  </script>
-
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
-  <!-- Bootstrap CSS (Required for navbar structure) -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Link to style.css for navbar and footer styling -->
-  <link rel="stylesheet" href="style.css">
-
-  <style>
-    /* Page-specific styles - navbar/footer from style.css */
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Passport Photo Maker Online | All Countries | Free AI Background Removal</title>
     
-    :root {
-      --primary: #6c5ce7;
-      --primary-dark: #5f4dd1;
-      --success: #10b981;
-      --danger: #ef4444;
-      --warning: #f59e0b;
-      --background: #f8fafc;
-      --card-bg: #ffffff;
-      --text-primary: #0f172a;
-      --text-secondary: #64748b;
-      --border: #e2e8f0;
-    }
-
-    /* Override body background for this page */
-    body {
-      background: #f4f7f6 !important;
-    }
-
-    .page-wrapper {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: calc(100vh - 200px);
-      padding: 20px 0;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 40px;
-      animation: fadeInDown 0.6s ease-out;
-      margin-top: 20px;
-    }
-
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    h1 {
-      font-family: 'Poppins', sans-serif;
-      font-size: clamp(28px, 5vw, 48px);
-      font-weight: 800;
-      color: white;
-      margin-bottom: 12px;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    }
-
-    .subtitle {
-      font-size: 18px;
-      color: rgba(255,255,255,0.95);
-      font-weight: 500;
-    }
-
-    .main-card {
-      background: var(--card-bg);
-      border-radius: 20px;
-      padding: 40px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-      margin-bottom: 30px;
-      animation: fadeInUp 0.6s ease-out 0.1s backwards;
-    }
-
-    .upload-section {
-      text-align: center;
-      padding: 40px;
-      border: 3px dashed var(--border);
-      border-radius: 16px;
-      background: var(--background);
-      margin-bottom: 30px;
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-
-    .upload-section:hover {
-      border-color: #6c5ce7;
-      background: #f1f5f9;
-      transform: translateY(-2px);
-    }
-
-    .upload-section.drag-over {
-      border-color: #6c5ce7;
-      background: #eff6ff;
-      transform: scale(1.02);
-    }
-
-    .upload-icon {
-      font-size: 64px;
-      margin-bottom: 16px;
-      opacity: 0.4;
-    }
-
-    input[type="file"] {
-      display: none;
-    }
-
-    .upload-label {
-      display: inline-block;
-      padding: 14px 32px;
-      background: #6c5ce7;
-      color: white;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 16px;
-      transition: all 0.3s ease;
-      margin-top: 10px;
-    }
-
-    .upload-label:hover {
-      background: #5f4dd1;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(108, 92, 231, 0.4);
-    }
-
-    .options-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-      margin-bottom: 30px;
-    }
-
-    .option-group {
-      background: var(--background);
-      padding: 24px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-    }
-
-    .option-group label {
-      display: block;
-      font-weight: 600;
-      margin-bottom: 12px;
-      color: var(--text-primary);
-      font-size: 15px;
-    }
-
-    select, input[type="color"] {
-      width: 100%;
-      padding: 12px;
-      border: 2px solid var(--border);
-      border-radius: 8px;
-      font-size: 15px;
-      font-family: inherit;
-      transition: all 0.3s ease;
-      background: white;
-    }
-
-    select:focus {
-      outline: none;
-      border-color: #6c5ce7;
-      box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
-    }
-
-    input[type="color"] {
-      height: 50px;
-      cursor: pointer;
-      padding: 4px;
-    }
-
-    .color-presets {
-      display: grid;
-      grid-template-columns: repeat(8, 1fr);
-      gap: 10px;
-      margin-top: 12px;
-    }
-
-    .color-preset {
-      width: 100%;
-      height: 36px;
-      border-radius: 6px;
-      cursor: pointer;
-      border: 3px solid transparent;
-      transition: all 0.2s ease;
-    }
-
-    .color-preset:hover {
-      transform: scale(1.1);
-      border-color: #6c5ce7;
-    }
-
-    .color-preset.active {
-      border-color: #6c5ce7;
-      box-shadow: 0 0 0 2px white, 0 0 0 4px #6c5ce7;
-    }
-
-    .process-btn {
-      width: 100%;
-      padding: 18px;
-      background: linear-gradient(135deg, #6c5ce7 0%, #5f4dd1 100%);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      font-size: 18px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-family: 'Poppins', sans-serif;
-      letter-spacing: 0.5px;
-      box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
-    }
-
-    .process-btn:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(108, 92, 231, 0.4);
-    }
-
-    .process-btn:disabled {
-      background: #cbd5e1;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
-
-    .status {
-      text-align: center;
-      margin-top: 20px;
-      padding: 12px;
-      border-radius: 8px;
-      font-weight: 500;
-      display: none;
-    }
-
-    .status.processing {
-      background: #fef3c7;
-      color: #92400e;
-      display: block;
-    }
-
-    .status.success {
-      background: #d1fae5;
-      color: #065f46;
-      display: block;
-    }
-
-    .status.error {
-      background: #fee2e2;
-      color: #991b1b;
-      display: block;
-    }
-
-    .preview-container {
-      margin-bottom: 30px;
-      margin-top: 0;
-    }
-
-    .preview-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 30px;
-      margin-bottom: 20px;
-    }
-
-    .preview-box {
-      background: var(--background);
-      border-radius: 12px;
-      padding: 20px;
-      text-align: center;
-      border: 2px solid var(--border);
-    }
-
-    .preview-box h3 {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 700;
-      margin-bottom: 16px;
-      color: var(--text-primary);
-    }
-
-    .preview-box img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      border: 1px solid var(--border);
-      background: white;
-    }
-
-    .image-editor {
-      position: relative;
-      display: inline-block;
-      background: #f8f9fa;
-      border-radius: 12px;
-      padding: 20px;
-      margin-top: 20px;
-    }
-
-    .editor-canvas-container {
-      position: relative;
-      display: inline-block;
-      background: white;
-      border: 2px dashed #6c5ce7;
-      border-radius: 8px;
-      overflow: hidden;
-      cursor: move;
-    }
-
-    .editor-canvas-container:active {
-      cursor: grabbing;
-    }
-
-    .editor-canvas {
-      display: block;
-      max-width: 100%;
-      height: auto;
-    }
-
-    .editor-controls {
-      margin-top: 15px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .editor-controls button {
-      padding: 8px 16px;
-      background: #6c5ce7;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: all 0.3s ease;
-    }
-
-    .editor-controls button:hover {
-      background: #5f4dd1;
-      transform: translateY(-1px);
-    }
-
-    .zoom-slider {
-      width: 200px;
-      margin: 0 10px;
-    }
-
-    .download-btn {
-      display: inline-block;
-      margin-top: 16px;
-      padding: 12px 28px;
-      background: var(--success);
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-
-    .download-btn:hover {
-      background: #059669;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-    }
-
-    .info-section {
-      background: white;
-      border-radius: 16px;
-      padding: 35px;
-      margin-top: 30px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      animation: fadeInUp 0.6s ease-out 0.2s backwards;
-    }
-
-    .info-section h2 {
-      font-family: 'Poppins', sans-serif;
-      font-size: 28px;
-      font-weight: 800;
-      margin-bottom: 20px;
-      color: var(--text-primary);
-    }
-
-    .info-section h3 {
-      font-family: 'Poppins', sans-serif;
-      font-size: 22px;
-      font-weight: 700;
-      margin-top: 30px;
-      margin-bottom: 15px;
-      color: #6c5ce7;
-    }
-
-    .info-section p {
-      color: var(--text-secondary);
-      margin-bottom: 16px;
-      line-height: 1.8;
-    }
-
-    .info-section ul, .info-section ol {
-      margin: 16px 0 16px 24px;
-      color: var(--text-secondary);
-    }
-
-    .info-section li {
-      margin-bottom: 10px;
-      line-height: 1.7;
-    }
-
-    .country-specs {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
-      margin: 20px 0;
-    }
-
-    .country-card {
-      background: var(--background);
-      padding: 20px;
-      border-radius: 12px;
-      border-left: 4px solid #6c5ce7;
-    }
-
-    .country-card h4 {
-      font-weight: 700;
-      margin-bottom: 10px;
-      color: var(--text-primary);
-      font-size: 18px;
-    }
-
-    .country-card .spec {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 8px;
-      font-size: 14px;
-    }
-
-    .country-card .spec-label {
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    .country-card .spec-value {
-      color: var(--text-secondary);
-    }
-
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      margin: 25px 0;
-    }
-
-    .feature-item {
-      background: var(--background);
-      padding: 20px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-    }
-
-    .feature-item h4 {
-      font-weight: 700;
-      margin-bottom: 8px;
-      color: var(--text-primary);
-    }
-
-    .feature-item p {
-      margin: 0;
-      font-size: 14px;
-    }
-
-    .loading-spinner {
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 3px solid rgba(255,255,255,0.3);
-      border-radius: 50%;
-      border-top-color: white;
-      animation: spin 0.8s linear infinite;
-      margin-right: 10px;
-      vertical-align: middle;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    @media (max-width: 768px) {
-      .main-card {
-        padding: 24px;
-      }
-
-      .options-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .preview-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .info-section {
-        padding: 24px;
-      }
-
-      .color-presets {
-        grid-template-columns: repeat(5, 1fr);
-        gap: 8px;
-      }
-
-      .color-preset {
-        height: 32px;
-      }
-    }
-  </style>
+    <!-- Enhanced SEO Meta Tags -->
+    <meta name="description" content="Create professional passport photos online for 20+ countries including USA, UK, India, Canada, Pakistan. Free AI background removal, custom sizes (2x2, 35x45mm, 51x51mm), and all background colors. Instant download.">
+    <meta name="keywords" content="passport photo maker, passport size photo, online passport photo, visa photo, ID photo, background removal, 2x2 photo, 35x45mm photo, US passport photo, UK passport photo, Indian passport photo, Pakistan passport photo, free passport photo">
+    <meta name="author" content="WebAITool">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4467977670160507" crossorigin="anonymous"></script>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-S323MFXTYL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-S323MFXTYL');
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --primary-dark: #5f4dd1;
+            --success: #10b981;
+            --background: #f8fafc;
+            --card-bg: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #64748b;
+            --border: #e2e8f0;
+        }
+
+        body { background: #f4f7f6 !important; }
+
+        /* Share Section */
+        .share-section {
+            background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin: 30px auto;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(108, 92, 231, 0.3);
+            max-width: 1200px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .share-section h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .contact-item {
+            background: rgba(255,255,255,0.2);
+            padding: 12px 24px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .contact-item a { 
+            color: white; 
+            text-decoration: none; 
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .share-btn {
+            padding: 12px 28px;
+            border-radius: 10px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .whatsapp-btn { background: #25D366; color: white; }
+        .whatsapp-btn:hover { background: #128C7E; color: white; }
+        .twitter-btn { background: #1DA1F2; color: white; }
+        .twitter-btn:hover { background: #0d8bd9; color: white; }
+        .facebook-btn { background: #1877F2; color: white; }
+        .facebook-btn:hover { background: #0c63d4; color: white; }
+
+        /* Page Layout */
+        .page-wrapper {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: calc(100vh - 200px);
+            padding: 20px 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin: 20px 0 40px;
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: 800;
+            color: white;
+            margin-bottom: 12px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: rgba(255,255,255,0.95);
+            font-weight: 500;
+        }
+
+        /* Main Card */
+        .main-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            margin-bottom: 30px;
+            animation: fadeInUp 0.6s ease-out 0.1s backwards;
+        }
+
+        /* Upload Section */
+        .upload-section {
+            text-align: center;
+            padding: 40px;
+            border: 3px dashed var(--border);
+            border-radius: 16px;
+            background: var(--background);
+            margin-bottom: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upload-section:hover {
+            border-color: #6c5ce7;
+            background: #f1f5f9;
+            transform: translateY(-2px);
+        }
+
+        .upload-section.drag-over {
+            border-color: #6c5ce7;
+            background: #eff6ff;
+            transform: scale(1.02);
+        }
+
+        .upload-label {
+            display: inline-block;
+            padding: 14px 32px;
+            background: #6c5ce7;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .upload-label:hover {
+            background: #5f4dd1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(108, 92, 231, 0.4);
+        }
+
+        /* Options Grid */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        .option-group {
+            background: var(--background);
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .option-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+            font-size: 15px;
+        }
+
+        select, input[type="color"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #6c5ce7;
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
+        }
+
+        input[type="color"] {
+            height: 50px;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        /* Color Presets */
+        .color-presets {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .color-preset {
+            width: 100%;
+            height: 36px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .color-preset:hover {
+            transform: scale(1.1);
+            border-color: #6c5ce7;
+        }
+
+        .color-preset.active {
+            border-color: #6c5ce7;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #6c5ce7;
+        }
+
+        /* Process Button */
+        .process-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #6c5ce7 0%, #5f4dd1 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .process-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(108, 92, 231, 0.4);
+        }
+
+        .process-btn:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Status Messages */
+        .status {
+            text-align: center;
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .status.success {
+            background: #d1fae5;
+            color: #065f46;
+            display: block;
+        }
+
+        .status.error {
+            background: #fee2e2;
+            color: #991b1b;
+            display: block;
+        }
+
+        .status.processing {
+            background: #fef3c7;
+            color: #92400e;
+            display: block;
+        }
+
+        /* Preview Grid */
+        .preview-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .preview-box {
+            background: var(--background);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid var(--border);
+        }
+
+        .preview-box h3 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+            font-size: 18px;
+        }
+
+        /* Image Editor - FITS IMAGE IN FRAME */
+        .editor-canvas-wrapper {
+            position: relative;
+            display: inline-block;
+            background: repeating-conic-gradient(#f0f0f0 0% 25%, white 0% 50%);
+            background-size: 20px 20px;
+            border: 3px solid #6c5ce7;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .editor-canvas-container {
+            position: relative;
+            cursor: grab;
+            user-select: none;
+            overflow: hidden;
+        }
+
+        .editor-canvas-container:active { 
+            cursor: grabbing; 
+        }
+
+        .editor-canvas-container img {
+            display: block;
+            pointer-events: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform-origin: center center;
+        }
+
+        /* Editor Controls */
+        .editor-controls {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .control-label {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-primary);
+            min-width: 50px;
+        }
+
+        .zoom-slider {
+            width: 180px;
+            height: 6px;
+            border-radius: 3px;
+            background: #e2e8f0;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .zoom-slider::-webkit-slider-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #6c5ce7;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(108, 92, 231, 0.4);
+        }
+
+        .zoom-slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #6c5ce7;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 6px rgba(108, 92, 231, 0.4);
+        }
+
+        .zoom-value {
+            min-width: 55px;
+            text-align: center;
+            font-weight: 600;
+            color: #6c5ce7;
+            font-size: 15px;
+        }
+
+        .editor-controls button {
+            padding: 10px 20px;
+            background: #6c5ce7;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .editor-controls button:hover {
+            background: #5f4dd1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(108, 92, 231, 0.3);
+        }
+
+        .editor-hint {
+            margin-top: 12px;
+            padding: 12px;
+            background: #e0e7ff;
+            border-left: 4px solid #6c5ce7;
+            border-radius: 6px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-align: left;
+        }
+
+        .editor-hint strong {
+            color: var(--text-primary);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        /* Download Button */
+        .download-btn {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 12px 28px;
+            background: var(--success);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .download-btn:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            color: white;
+        }
+
+        /* Info Section - SEO Content */
+        .info-section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            animation: fadeInUp 0.6s ease-out 0.2s backwards;
+        }
+
+        .info-section h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--text-primary);
+            border-bottom: 3px solid #6c5ce7;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .info-section h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: #6c5ce7;
+            margin-top: 35px;
+            margin-bottom: 18px;
+        }
+
+        .info-section p, .info-section li {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+
+        .info-section ul, .info-section ol {
+            margin: 20px 0 20px 30px;
+        }
+
+        .info-section li strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .info-section a {
+            color: #6c5ce7;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .info-section a:hover {
+            text-decoration: underline;
+        }
+
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .feature-item {
+            background: var(--background);
+            padding: 24px;
+            border-radius: 12px;
+            border-left: 4px solid #6c5ce7;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(108, 92, 231, 0.15);
+        }
+
+        .feature-item h4 {
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+            font-size: 18px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .feature-item p {
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* FAQ Items */
+        .faq-section {
+            margin-top: 40px;
+        }
+
+        .faq-item {
+            background: var(--background);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border-left: 4px solid #6c5ce7;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.1);
+        }
+
+        .faq-question {
+            font-weight: 700;
+            color: var(--text-primary);
+            font-size: 17px;
+            margin-bottom: 10px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .faq-answer {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-card { padding: 24px; }
+            .options-grid { grid-template-columns: 1fr; }
+            .preview-grid { grid-template-columns: 1fr; }
+            .info-section { padding: 28px; }
+            .info-section h2 { font-size: 26px; }
+            .info-section h3 { font-size: 20px; }
+            .color-presets { grid-template-columns: repeat(5, 1fr); gap: 8px; }
+            .color-preset { height: 32px; }
+            .share-section h3 { font-size: 20px; }
+            .contact-info { flex-direction: column; }
+            .share-buttons { flex-direction: column; width: 100%; }
+            .share-btn { width: 100%; justify-content: center; }
+            .editor-controls { flex-direction: column; gap: 15px; }
+            .control-group { width: 100%; flex-direction: column; }
+            .zoom-slider { width: 100%; }
+            .editor-controls button { width: 100%; justify-content: center; }
+        }
+    </style>
 </head>
 <body>
-  <!-- Navigation - Dynamic from API with style.css styling -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm" id="navbar">
-    <div class="container-fluid px-4">
-      <a href="index.html" class="navbar-brand logo">🛠️ WebAITool</a>
-      
-      <button class="navbar-toggler hamburger" type="button" id="hamburgerBtn" aria-label="Toggle navigation">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      
-      <div class="collapse navbar-collapse justify-content-center" id="menuList">
-        <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Main Content Area -->
-  <div class="page-wrapper">
-    <div class="container">
-      <header>
-        <h1>📸 Professional Passport Photo Maker</h1>
-        <p class="subtitle">Create perfect passport photos for any country in seconds with AI</p>
-      </header>
-
-    <div class="main-card">
-      <!-- Preview Container at TOP -->
-      <div class="preview-container" id="previewContainer"></div>
-
-      <!-- Upload Section -->
-      <div class="upload-section" id="dropZone">
-        <div class="upload-icon">📷</div>
-        <h3 style="margin-bottom: 10px; font-weight: 700;">Upload Your Photo</h3>
-        <p style="color: var(--text-secondary); margin-bottom: 16px;">
-          Drag & drop your photo here or click to browse<br>
-          <small>Supports JPG, PNG, WebP • Maximum 10MB</small>
-        </p>
-        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-          <label for="imageInput" class="upload-label">📁 Choose Photo</label>
-          <label for="cameraInput" class="upload-label" style="background: #10b981;">📸 Take Photo</label>
-        </div>
-        <input type="file" id="imageInput" accept="image/jpeg,image/png,image/webp">
-        <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display: none;">
-      </div>
-
-      <!-- Options Grid -->
-      <div class="options-grid">
-        <!-- Country/Size Selection -->
-        <div class="option-group">
-          <label for="countrySelect">🌍 Select Country / Photo Size</label>
-          <select id="countrySelect">
-            <optgroup label="🌎 Popular Countries">
-              <option value="usa" selected>🇺🇸 USA (2x2 inch / 51x51mm)</option>
-              <option value="uk">🇬🇧 UK (35x45mm)</option>
-              <option value="india">🇮🇳 India (35x45mm)</option>
-              <option value="canada">🇨🇦 Canada (50x70mm)</option>
-              <option value="australia">🇦🇺 Australia (35x45mm)</option>
-              <option value="schengen">🇪🇺 Schengen Visa (35x45mm)</option>
-            </optgroup>
-            <optgroup label="🇪🇺 European Countries">
-              <option value="germany">🇩🇪 Germany (35x45mm)</option>
-              <option value="france">🇫🇷 France (35x45mm)</option>
-              <option value="spain">🇪🇸 Spain (35x45mm)</option>
-              <option value="italy">🇮🇹 Italy (35x45mm)</option>
-              <option value="netherlands">🇳🇱 Netherlands (35x45mm)</option>
-              <option value="poland">🇵🇱 Poland (35x45mm)</option>
-              <option value="sweden">🇸🇪 Sweden (35x45mm)</option>
-            </optgroup>
-            <optgroup label="🌏 Asian Countries">
-              <option value="china">🇨🇳 China (33x48mm)</option>
-              <option value="japan">🇯🇵 Japan (35x45mm)</option>
-              <option value="pakistan">🇵🇰 Pakistan (35x45mm)</option>
-              <option value="bangladesh">🇧🇩 Bangladesh (35x45mm)</option>
-              <option value="philippines">🇵🇭 Philippines (35x45mm)</option>
-              <option value="thailand">🇹🇭 Thailand (35x45mm)</option>
-              <option value="singapore">🇸🇬 Singapore (35x45mm)</option>
-              <option value="malaysia">🇲🇾 Malaysia (35x50mm)</option>
-            </optgroup>
-            <optgroup label="🌍 Middle East & Africa">
-              <option value="uae">🇦🇪 UAE (43x55mm)</option>
-              <option value="saudi">🇸🇦 Saudi Arabia (40x60mm)</option>
-              <option value="qatar">🇶🇦 Qatar (35x45mm)</option>
-              <option value="egypt">🇪🇬 Egypt (40x60mm)</option>
-              <option value="southafrica">🇿🇦 South Africa (35x45mm)</option>
-            </optgroup>
-            <optgroup label="📐 Custom Sizes">
-              <option value="custom_2x2">Custom: 2x2 inch (600x600px)</option>
-              <option value="custom_35x45">Custom: 35x45mm (413x531px)</option>
-              <option value="custom_51x51">Custom: 51x51mm (600x600px)</option>
-            </optgroup>
-          </select>
-        </div>
-
-        <!-- Background Color Selection -->
-        <div class="option-group">
-          <label for="bgColorPicker">🎨 Background Color</label>
-          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
-            <input type="color" id="bgColorPicker" value="#ffffff" style="flex: 1;">
-            <span style="font-size: 13px; color: var(--text-secondary); font-weight: 500;">👆 More colors here</span>
-          </div>
-          <div class="color-presets">
-            <div class="color-preset active" data-color="#ffffff" style="background: #ffffff; border: 2px solid #ccc;" title="White (USA, India, Pakistan, Bangladesh)"></div>
-            <div class="color-preset" data-color="#f5f5f5" style="background: #f5f5f5;" title="Off White (Canada, Australia)"></div>
-            <div class="color-preset" data-color="#f0f0f0" style="background: #f0f0f0;" title="Light Gray (UK, Germany, EU)"></div>
-            <div class="color-preset" data-color="#e8e8e8" style="background: #e8e8e8;" title="Gray (Schengen Visa)"></div>
-            <div class="color-preset" data-color="#e8f4f8" style="background: #e8f4f8;" title="Light Blue (China, Official Docs)"></div>
-            <div class="color-preset" data-color="#d6eaf8" style="background: #d6eaf8;" title="Sky Blue"></div>
-            <div class="color-preset" data-color="#99ccff" style="background: #99ccff;" title="Blue (China Alternative)"></div>
-            <div class="color-preset" data-color="#87ceeb" style="background: #87ceeb;" title="Light Sky Blue"></div>
-            <div class="color-preset" data-color="#1a73e8" style="background: #1a73e8;" title="Dark Blue (ID Cards)"></div>
-            <div class="color-preset" data-color="#4169e1" style="background: #4169e1;" title="Royal Blue"></div>
-            <div class="color-preset" data-color="#fef5e7" style="background: #fef5e7;" title="Cream (UK Alternative)"></div>
-            <div class="color-preset" data-color="#fff9e6" style="background: #fff9e6;" title="Light Cream"></div>
-            <div class="color-preset" data-color="#faebd7" style="background: #faebd7;" title="Antique White"></div>
-            <div class="color-preset" data-color="#f5f5dc" style="background: #f5f5dc;" title="Beige"></div>
-            <div class="color-preset" data-color="#ffe4e1" style="background: #ffe4e1;" title="Light Pink (Some Asian Countries)"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Process Button -->
-      <button class="process-btn" id="processBtn" disabled>
-        <span id="btnText">Select a Photo to Continue</span>
-      </button>
-
-      <!-- Status Message -->
-      <div class="status" id="statusMessage"></div>
-    </div>
-
-    <!-- Comprehensive Information Section -->
-    <div class="info-section">
-      <h2>📖 Complete Guide: How to Create Perfect Passport Photos</h2>
-      
-      <h3>🚀 How to Use This Tool (5 Easy Steps)</h3>
-      <ol>
-        <li><strong>Upload Your Photo:</strong> Click the upload button or drag and drop your photo. Use a clear, recent photo taken in the last 6 months with a plain background for best AI background removal results.</li>
-        <li><strong>Select Your Country:</strong> Choose your destination country or visa type from the dropdown menu. We support 25+ countries with exact official specifications.</li>
-        <li><strong>Choose Background Color:</strong> Select the required background color for your country. Use our preset colors or pick any custom color with the color picker.</li>
-        <li><strong>Adjust Your Photo:</strong> Use the canvas editor to zoom, move, and rotate your image to fit perfectly within the passport photo frame.</li>
-        <li><strong>Click "Create Passport Photo":</strong> Our advanced AI will automatically remove the background, apply your chosen color, and resize your photo to exact government specifications.</li>
-        <li><strong>Download Your Photo:</strong> Download your professional passport photo in high-quality PNG format, ready for printing or digital submission to embassies and government offices.</li>
-      </ol>
-    </div>
-    <!-- End of info-section -->
-
-  </div>
-  <!-- End of container -->
-  
-  </div>
-  <!-- End of page-wrapper -->
-
-  <!-- Footer - Dynamic from API with style.css styling -->
-  <footer class="bg-dark text-white text-center py-4 mt-auto" id="footer">
-    <p class="mb-0">© 2024 WebAITool.net</p>
-  </footer>
-
-  <script>
-    // ============================================================================
-    // GA4 Event Tracking Function
-    // ============================================================================
-    function trackGA4Event(eventName, params = {}) {
-      if (typeof gtag === 'function') {
-        gtag('event', eventName, params);
-        console.log('GA4 Event Tracked:', eventName, params);
-      }
-    }
-
-    // ============================================================================
-    // Country Size Specifications
-    // ============================================================================
-    const countrySpecs = {
-      usa: { width: 600, height: 600, name: 'USA' },
-      uk: { width: 413, height: 531, name: 'UK' },
-      india: { width: 413, height: 531, name: 'India' },
-      canada: { width: 591, height: 827, name: 'Canada' },
-      australia: { width: 413, height: 531, name: 'Australia' },
-      schengen: { width: 413, height: 531, name: 'Schengen' },
-      germany: { width: 413, height: 531, name: 'Germany' },
-      france: { width: 413, height: 531, name: 'France' },
-      spain: { width: 413, height: 531, name: 'Spain' },
-      italy: { width: 413, height: 531, name: 'Italy' },
-      netherlands: { width: 413, height: 531, name: 'Netherlands' },
-      poland: { width: 413, height: 531, name: 'Poland' },
-      sweden: { width: 413, height: 531, name: 'Sweden' },
-      china: { width: 390, height: 567, name: 'China' },
-      japan: { width: 413, height: 531, name: 'Japan' },
-      pakistan: { width: 413, height: 531, name: 'Pakistan' },
-      bangladesh: { width: 413, height: 531, name: 'Bangladesh' },
-      philippines: { width: 413, height: 531, name: 'Philippines' },
-      thailand: { width: 413, height: 531, name: 'Thailand' },
-      singapore: { width: 413, height: 531, name: 'Singapore' },
-      malaysia: { width: 413, height: 591, name: 'Malaysia' },
-      uae: { width: 508, height: 650, name: 'UAE' },
-      saudi: { width: 472, height: 709, name: 'Saudi Arabia' },
-      qatar: { width: 413, height: 531, name: 'Qatar' },
-      egypt: { width: 472, height: 709, name: 'Egypt' },
-      southafrica: { width: 413, height: 531, name: 'South Africa' },
-      custom_2x2: { width: 600, height: 600, name: 'Custom 2x2' },
-      custom_35x45: { width: 413, height: 531, name: 'Custom 35x45' },
-      custom_51x51: { width: 600, height: 600, name: 'Custom 51x51' }
-    };
-
-    // ============================================================================
-    // DOM Elements
-    // ============================================================================
-    const imageInput = document.getElementById('imageInput');
-    const dropZone = document.getElementById('dropZone');
-    const countrySelect = document.getElementById('countrySelect');
-    const bgColorPicker = document.getElementById('bgColorPicker');
-    const processBtn = document.getElementById('processBtn');
-    const btnText = document.getElementById('btnText');
-    const statusMessage = document.getElementById('statusMessage');
-    const previewContainer = document.getElementById('previewContainer');
-    const colorPresets = document.querySelectorAll('.color-preset');
-
-    let selectedFile = null;
-    let originalPreviewUrl = null;
-
-    // ============================================================================
-    // Drag and Drop Functionality
-    // ============================================================================
-    dropZone.addEventListener('click', () => imageInput.click());
-
-    dropZone.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      dropZone.classList.add('drag-over');
-    });
-
-    dropZone.addEventListener('dragleave', () => {
-      dropZone.classList.remove('drag-over');
-    });
-
-    dropZone.addEventListener('drop', (e) => {
-      e.preventDefault();
-      dropZone.classList.remove('drag-over');
-      const files = e.dataTransfer.files;
-      if (files.length > 0) {
-        imageInput.files = files;
-        handleFileSelect();
-      }
-    });
-
-    // ============================================================================
-    // File Selection Handler
-    // ============================================================================
-    imageInput.addEventListener('change', handleFileSelect);
-    
-    // Camera input handler
-    const cameraInput = document.getElementById('cameraInput');
-    if (cameraInput) {
-      cameraInput.addEventListener('change', handleFileSelect);
-    }
-
-    function handleFileSelect(e) {
-      const input = e.target;
-      const file = input.files[0];
-      
-      if (!file) {
-        processBtn.disabled = true;
-        btnText.textContent = 'Select a Photo to Continue';
-        return;
-      }
-
-      // Validate file size (10MB max)
-      if (file.size > 10 * 1024 * 1024) {
-        showStatus('File too large. Maximum 10MB allowed.', 'error');
-        imageInput.value = '';
-        cameraInput.value = '';
-        return;
-      }
-
-      selectedFile = file;
-      
-      // Create preview
-      if (originalPreviewUrl) {
-        URL.revokeObjectURL(originalPreviewUrl);
-      }
-      originalPreviewUrl = URL.createObjectURL(file);
-
-      // Enable process button
-      processBtn.disabled = false;
-      btnText.textContent = '✨ Create Passport Photo';
-
-      // Show preview
-      const selectedCountry = countrySelect.value;
-      const spec = countrySpecs[selectedCountry];
-      
-      previewContainer.innerHTML = `
-        <div class="preview-grid">
-          <div class="preview-box">
-            <h3>📷 Original Photo</h3>
-            <img src="${originalPreviewUrl}" alt="Original uploaded photo" id="originalImage">
-            <p style="color: var(--text-secondary); margin-top: 10px; font-size: 14px;">
-              Your uploaded photo
-            </p>
-          </div>
-          <div class="preview-box">
-            <h3>✂️ Adjust Your Photo</h3>
-            <div class="image-editor">
-              <div class="editor-canvas-container">
-                <canvas id="editorCanvas" class="editor-canvas"></canvas>
-              </div>
-              <div class="editor-controls">
-                <label style="font-weight: 600; font-size: 14px;">🔍 Zoom:</label>
-                <input type="range" id="zoomSlider" class="zoom-slider" min="50" max="200" value="100" step="1">
-                <span id="zoomValue" style="min-width: 50px; text-align: center;">100%</span>
-                <button onclick="rotateImage(-90)" title="Rotate Left">↶ Rotate</button>
-                <button onclick="resetEditor()" title="Reset">↻ Reset</button>
-              </div>
-            </div>
-            <p style="color: var(--text-secondary); margin-top: 10px; font-size: 14px;">
-              Drag to move • Scroll/Slider to zoom • Click rotate to adjust
-            </p>
-          </div>
-        </div>
-      `;
-
-      showStatus('Photo selected! Adjust the image using zoom/drag/rotate, then click "Create Passport Photo".', 'success');
-
-      // Initialize image editor
-      setTimeout(initImageEditor, 100);
-
-      // Track upload event
-      trackGA4Event('photo_uploaded', {
-        tool_name: 'Passport Photo Maker',
-        file_size: file.size,
-        file_type: file.type
-      });
-    }
-
-    // ============================================================================
-    // Color Preset Handlers
-    // ============================================================================
-    colorPresets.forEach(preset => {
-      preset.addEventListener('click', () => {
-        const color = preset.getAttribute('data-color');
-        bgColorPicker.value = color;
-        
-        // Update active state
-        colorPresets.forEach(p => p.classList.remove('active'));
-        preset.classList.add('active');
-
-        // Track color selection
-        trackGA4Event('background_color_selected', {
-          tool_name: 'Passport Photo Maker',
-          color_value: color
-        });
-      });
-    });
-
-    // Manual color picker change
-    bgColorPicker.addEventListener('change', () => {
-      colorPresets.forEach(p => p.classList.remove('active'));
-      
-      trackGA4Event('custom_color_selected', {
-        tool_name: 'Passport Photo Maker',
-        color_value: bgColorPicker.value
-      });
-    });
-
-    // ============================================================================
-    // Country Selection Handler
-    // ============================================================================
-    countrySelect.addEventListener('change', () => {
-      const selectedCountry = countrySelect.value;
-      const spec = countrySpecs[selectedCountry];
-      
-      trackGA4Event('country_selected', {
-        tool_name: 'Passport Photo Maker',
-        country: spec.name,
-        size: `${spec.width}x${spec.height}`
-      });
-    });
-
-    // ============================================================================
-    // Process Button Handler (Main Function)
-    // ============================================================================
-    processBtn.addEventListener('click', async () => {
-      if (!selectedFile) {
-        showStatus('Please select a photo first.', 'error');
-        return;
-      }
-
-      // Get edited image from canvas
-      const editedBlob = await getEditedImageBlob();
-      
-      const formData = new FormData();
-      formData.append('image', editedBlob, 'edited-photo.png');
-      formData.append('bgColor', bgColorPicker.value);
-      
-      const selectedCountry = countrySelect.value;
-      const spec = countrySpecs[selectedCountry];
-      formData.append('width', spec.width);
-      formData.append('height', spec.height);
-
-      // Disable button and show loading
-      processBtn.disabled = true;
-      btnText.innerHTML = '<span class="loading-spinner"></span>Processing...';
-      showStatus('Processing your photo with AI... This may take 5-10 seconds.', 'processing');
-
-      try {
-        const response = await fetch('passportimagemaker.php', {
-          method: 'POST',
-          body: formData
-        });
-
-        const text = await response.text();
-        let data;
-        
-        try {
-          data = JSON.parse(text);
-        } catch (e) {
-          console.error('Server response:', text);
-          throw new Error('Invalid server response. Please try again.');
-        }
-
-        if (!data.success) {
-          throw new Error(data.error || 'Processing failed. Please try again.');
-        }
-
-        // Display result with both images side by side
-        previewContainer.innerHTML = `
-          <div class="preview-grid">
-            <div class="preview-box">
-              <h3>📷 Original Photo</h3>
-              <img src="${originalPreviewUrl}" alt="Original photo">
-              <p style="color: var(--text-secondary); margin-top: 10px; font-size: 14px;">
-                Your uploaded photo
-              </p>
-            </div>
-            <div class="preview-box">
-              <h3>✅ Passport Photo Ready</h3>
-              <img src="${data.url}" alt="Processed passport photo">
-              <p style="color: var(--text-secondary); margin-top: 10px; font-size: 14px;">
-                ${spec.name} • ${spec.width}x${spec.height}px
-              </p>
-              <a href="#" class="download-btn" onclick="downloadPhoto('${data.url}', '${spec.name}'); return false;">
-                ⬇️ Download PNG
-              </a>
-            </div>
-          </div>
-        `;
-
-        showStatus('✅ Success! Your passport photo is ready. Click download to save.', 'success');
-
-        // Track successful creation
-        trackGA4Event('passport_photo_created', {
-          tool_name: 'Passport Photo Maker',
-          country: spec.name,
-          size: `${spec.width}x${spec.height}`,
-          background_color: bgColorPicker.value,
-          page_location: window.location.href
-        });
-
-      } catch (error) {
-        console.error('Error:', error);
-        showStatus('❌ Error: ' + error.message, 'error');
-
-        // Track error
-        trackGA4Event('processing_error', {
-          tool_name: 'Passport Photo Maker',
-          error_message: error.message
-        });
-      } finally {
-        processBtn.disabled = false;
-        btnText.textContent = '✨ Create Passport Photo';
-      }
-    });
-
-    // ============================================================================
-    // Download Function
-    // ============================================================================
-    async function downloadPhoto(url, countryName) {
-      try {
-        const response = await fetch(url, { mode: 'cors' });
-        if (!response.ok) throw new Error('Download failed');
-        
-        const blob = await response.blob();
-        const blobUrl = URL.createObjectURL(blob);
-        
-        const link = document.createElement('a');
-        link.href = blobUrl;
-        link.download = `passport-photo-${countryName.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}.png`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        
-        URL.revokeObjectURL(blobUrl);
-
-        showStatus('✅ Photo downloaded successfully!', 'success');
-
-        // Track download
-        trackGA4Event('photo_downloaded', {
-          tool_name: 'Passport Photo Maker',
-          country: countryName,
-          page_location: window.location.href
-        });
-
-      } catch (error) {
-        showStatus('Download failed. Please try right-click and "Save image as".', 'error');
-      }
-    }
-
-    // ============================================================================
-    // Status Message Helper
-    // ============================================================================
-    function showStatus(message, type) {
-      statusMessage.textContent = message;
-      statusMessage.className = `status ${type}`;
-    }
-
-    // ============================================================================
-    // Image Editor Functionality (FIXED - Canvas stays fixed, image moves inside)
-    // ============================================================================
-    let canvas, ctx, editorImage;
-    let scale = 1, rotation = 0, offsetX = 0, offsetY = 0;
-    let isDragging = false, startX, startY;
-
-    function initImageEditor() {
-      canvas = document.getElementById('editorCanvas');
-      if (!canvas) return;
-      
-      ctx = canvas.getContext('2d');
-      editorImage = new Image();
-      editorImage.src = originalPreviewUrl;
-      
-      editorImage.onload = function() {
-        // Set canvas size to match selected country dimensions
-        const selectedCountry = countrySelect.value;
-        const spec = countrySpecs[selectedCountry];
-        canvas.width = spec.width;
-        canvas.height = spec.height;
-        
-        // Initial draw
-        drawImageOnCanvas();
-        
-        // Add event listeners
-        setupEditorControls();
-      };
-    }
-
-    function drawImageOnCanvas() {
-      if (!ctx || !editorImage) return;
-      
-      // Clear canvas with white background
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      // Save context state
-      ctx.save();
-      
-      // Calculate scaled dimensions
-      const imgWidth = editorImage.width * scale;
-      const imgHeight = editorImage.height * scale;
-      
-      // Move to center + offset (this moves the image, not the canvas)
-      ctx.translate(canvas.width / 2 + offsetX, canvas.height / 2 + offsetY);
-      
-      // Apply rotation at the center point
-      ctx.rotate(rotation * Math.PI / 180);
-      
-      // Draw image centered at the rotation point
-      ctx.drawImage(
-        editorImage,
-        -imgWidth / 2,
-        -imgHeight / 2,
-        imgWidth,
-        imgHeight
-      );
-      
-      // Restore context state
-      ctx.restore();
-      
-      // Draw border around canvas to show boundaries clearly
-      ctx.strokeStyle = '#6c5ce7';
-      ctx.lineWidth = 2;
-      ctx.strokeRect(0, 0, canvas.width, canvas.height);
-    }
-
-    function setupEditorControls() {
-      // Zoom slider
-      const zoomSlider = document.getElementById('zoomSlider');
-      const zoomValue = document.getElementById('zoomValue');
-      
-      if (zoomSlider) {
-        zoomSlider.addEventListener('input', function() {
-          scale = this.value / 100;
-          zoomValue.textContent = this.value + '%';
-          drawImageOnCanvas();
-        });
-      }
-      
-      // Canvas dragging - drag the canvas to move the image
-      const canvasContainer = canvas.parentElement;
-      
-      canvasContainer.addEventListener('mousedown', startDrag);
-      canvasContainer.addEventListener('mousemove', drag);
-      canvasContainer.addEventListener('mouseup', stopDrag);
-      canvasContainer.addEventListener('mouseleave', stopDrag);
-      
-      // Touch support for mobile
-      canvasContainer.addEventListener('touchstart', handleTouchStart);
-      canvasContainer.addEventListener('touchmove', handleTouchMove);
-      canvasContainer.addEventListener('touchend', stopDrag);
-      
-      // Mouse wheel zoom on canvas
-      canvasContainer.addEventListener('wheel', function(e) {
-        e.preventDefault();
-        const delta = e.deltaY > 0 ? -5 : 5;
-        const newValue = Math.min(200, Math.max(50, parseInt(zoomSlider.value) + delta));
-        zoomSlider.value = newValue;
-        scale = newValue / 100;
-        zoomValue.textContent = newValue + '%';
-        drawImageOnCanvas();
-      });
-    }
-
-    function startDrag(e) {
-      isDragging = true;
-      const rect = canvas.getBoundingClientRect();
-      startX = (e.clientX || e.touches[0].clientX) - rect.left - offsetX;
-      startY = (e.clientY || e.touches[0].clientY) - rect.top - offsetY;
-    }
-
-    function drag(e) {
-      if (!isDragging) return;
-      e.preventDefault();
-      
-      const rect = canvas.getBoundingClientRect();
-      const clientX = e.clientX || (e.touches && e.touches[0].clientX);
-      const clientY = e.clientY || (e.touches && e.touches[0].clientY);
-      
-      offsetX = clientX - rect.left - startX;
-      offsetY = clientY - rect.top - startY;
-      
-      drawImageOnCanvas();
-    }
-
-    function stopDrag() {
-      isDragging = false;
-    }
-
-    function handleTouchStart(e) {
-      e.preventDefault();
-      const touch = e.touches[0];
-      const rect = canvas.getBoundingClientRect();
-      isDragging = true;
-      startX = touch.clientX - rect.left - offsetX;
-      startY = touch.clientY - rect.top - offsetY;
-    }
-
-    function handleTouchMove(e) {
-      if (!isDragging) return;
-      e.preventDefault();
-      const touch = e.touches[0];
-      const rect = canvas.getBoundingClientRect();
-      offsetX = touch.clientX - rect.left - startX;
-      offsetY = touch.clientY - rect.top - startY;
-      drawImageOnCanvas();
-    }
-
-    function rotateImage(degrees) {
-      rotation += degrees;
-      drawImageOnCanvas();
-    }
-
-    function resetEditor() {
-      scale = 1;
-      rotation = 0;
-      offsetX = 0;
-      offsetY = 0;
-      const zoomSlider = document.getElementById('zoomSlider');
-      const zoomValue = document.getElementById('zoomValue');
-      if (zoomSlider) {
-        zoomSlider.value = 100;
-        zoomValue.textContent = '100%';
-      }
-      drawImageOnCanvas();
-    }
-
-    function getEditedImageBlob() {
-      return new Promise((resolve) => {
-        canvas.toBlob((blob) => {
-          resolve(blob);
-        }, 'image/png', 1.0);
-      });
-    }
-
-    // ============================================================================
-    // Track Initial Page View
-    // ============================================================================
-    trackGA4Event('page_view', {
-      page_title: 'Passport Photo Maker',
-      page_location: window.location.href,
-      tool_name: 'Passport Photo Maker'
-    });
-
-    // ============================================================================
-    // Dynamic Header & Footer Loading (Same as index.html)
-    // ============================================================================
-    const API = 'api.php';
-
-    async function apiCall(action) {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 5000);
-      
-      try {
-        const response = await fetch(`${API}?action=${action}&_t=${Date.now()}`, {
-          cache: 'no-store',
-          signal: controller.signal,
-          headers: {
-            'Cache-Control': 'no-cache',
-            'Pragma': 'no-cache'
-          }
-        });
-        clearTimeout(timeoutId);
-        
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        
-        const text = await response.text();
-        return JSON.parse(text);
-      } catch(error) {
-        clearTimeout(timeoutId);
-        console.error('API Error:', error);
-        return null;
-      }
-    }
-
-    // Toggle Mobile Menu
-    const hamburgerBtn = document.getElementById('hamburgerBtn');
-    const menuList = document.getElementById('menuList');
-    
-    if(hamburgerBtn) {
-      hamburgerBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        menuList.classList.toggle('show');
-        hamburgerBtn.classList.toggle('active');
-      });
-    }
-
-    // Toggle Dropdown (make it global for onclick access)
-    window.toggleDropdown = function(id, event) {
-      event.preventDefault();
-      event.stopPropagation();
-      
-      const clickedDropdown = document.querySelector(`[data-dropdown="${id}"]`);
-      const allDropdowns = document.querySelectorAll('.dropdown');
-      
-      allDropdowns.forEach(dropdown => {
-        if(dropdown !== clickedDropdown) {
-          dropdown.classList.remove('active');
-        }
-      });
-      
-      clickedDropdown?.classList.toggle('active');
-    }
-
-    // Load Dynamic Navigation and Footer
-    async function loadDynamicContent() {
-      try {
-        const [parents, subs, settings] = await Promise.all([
-          apiCall('get_parent_menus'),
-          apiCall('get_sub_menus'),
-          apiCall('get_settings')
-        ]);
-
-        // Build Navigation
-        if(parents && parents.length > 0) {
-          let menuHTML = '<ul class="navbar-nav">';
-          
-          parents.forEach(parent => {
-            const children = subs ? subs.filter(s => s.parent_id == parent.id) : [];
+    <!-- Navigation - Dynamic from API (Same as index.html) -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm" id="navbar">
+        <div class="container-fluid px-4">
+            <a href="index.html" class="navbar-brand logo">🛠️ WebAITool</a>
             
-            if (children.length > 0) {
-              menuHTML += `
-                <li class="nav-item dropdown" data-dropdown="${parent.id}">
-                  <a class="nav-link dropdown-toggle dropbtn" href="#" onclick="toggleDropdown(${parent.id}, event)">${parent.name}</a>
-                  <ul class="dropdown-menu dropdown-content">
-                    ${children.map(child => `<li><a class="dropdown-item" href="${child.link}">${child.name}</a></li>`).join('')}
-                  </ul>
-                </li>
-              `;
-            } else {
-              menuHTML += `<li class="nav-item"><a class="nav-link" href="${parent.link}">${parent.name}</a></li>`;
+            <button class="navbar-toggler hamburger" type="button" id="hamburgerBtn" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="collapse navbar-collapse justify-content-center" id="menuList">
+                <div class="text-center p-3 text-muted">Loading...</div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-wrapper">
+        <div class="container">
+            <header>
+                <h1>📸 Professional Passport Photo Maker</h1>
+                <p class="subtitle">Create perfect passport photos for any country in seconds with AI</p>
+            </header>
+
+            <!-- Share Section -->
+            <div class="share-section">
+                <h3>🚀 Found this tool helpful? Share the magic with 5 friends!</h3>
+                <p>If you face any issues or want a new feature added, mail us—we'll fix it and build it for you!</p>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span>📧</span>
+                        <a href="mailto:shahidjamshaid@live.com">shahidjamshaid@live.com</a>
+                    </div>
+                    <div class="contact-item">
+                        <span>📧</span>
+                        <a href="mailto:vislamic1984@gmail.com">vislamic1984@gmail.com</a>
+                    </div>
+                </div>
+
+                <div class="share-buttons">
+                    <a href="https://wa.me/?text=Check%20out%20this%20amazing%20FREE%20Passport%20Photo%20Maker!%20https://webaitool.net/passportimagemaker.html" 
+                       class="share-btn whatsapp-btn" target="_blank">
+                        <span>📱</span> Share on WhatsApp
+                    </a>
+                    <a href="https://twitter.com/intent/tweet?text=Create%20professional%20passport%20photos%20online%20FREE!&url=https://webaitool.net/passportimagemaker.html" 
+                       class="share-btn twitter-btn" target="_blank">
+                        <span>🐦</span> Share on Twitter
+                    </a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://webaitool.net/passportimagemaker.html" 
+                       class="share-btn facebook-btn" target="_blank">
+                        <span>📘</span> Share on Facebook
+                    </a>
+                </div>
+            </div>
+
+            <div class="main-card">
+                <div id="previewContainer"></div>
+
+                <div class="upload-section" id="dropZone">
+                    <div style="font-size: 64px; margin-bottom: 16px; opacity: 0.4;">📷</div>
+                    <h3 style="font-weight: 700; margin-bottom: 10px;">Upload Your Photo</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 16px;">
+                        Drag & drop your photo here or click to browse<br>
+                        <small>Supports JPG, PNG, WebP • Maximum 10MB</small>
+                    </p>
+                    <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                        <label for="imageInput" class="upload-label">📁 Choose Photo</label>
+                        <label for="cameraInput" class="upload-label" style="background: #10b981;">📸 Take Photo</label>
+                    </div>
+                    <input type="file" id="imageInput" accept="image/jpeg,image/png,image/webp" style="display: none;">
+                    <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display: none;">
+                </div>
+
+                <div class="options-grid">
+                    <div class="option-group">
+                        <label for="countrySelect">🌍 Select Country / Photo Size</label>
+                        <select id="countrySelect">
+                            <optgroup label="🌎 Popular Countries">
+                                <option value="usa" selected>🇺🇸 USA (2x2 inch / 51x51mm)</option>
+                                <option value="uk">🇬🇧 UK (35x45mm)</option>
+                                <option value="india">🇮🇳 India (35x45mm)</option>
+                                <option value="canada">🇨🇦 Canada (50x70mm)</option>
+                                <option value="australia">🇦🇺 Australia (35x45mm)</option>
+                                <option value="schengen">🇪🇺 Schengen Visa (35x45mm)</option>
+                            </optgroup>
+                            <optgroup label="🌏 Asian Countries">
+                                <option value="china">🇨🇳 China (33x48mm)</option>
+                                <option value="japan">🇯🇵 Japan (35x45mm)</option>
+                                <option value="pakistan">🇵🇰 Pakistan (35x45mm)</option>
+                                <option value="bangladesh">🇧🇩 Bangladesh (35x45mm)</option>
+                                <option value="philippines">🇵🇭 Philippines (35x45mm)</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <div class="option-group">
+                        <label for="bgColorPicker">🎨 Background Color</label>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                            <input type="color" id="bgColorPicker" value="#ffffff" style="flex: 1;">
+                            <span style="font-size: 13px; color: var(--text-secondary); font-weight: 500;">👆 Custom color</span>
+                        </div>
+                        <div class="color-presets">
+                            <div class="color-preset active" data-color="#ffffff" style="background: #ffffff; border: 2px solid #ccc;" title="White"></div>
+                            <div class="color-preset" data-color="#f5f5f5" style="background: #f5f5f5;" title="Off White"></div>
+                            <div class="color-preset" data-color="#f0f0f0" style="background: #f0f0f0;" title="Light Gray"></div>
+                            <div class="color-preset" data-color="#e8f4f8" style="background: #e8f4f8;" title="Light Blue"></div>
+                            <div class="color-preset" data-color="#99ccff" style="background: #99ccff;" title="Blue"></div>
+                            <div class="color-preset" data-color="#1a73e8" style="background: #1a73e8;" title="Dark Blue"></div>
+                            <div class="color-preset" data-color="#fef5e7" style="background: #fef5e7;" title="Cream"></div>
+                            <div class="color-preset" data-color="#ffe4e1" style="background: #ffe4e1;" title="Light Pink"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="process-btn" id="processBtn" disabled>
+                    <span id="btnText">Select a Photo to Continue</span>
+                </button>
+
+                <div class="status" id="statusMessage"></div>
+            </div>
+            <!-- COMPLETE SEO CONTENT SECTION -->
+            <div class="info-section">
+                <h2>📖 Complete Guide: Professional Passport Photo Maker Online</h2>
+                
+                <h3>✨ Create Perfect Passport Photos in 3 Simple Steps</h3>
+                <ol>
+                    <li><strong>Upload Your Photo:</strong> Click the upload button or drag and drop your photo. You can also use your phone camera to take a new photo directly. Use a clear, recent photo taken in the last 6 months with a plain background for best AI background removal results.</li>
+                    <li><strong>Select Your Country & Background Color:</strong> Choose your destination country or visa type from the dropdown menu (we support 25+ countries with exact official specifications). Then select the required background color for your country using our preset colors or custom color picker.</li>
+                    <li><strong>Adjust & Download:</strong> Drag your photo to position it perfectly within the frame. Use zoom slider or mouse wheel to resize. Click "Create Passport Photo" and our advanced AI will automatically remove the background, apply your chosen color, and resize to exact government specifications. Download your professional passport photo instantly.</li>
+                </ol>
+
+                <h3>🎯 Key Features - Why Choose Our Tool?</h3>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <h4>⚡ Lightning Fast Processing</h4>
+                        <p>Advanced AI background removal in just 5-10 seconds. No waiting, instant results with professional quality.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>🔒 100% Secure & Private</h4>
+                        <p>Your photos are automatically deleted after processing. We use SSL encryption and never store your images permanently.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>🆓 Completely Free Forever</h4>
+                        <p>No hidden costs, no subscriptions, no credit card required. Create unlimited passport photos absolutely free.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>📝 No Registration Required</h4>
+                        <p>Start creating passport photos immediately. No signup, no email required, no personal information needed.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>🌍 25+ Countries Supported</h4>
+                        <p>Exact specifications for USA, UK, India, Canada, China, UAE, Schengen visa, and 20+ more countries.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>🎨 Any Background Color</h4>
+                        <p>Choose from preset colors or select any custom color. Supports white, blue, gray, cream backgrounds.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>📱 Works on All Devices</h4>
+                        <p>Desktop, laptop, tablet, or smartphone. Works perfectly on Windows, Mac, iPhone, Android devices.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>🖼️ Professional Quality Output</h4>
+                        <p>High-resolution PNG output meeting all government standards. Perfect for visa applications and embassies.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>✂️ Drag & Position Editor</h4>
+                        <p>Drag your photo with mouse or touch to position perfectly. Zoom in/out for precise control.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>📤 Instant Download</h4>
+                        <p>Download your passport photo immediately after creation. Save directly to your device.</p>
+                    </div>
+                </div>
+
+                <h3>💡 Professional Tips for Best Results</h3>
+                <ul>
+                    <li><strong>Use Good Lighting:</strong> Take or upload photos in natural daylight or well-lit room. Avoid harsh shadows on face and background.</li>
+                    <li><strong>Plain Background Works Best:</strong> While our AI can remove any background, starting with a plain light-colored wall gives best results.</li>
+                    <li><strong>Face the Camera Directly:</strong> Keep your head straight and face the camera directly. Maintain neutral expression with mouth closed.</li>
+                    <li><strong>File Size Matters:</strong> Use high-resolution photos (at least 600x600 pixels). Files under 5MB process fastest while maintaining quality.</li>
+                    <li><strong>Check Country Requirements:</strong> Different countries have different photo specifications. Always select the correct country from dropdown.</li>
+                    <li><strong>Browser Compatibility:</strong> Works best on Chrome, Firefox, Safari, Edge (latest versions). Clear browser cache if you face issues.</li>
+                    <li><strong>Verify Before Printing:</strong> Always preview the final photo on screen before printing. Check that face is centered and properly sized.</li>
+                </ul>
+
+                <h3>❓ Frequently Asked Questions (FAQ)</h3>
+                <div class="faq-section">
+                    <div class="faq-item">
+                        <div class="faq-question">Q: Is this passport photo maker really free?</div>
+                        <div class="faq-answer">A: Yes, absolutely! Our passport photo maker is 100% free with no hidden charges, subscriptions, or premium features. You can create unlimited passport photos without any cost.</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Q: Are these passport photos legally valid for visa applications?</div>
+                        <div class="faq-answer">A: Yes! We follow exact government specifications for each country including USA (2x2 inch), UK (35x45mm), India, Canada, Schengen visa requirements, and 20+ other countries. Our photos meet all official standards for passports, visas, and ID cards.</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Q: How does the AI background removal work?</div>
+                        <div class="faq-answer">A: We use advanced AI technology (Cloudinary) that automatically detects and removes the background from your photo, then applies your chosen background color. The AI ensures clean edges and professional results every time.</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Q: Is my photo safe and private?</div>
+                        <div class="faq-answer">A: Absolutely! Your photos are processed securely using SSL encryption. All uploaded images are automatically deleted from our servers immediately after processing. We never store, share, or use your photos for any purpose.</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Q: What file size and format can I upload?</div>
+                        <div class="faq-answer">A: We accept JPG, PNG, and WebP formats up to 10MB. For best results, use high-resolution photos (at least 600x600 pixels). Larger files process slower but maintain better quality.</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Q: Which web browsers are supported?</div>
+                        <div class="faq-answer">A: Our tool works on all modern browsers: Google Chrome (recommended), Mozilla Firefox, Safari, Microsoft Edge, Opera. Mobile browsers (Chrome, Safari on iOS/Android) are fully supported. Use latest browser version for best performance.</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Q: Can I use this on my smartphone?</div>
+                        <div class="faq-answer">A: Yes! Our passport photo maker is fully mobile-responsive and works perfectly on iOS (iPhone/iPad) and Android devices. You can even use your phone camera to take a new photo directly within the tool.</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Q: What if my photo doesn't process correctly?</div>
+                        <div class="faq-answer">A: If processing fails, try these steps: (1) Use a different photo with better lighting, (2) Clear your browser cache and try again, (3) Ensure file size is under 10MB, (4) Try a different browser. If issues persist, contact us at shahidjamshaid@live.com or vislamic1984@gmail.com.</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Q: Can I print these photos at home?</div>
+                        <div class="faq-answer">A: Yes! Download the high-quality PNG file and print it using any photo printer. For best results, use glossy photo paper and ensure your printer is set to highest quality mode. Alternatively, upload the file to any online photo printing service or local photo shop.</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Q: Do you offer refunds if I'm not satisfied?</div>
+                        <div class="faq-answer">A: Since our service is completely free, there are no charges and no refunds needed. If you're not happy with the result, simply upload a new photo and try again - it costs you nothing!</div>
+                    </div>
+                </div>
+
+                <h3>📋 Common Use Cases - Who Needs Passport Photos?</h3>
+                <ul>
+                    <li><strong>International Travel:</strong> Passport renewal, first-time passport applications, visa applications for USA, UK, Schengen countries, Canada, Australia, China, UAE, and more.</li>
+                    <li><strong>Business & Professional:</strong> Work permits, professional licenses, corporate ID cards, employee badges, security clearances, and business visa applications.</li>
+                    <li><strong>Legal & Government:</strong> Driver's license renewal, national ID cards, voter registration, government applications, police clearance certificates, and legal documents.</li>
+                    <li><strong>Academic & Education:</strong> Student ID cards, university applications, scholarship forms, study abroad visa applications, and educational certificates.</li>
+                    <li><strong>Immigration & Citizenship:</strong> Green card applications, citizenship certificates, permanent residency applications, refugee documents, and family sponsorship.</li>
+                    <li><strong>Personal Documents:</strong> Health insurance cards, gym memberships, library cards, club memberships, and any official personal documentation.</li>
+                    <li><strong>Emergency Travel:</strong> Quick passport photos needed for last-minute travel, lost passport replacement, emergency visa applications.</li>
+                </ul>
+
+                <h3>💻 Technical Compatibility & System Requirements</h3>
+                <p><strong>Supported Web Browsers:</strong></p>
+                <ul>
+                    <li>Google Chrome (version 90+) - Recommended for best performance</li>
+                    <li>Mozilla Firefox (version 88+)</li>
+                    <li>Apple Safari (version 14+) - macOS and iOS</li>
+                    <li>Microsoft Edge (version 90+)</li>
+                    <li>Opera (version 76+)</li>
+                    <li>Samsung Internet Browser (version 14+)</li>
+                </ul>
+
+                <p><strong>Operating Systems:</strong></p>
+                <ul>
+                    <li>Windows 10, 11 (Desktop/Laptop)</li>
+                    <li>macOS Big Sur, Monterey, Ventura (Desktop/Laptop)</li>
+                    <li>iOS 14+ (iPhone, iPad)</li>
+                    <li>Android 9+ (Smartphones, Tablets)</li>
+                    <li>Linux (Ubuntu, Fedora, Debian with modern browsers)</li>
+                    <li>ChromeOS (Chromebooks)</li>
+                </ul>
+
+                <h3>🔐 Privacy & Security - Your Safety Matters</h3>
+                <p><strong>Data Protection Guarantee:</strong></p>
+                <ul>
+                    <li><strong>Zero Data Storage:</strong> Your uploaded photos are automatically deleted immediately after processing. We do not store any images on our servers permanently.</li>
+                    <li><strong>SSL Encryption:</strong> All data transfers use 256-bit SSL/TLS encryption, ensuring your photos are secure during upload and processing.</li>
+                    <li><strong>No Personal Information:</strong> We never collect personal data, email addresses, names, or any identifying information. Complete anonymity guaranteed.</li>
+                    <li><strong>No Tracking:</strong> We do not track your usage, IP address, or browsing history beyond basic analytics for service improvement.</li>
+                    <li><strong>GDPR Compliant:</strong> Our service fully complies with EU data protection regulations and international privacy standards.</li>
+                    <li><strong>Secure Processing:</strong> All image processing happens in secure cloud servers with enterprise-grade security measures.</li>
+                    <li><strong>No Third-Party Sharing:</strong> Your photos are never shared with third parties, advertisers, or any external services.</li>
+                </ul>
+
+                <h3>📞 Need Help? Contact Us</h3>
+                <p>If you encounter any issues, have questions, or want to request a new feature, we're here to help! Reach out to us via email:</p>
+                <ul>
+                    <li>📧 <strong>Primary Email:</strong> <a href="mailto:shahidjamshaid@live.com">shahidjamshaid@live.com</a></li>
+                    <li>📧 <strong>Alternative Email:</strong> <a href="mailto:vislamic1984@gmail.com">vislamic1984@gmail.com</a></li>
+                </ul>
+                <p>We typically respond within 24-48 hours and genuinely value your feedback. If you have suggestions for new features or improvements, please don't hesitate to share them with us!</p>
+
+                <h3>🎉 Share This Tool with Friends!</h3>
+                <p>Found our passport photo maker helpful? Share it with friends, family, and colleagues who might need professional passport photos. Help others save time and money by spreading the word about this free tool. Use the share buttons at the top of the page to share via WhatsApp, Twitter, or Facebook - it takes just one click!</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer - Dynamic from API (Same as index.html) -->
+    <footer class="bg-dark text-white text-center py-4 mt-auto" id="site-footer">
+        <p class="mb-0">Loading...</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script>
+        // ============================================================================
+        // Country Specifications
+        // ============================================================================
+        const countrySpecs = {
+            usa: { width: 600, height: 600, name: 'USA' },
+            uk: { width: 413, height: 531, name: 'UK' },
+            india: { width: 413, height: 531, name: 'India' },
+            canada: { width: 591, height: 827, name: 'Canada' },
+            australia: { width: 413, height: 531, name: 'Australia' },
+            schengen: { width: 413, height: 531, name: 'Schengen' },
+            china: { width: 390, height: 567, name: 'China' },
+            japan: { width: 413, height: 531, name: 'Japan' },
+            pakistan: { width: 413, height: 531, name: 'Pakistan' },
+            bangladesh: { width: 413, height: 531, name: 'Bangladesh' },
+            philippines: { width: 413, height: 531, name: 'Philippines' }
+        };
+
+        // ============================================================================
+        // DOM Elements
+        // ============================================================================
+        const el = {
+            imageInput: document.getElementById('imageInput'),
+            cameraInput: document.getElementById('cameraInput'),
+            dropZone: document.getElementById('dropZone'),
+            countrySelect: document.getElementById('countrySelect'),
+            bgColorPicker: document.getElementById('bgColorPicker'),
+            processBtn: document.getElementById('processBtn'),
+            btnText: document.getElementById('btnText'),
+            statusMessage: document.getElementById('statusMessage'),
+            previewContainer: document.getElementById('previewContainer')
+        };
+
+        let selectedFile = null;
+        let originalUrl = null;
+        let editor = { 
+            img: null, 
+            container: null,
+            scale: 1, 
+            rotation: 0, 
+            translateX: 0, 
+            translateY: 0, 
+            isDragging: false,
+            startX: 0,
+            startY: 0
+        };
+
+        // ============================================================================
+        // Color Preset Handlers
+        // ============================================================================
+        document.querySelectorAll('.color-preset').forEach(preset => {
+            preset.addEventListener('click', () => {
+                const color = preset.getAttribute('data-color');
+                el.bgColorPicker.value = color;
+                document.querySelectorAll('.color-preset').forEach(p => p.classList.remove('active'));
+                preset.classList.add('active');
+            });
+        });
+
+        el.bgColorPicker.addEventListener('change', () => {
+            document.querySelectorAll('.color-preset').forEach(p => p.classList.remove('active'));
+        });
+
+        // ============================================================================
+        // Drag & Drop Upload
+        // ============================================================================
+        el.dropZone.addEventListener('click', () => el.imageInput.click());
+        
+        el.dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            el.dropZone.classList.add('drag-over');
+        });
+        
+        el.dropZone.addEventListener('dragleave', () => {
+            el.dropZone.classList.remove('drag-over');
+        });
+        
+        el.dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            el.dropZone.classList.remove('drag-over');
+            if (e.dataTransfer.files.length > 0) {
+                el.imageInput.files = e.dataTransfer.files;
+                handleFileSelect();
             }
-          });
-          
-          menuHTML += '</ul>';
-          document.getElementById('menuList').innerHTML = menuHTML;
+        });
+
+        // ============================================================================
+        // File Selection Handler
+        // ============================================================================
+        el.imageInput.addEventListener('change', handleFileSelect);
+        el.cameraInput.addEventListener('change', handleFileSelect);
+
+        function handleFileSelect() {
+            const file = el.imageInput.files[0] || el.cameraInput.files[0];
+            if (!file) return;
+
+            if (file.size > 10 * 1024 * 1024) {
+                showStatus('File too large. Maximum 10MB allowed.', 'error');
+                el.imageInput.value = '';
+                el.cameraInput.value = '';
+                return;
+            }
+
+            selectedFile = file;
+            if (originalUrl) URL.revokeObjectURL(originalUrl);
+            originalUrl = URL.createObjectURL(file);
+
+            el.processBtn.disabled = false;
+            el.btnText.textContent = '✨ Create Passport Photo';
+
+            const spec = countrySpecs[el.countrySelect.value];
+            
+            // Calculate display size - FIT IMAGE IN FRAME
+            const maxDisplayWidth = 400;
+            const displayWidth = Math.min(maxDisplayWidth, spec.width);
+            const displayHeight = (displayWidth / spec.width) * spec.height;
+
+            el.previewContainer.innerHTML = `
+                <div class="preview-grid">
+                    <div class="preview-box">
+                        <h3>📷 Original Photo</h3>
+                        <img src="${originalUrl}" alt="Original" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                        <p style="color: var(--text-secondary); margin-top: 10px; font-size: 14px;">Your uploaded photo</p>
+                    </div>
+                    <div class="preview-box">
+                        <h3>✂️ Adjust Your Photo Position</h3>
+                        <div class="editor-canvas-wrapper" id="canvasWrapper" style="width: ${displayWidth}px; height: ${displayHeight}px;">
+                            <div class="editor-canvas-container" id="imageContainer" style="width: ${displayWidth}px; height: ${displayHeight}px;">
+                                <img src="${originalUrl}" id="draggableImage" alt="Drag to adjust">
+                            </div>
+                        </div>
+                        <div class="editor-controls">
+                            <div class="control-group">
+                                <span class="control-label">🔍 Zoom:</span>
+                                <input type="range" id="zoomSlider" class="zoom-slider" min="50" max="200" value="100" step="1">
+                                <span id="zoomValue" class="zoom-value">100%</span>
+                            </div>
+                            <button onclick="rotateImage(-90)">↶ Rotate 90°</button>
+                            <button onclick="resetEditor()">↻ Reset All</button>
+                        </div>
+                        <div class="editor-hint">
+                            <strong>💡 How to Adjust:</strong>
+                            Drag the image with mouse/finger to position • Use zoom slider or mouse wheel to resize • Click rotate to change orientation
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            showStatus('Photo selected! Drag the image to position it perfectly within the frame.', 'success');
+            setTimeout(initEditor, 100);
         }
 
-        // Set Footer
-        if(settings && settings.footer_text) {
-          document.getElementById('footer').innerHTML = `<p class="mb-0">${settings.footer_text}</p>`;
+        // ============================================================================
+        // Image Editor - FITS IMAGE PERFECTLY IN FRAME
+        // ============================================================================
+        function initEditor() {
+            editor.img = document.getElementById('draggableImage');
+            editor.container = document.getElementById('imageContainer');
+            
+            if (!editor.img || !editor.container) return;
+
+            // Reset editor state
+            editor.scale = 1;
+            editor.rotation = 0;
+            editor.translateX = 0;
+            editor.translateY = 0;
+
+            // Load image and calculate initial size to FIT IN FRAME
+            const tempImg = new Image();
+            tempImg.src = originalUrl;
+            tempImg.onload = () => {
+                const containerWidth = editor.container.clientWidth;
+                const containerHeight = editor.container.clientHeight;
+                const imgAspect = tempImg.width / tempImg.height;
+                const containerAspect = containerWidth / containerHeight;
+
+                // Calculate initial size to FIT image in frame
+                let initialWidth, initialHeight;
+                if (imgAspect > containerAspect) {
+                    // Image is wider - fit to width
+                    initialWidth = containerWidth;
+                    initialHeight = containerWidth / imgAspect;
+                } else {
+                    // Image is taller - fit to height
+                    initialHeight = containerHeight;
+                    initialWidth = containerHeight * imgAspect;
+                }
+
+                // Set image size to fit perfectly
+                editor.img.style.width = initialWidth + 'px';
+                editor.img.style.height = initialHeight + 'px';
+                
+                updateTransform();
+                setupControls();
+            };
         }
 
-      } catch(error) {
-        console.error('Load Error:', error);
-      }
-    }
+        function setupControls() {
+            const zoomSlider = document.getElementById('zoomSlider');
+            const zoomValue = document.getElementById('zoomValue');
 
-    // Load dynamic content when page loads
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', loadDynamicContent);
-    } else {
-      loadDynamicContent();
-    }
+            if (zoomSlider) {
+                zoomSlider.addEventListener('input', function() {
+                    editor.scale = this.value / 100;
+                    zoomValue.textContent = this.value + '%';
+                    updateTransform();
+                });
+            }
 
-    // Add minimal required styles for dropdown functionality
-    const style = document.createElement('style');
-    style.textContent = `
-      .dropdown-menu { display: none !important; }
-      .dropdown.active .dropdown-menu { display: block !important; }
-    `;
-    document.head.appendChild(style);
-  </script>
+            // Mouse events
+            editor.container.addEventListener('mousedown', startDrag);
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', stopDrag);
 
-  <!-- Bootstrap JS (Required for navbar functionality) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+            // Touch events
+            editor.container.addEventListener('touchstart', handleTouchStart, { passive: false });
+            document.addEventListener('touchmove', handleTouchMove, { passive: false });
+            document.addEventListener('touchend', stopDrag);
+
+            // Mouse wheel zoom
+            editor.container.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                const delta = e.deltaY > 0 ? -5 : 5;
+                const newVal = Math.min(200, Math.max(50, parseInt(zoomSlider.value) + delta));
+                zoomSlider.value = newVal;
+                editor.scale = newVal / 100;
+                zoomValue.textContent = newVal + '%';
+                updateTransform();
+            }, { passive: false });
+        }
+
+        function startDrag(e) {
+            editor.isDragging = true;
+            editor.container.style.cursor = 'grabbing';
+            const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+            const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+            editor.startX = clientX - editor.translateX;
+            editor.startY = clientY - editor.translateY;
+        }
+
+        function drag(e) {
+            if (!editor.isDragging) return;
+            e.preventDefault();
+            const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+            const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+            editor.translateX = clientX - editor.startX;
+            editor.translateY = clientY - editor.startY;
+            updateTransform();
+        }
+
+        function stopDrag() {
+            if (editor.isDragging) {
+                editor.isDragging = false;
+                if (editor.container) editor.container.style.cursor = 'grab';
+            }
+        }
+
+        function handleTouchStart(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            editor.isDragging = true;
+            editor.container.style.cursor = 'grabbing';
+            editor.startX = touch.clientX - editor.translateX;
+            editor.startY = touch.clientY - editor.translateY;
+        }
+
+        function handleTouchMove(e) {
+            if (!editor.isDragging) return;
+            e.preventDefault();
+            const touch = e.touches[0];
+            editor.translateX = touch.clientX - editor.startX;
+            editor.translateY = touch.clientY - editor.startY;
+            updateTransform();
+        }
+
+        function updateTransform() {
+            if (!editor.img) return;
+            editor.img.style.transform = `translate(calc(-50% + ${editor.translateX}px), calc(-50% + ${editor.translateY}px)) scale(${editor.scale}) rotate(${editor.rotation}deg)`;
+        }
+
+        function rotateImage(deg) {
+            editor.rotation += deg;
+            updateTransform();
+        }
+
+        function resetEditor() {
+            editor.scale = 1;
+            editor.rotation = 0;
+            editor.translateX = 0;
+            editor.translateY = 0;
+            const zoomSlider = document.getElementById('zoomSlider');
+            const zoomValue = document.getElementById('zoomValue');
+            if (zoomSlider) {
+                zoomSlider.value = 100;
+                zoomValue.textContent = '100%';
+            }
+            updateTransform();
+        }
+
+        // ============================================================================
+        // Get Final Image Blob for Export
+        // ============================================================================
+        async function getFinalBlob() {
+            return new Promise((resolve) => {
+                const spec = countrySpecs[el.countrySelect.value];
+                const canvas = document.createElement('canvas');
+                canvas.width = spec.width;
+                canvas.height = spec.height;
+                const ctx = canvas.getContext('2d');
+
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                const wrapper = document.getElementById('canvasWrapper');
+                const displayWidth = parseFloat(wrapper.style.width);
+                const exportScale = spec.width / displayWidth;
+
+                const img = new Image();
+                img.src = originalUrl;
+                img.onload = () => {
+                    ctx.save();
+                    
+                    // Calculate exported dimensions
+                    const imgDisplayWidth = editor.img.clientWidth;
+                    const imgDisplayHeight = editor.img.clientHeight;
+                    const imgExportWidth = imgDisplayWidth * exportScale;
+                    const imgExportHeight = imgDisplayHeight * exportScale;
+                    
+                    // Apply transformations
+                    ctx.translate(
+                        canvas.width / 2 + (editor.translateX * exportScale),
+                        canvas.height / 2 + (editor.translateY * exportScale)
+                    );
+                    ctx.rotate(editor.rotation * Math.PI / 180);
+                    ctx.scale(editor.scale, editor.scale);
+                    
+                    // Draw image
+                    ctx.drawImage(
+                        img,
+                        -imgExportWidth / 2,
+                        -imgExportHeight / 2,
+                        imgExportWidth,
+                        imgExportHeight
+                    );
+                    
+                    ctx.restore();
+                    canvas.toBlob((blob) => resolve(blob), 'image/png', 1.0);
+                };
+            });
+        }
+
+        // ============================================================================
+        // Process Button Handler
+        // ============================================================================
+        el.processBtn.addEventListener('click', async () => {
+            if (!selectedFile) {
+                showStatus('Please select a photo first.', 'error');
+                return;
+            }
+
+            const blob = await getFinalBlob();
+            const formData = new FormData();
+            formData.append('image', blob, 'photo.png');
+            formData.append('bgColor', el.bgColorPicker.value);
+            const spec = countrySpecs[el.countrySelect.value];
+            formData.append('width', spec.width);
+            formData.append('height', spec.height);
+
+            el.processBtn.disabled = true;
+            el.btnText.innerHTML = '<span class="loading-spinner"></span>Processing...';
+            showStatus('Processing your photo with AI... This may take 5-10 seconds.', 'processing');
+
+            try {
+                const res = await fetch('passportimagemaker.php', { method: 'POST', body: formData });
+                const text = await res.text();
+                let data;
+                
+                try {
+                    data = JSON.parse(text);
+                } catch (e) {
+                    console.error('Server response:', text);
+                    throw new Error('Invalid server response. Please try again.');
+                }
+
+                if (!data.success) {
+                    throw new Error(data.error || 'Processing failed. Please try again.');
+                }
+
+                el.previewContainer.innerHTML = `
+                    <div class="preview-grid">
+                        <div class="preview-box">
+                            <h3>📷 Original Photo</h3>
+                            <img src="${originalUrl}" alt="Original" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                            <p style="color: var(--text-secondary); margin-top: 10px; font-size: 14px;">Your uploaded photo</p>
+                        </div>
+                        <div class="preview-box">
+                            <h3>✅ Passport Photo Ready</h3>
+                            <img src="${data.url}" alt="Result" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                            <p style="color: var(--text-secondary); margin-top: 10px; font-size: 14px;">
+                                ${spec.name} • ${spec.width}x${spec.height}px
+                            </p>
+                            <a href="${data.url}" download="passport-photo-${spec.name.toLowerCase()}.png" class="download-btn">
+                                ⬇️ Download PNG
+                            </a>
+                        </div>
+                    </div>
+                `;
+                showStatus('✅ Success! Your passport photo is ready. Click download to save.', 'success');
+            } catch (err) {
+                console.error('Error:', err);
+                showStatus('❌ Error: ' + err.message, 'error');
+            } finally {
+                el.processBtn.disabled = false;
+                el.btnText.textContent = '✨ Create Passport Photo';
+            }
+        });
+
+        // ============================================================================
+        // Status Message Helper
+        // ============================================================================
+        function showStatus(msg, type) {
+            el.statusMessage.textContent = msg;
+            el.statusMessage.className = `status ${type}`;
+        }
+
+        // ============================================================================
+        // Dynamic Navigation & Footer (EXACT SAME AS INDEX.HTML)
+        // ============================================================================
+        const API = 'api.php';
+
+        async function apiCall(action) {
+            try {
+                const timestamp = new Date().getTime();
+                const response = await fetch(`${API}?action=${action}&_t=${timestamp}`, {
+                    cache: 'no-store',
+                    headers: {
+                        'Cache-Control': 'no-cache, no-store, must-revalidate',
+                        'Pragma': 'no-cache',
+                        'Expires': '0'
+                    }
+                });
+                const text = await response.text();
+                return JSON.parse(text);
+            } catch(error) {
+                console.error('API Error:', error);
+                throw error;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const menuList = document.getElementById('menuList');
+            
+            if(hamburgerBtn) {
+                hamburgerBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    menuList.classList.toggle('show');
+                    hamburgerBtn.classList.toggle('active');
+                });
+            }
+        });
+
+        function toggleDropdown(id, event) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            const clickedDropdown = document.querySelector(`[data-dropdown="${id}"]`);
+            const allDropdowns = document.querySelectorAll('.dropdown');
+            
+            allDropdowns.forEach(dropdown => {
+                if(dropdown !== clickedDropdown) {
+                    dropdown.classList.remove('active');
+                }
+            });
+            
+            clickedDropdown.classList.toggle('active');
+        }
+
+        async function loadWebsite() {
+            try {
+                const [parents, subs, settings, footerSections] = await Promise.all([
+                    apiCall('get_parent_menus'),
+                    apiCall('get_sub_menus'),
+                    apiCall('get_settings'),
+                    apiCall('get_footer_sections')
+                ]);
+
+                // Build Navigation
+                let menuHTML = '<ul class="navbar-nav">';
+                
+                if(parents && parents.length > 0) {
+                    parents.forEach(parent => {
+                        const children = subs.filter(s => s.parent_id == parent.id);
+                        
+                        if (children.length > 0) {
+                            menuHTML += `
+                                <li class="nav-item dropdown" data-dropdown="${parent.id}">
+                                    <a class="nav-link dropdown-toggle dropbtn" href="#" onclick="toggleDropdown(${parent.id}, event)">${parent.name}</a>
+                                    <ul class="dropdown-menu dropdown-content">
+                                        ${children.map(child => `<li><a class="dropdown-item" href="${child.link}">${child.name}</a></li>`).join('')}
+                                    </ul>
+                                </li>
+                            `;
+                        } else {
+                            menuHTML += `<li class="nav-item"><a class="nav-link" href="${parent.link}">${parent.name}</a></li>`;
+                        }
+                    });
+                } else {
+                    menuHTML += '<li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>';
+                    menuHTML += '<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>';
+                }
+                
+                menuHTML += '</ul>';
+                document.getElementById('menuList').innerHTML = menuHTML;
+
+                // Build Footer
+                const footerElement = document.getElementById('site-footer');
+                
+                if(footerSections && footerSections.length > 0) {
+                    const colClass = footerSections.length === 1 ? 'col-12' :
+                                    footerSections.length === 2 ? 'col-md-6' :
+                                    footerSections.length === 3 ? 'col-md-4' :
+                                    footerSections.length === 4 ? 'col-md-3' :
+                                    'col-md-2';
+                    
+                    let footerHTML = `<div class="container py-5"><div class="row g-4">`;
+                    footerSections.forEach(section => {
+                        footerHTML += `
+                            <div class="${colClass}">
+                                <div class="footer-section">
+                                    <h5 class="footer-title">${section.title}</h5>
+                                    <div class="footer-content">${section.content}</div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    footerHTML += `</div></div>`;
+                    
+                    if(settings && settings.footer_text) {
+                        footerHTML += `<div class="footer-bottom text-center py-3 border-top border-secondary"><p class="mb-0">${settings.footer_text}</p></div>`;
+                    }
+                    
+                    footerElement.innerHTML = footerHTML;
+                } else {
+                    if (settings && settings.footer_text) {
+                        footerElement.innerHTML = `<p class="mb-0">${settings.footer_text}</p>`;
+                    }
+                }
+
+                console.log('✅ Website loaded!');
+
+            } catch(error) {
+                console.error('Load Error:', error);
+                
+                document.getElementById('menuList').innerHTML = `
+                    <div class="alert alert-danger">❌ Error loading menu</div>
+                `;
+                
+                document.getElementById('site-footer').innerHTML = `<p class="mb-0">Error loading footer</p>`;
+            }
+        }
+
+        // Load immediately without waiting for DOMContentLoaded
+        loadWebsite();
+    </script>
 </body>
 </html>
