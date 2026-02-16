@@ -1,0 +1,668 @@
+<?php
+// bg-remover.php - Professional AI Background Remover Frontend
+// Backend API: bg-remove.php (already working)
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Meta Tags -->
+  <title>Free AI Background Remover Online - Remove Image Background Instantly | No Registration</title>
+  <meta name="description" content="Remove image backgrounds instantly with AI. Upload JPG, PNG, or WebP and download transparent PNG for free. No signup, no watermarks. Professional quality results in seconds.">
+  <meta name="keywords" content="background remover, remove background, ai background remover, transparent png, image background removal, photo background remover, free background eraser, remove bg online">
+  <meta name="author" content="WebAITool">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://webaitool.net/bg-remover.php">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Free AI Background Remover - Remove Image Background Online">
+  <meta property="og:description" content="Remove backgrounds from images using AI. Free, instant, professional quality.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://webaitool.net/bg-remover.php">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free AI Background Remover - Instant Results">
+  <meta name="twitter:description" content="Remove image backgrounds with AI. Free and instant.">
+
+  <!-- JSON-LD Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "AI Background Remover",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "ratingCount": "7234"
+    },
+    "description": "AI-powered background removal tool. Upload images and download transparent PNG instantly."
+  }
+  </script>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-S323MFXTYL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-S323MFXTYL');
+  </script>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0;}
+    :root{--brand:#e91e63;--brand-lt:#fce4ec;--accent:#ff6b9d;--purple:#6c5ce7;--success:#00b894;--dark:#1a1a2e;--mid:#3d3d5c;--muted:#7a7a9a;--light:#f8f9fd;--border:#e8e8f0;--shadow-sm:0 2px 8px rgba(0,0,0,.06);--shadow-lg:0 20px 60px rgba(0,0,0,.14);--radius:14px;}
+    body{font-family:'DM Sans',sans-serif;background:#f4f7f6!important;color:var(--dark);line-height:1.65;}
+    h1,h2,h3,h4{font-family:'Syne',sans-serif;line-height:1.2;}
+
+    .page-wrapper{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 40%,#0f3460 100%);padding:60px 20px 40px;}
+    
+    .tool-hero{text-align:center;margin-bottom:50px;animation:fadeInDown .6s ease-out;}
+    @keyframes fadeInDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes fadeInUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+    
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:13px;font-weight:600;padding:8px 18px;border-radius:50px;margin-bottom:20px;}
+    .tool-hero h1{font-size:clamp(28px,5vw,48px);color:#fff;margin-bottom:16px;font-weight:800;text-shadow:0 2px 10px rgba(0,0,0,.3);}
+    .tool-hero h1 em{font-style:normal;color:var(--accent);}
+    .hero-sub{color:rgba(255,255,255,.85);font-size:clamp(16px,2.5vw,20px);max-width:680px;margin:0 auto 32px;font-weight:500;}
+    .hero-pills{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+    .hero-pill{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.95);font-size:13px;font-weight:600;padding:8px 16px;border-radius:50px;}
+
+    .tool-card{max-width:1000px;margin:0 auto;background:#fff;border-radius:var(--radius);box-shadow:var(--shadow-lg);overflow:hidden;animation:fadeInUp .6s ease-out .1s backwards;}
+    .tool-card-header{background:linear-gradient(90deg,var(--brand) 0%,var(--accent) 100%);padding:24px 32px;display:flex;align-items:center;gap:16px;}
+    .tool-icon{width:52px;height:52px;background:rgba(255,255,255,.2);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:28px;}
+    .tool-card-header h2{color:#fff;font-size:24px;margin:0;font-weight:800;}
+    .tool-card-header p{color:rgba(255,255,255,.9);font-size:14px;margin:4px 0 0;}
+    .tool-card-body{padding:40px 32px;}
+
+    .upload-zone{border:3px dashed var(--border);border-radius:12px;background:var(--light);padding:60px 32px;text-align:center;cursor:pointer;transition:all .3s;position:relative;}
+    .upload-zone:hover,.upload-zone.dragover{border-color:var(--brand);background:var(--brand-lt);transform:scale(1.02);}
+    .upload-zone input[type=file]{position:absolute;inset:0;opacity:0;pointer-events:none;width:100%;height:100%;}
+    .upload-ico{font-size:64px;margin-bottom:16px;opacity:.6;pointer-events:none;}
+    .upload-title{font-size:18px;font-weight:700;color:var(--dark);margin-bottom:8px;pointer-events:none;}
+    .upload-hint{font-size:14px;color:var(--muted);pointer-events:none;}
+
+    .tool-actions{margin-top:28px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+    .btn-process{background:linear-gradient(135deg,var(--brand),var(--accent));color:#fff;border:none;padding:16px 42px;border-radius:50px;font-size:16px;font-weight:700;font-family:'Syne',sans-serif;cursor:pointer;transition:all .3s;box-shadow:0 6px 20px rgba(233,30,99,.4);}
+    .btn-process:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 10px 30px rgba(233,30,99,.5);}
+    .btn-process:disabled{opacity:.5;cursor:not-allowed;}
+    .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-radius:50%;border-top-color:#fff;animation:spin .8s linear infinite;margin-right:10px;vertical-align:middle;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+    #status{font-size:14px;font-weight:600;}
+
+    #preview{margin-top:32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;}
+    #preview:empty{display:none;}
+    .prev-block{background:var(--light);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;}
+    .prev-label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px;}
+    .prev-block img{max-width:100%;border-radius:8px;background:repeating-conic-gradient(#e0e0e0 0% 25%,#fff 0% 50%) 0 0/20px 20px;}
+
+    #download-btn{display:none;margin:28px auto 0;padding:16px 48px;background:linear-gradient(135deg,var(--success),#00cec9);color:#fff;border:none;border-radius:50px;font-size:16px;font-weight:700;font-family:'Syne',sans-serif;cursor:pointer;box-shadow:0 6px 20px rgba(0,184,148,.4);transition:all .3s;}
+    #download-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,184,148,.5);}
+
+    .share-section{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:40px 32px;border-radius:16px;text-align:center;margin-top:40px;}
+    .share-section h3{font-size:24px;margin-bottom:12px;font-weight:800;}
+    .share-section p{font-size:16px;margin-bottom:24px;opacity:.95;}
+    .contact-info{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:24px;}
+    .contact-btn{padding:12px 28px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:50px;text-decoration:none;font-weight:600;transition:all .3s;}
+    .contact-btn:hover{background:rgba(255,255,255,.3);color:#fff;transform:translateY(-2px);}
+    .share-buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+    .share-btn{padding:12px 24px;background:#fff;color:var(--purple);border:none;border-radius:50px;font-weight:700;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block;}
+    .share-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.2);color:var(--purple);}
+
+    .info-section{max-width:1200px;margin:40px auto 0;background:#fff;border-radius:16px;padding:40px 32px;box-shadow:0 4px 20px rgba(0,0,0,.08);animation:fadeInUp .6s ease-out .2s backwards;}
+    .info-section h2{font-size:28px;font-weight:800;margin-bottom:24px;color:var(--dark);}
+    .info-section h3{font-size:22px;font-weight:700;margin-top:35px;margin-bottom:18px;color:var(--purple);}
+    .info-section p,.info-section li{color:var(--mid);line-height:1.9;font-size:15px;}
+    .info-section ol,.info-section ul{margin:18px 0 18px 28px;}
+    .info-section li{margin-bottom:12px;}
+    
+    .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px;margin:28px 0;}
+    .feature-item{background:var(--light);padding:24px;border-radius:12px;border:1px solid var(--border);transition:all .3s;}
+    .feature-item:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(0,0,0,.08);}
+    .feature-item h4{font-weight:700;margin-bottom:10px;color:var(--dark);font-size:17px;}
+    .feature-item p{margin:0;font-size:14px;}
+    
+    .faq-item{background:var(--light);padding:24px;border-radius:12px;margin-bottom:18px;border-left:4px solid var(--brand);}
+    .faq-item h4{font-weight:700;color:var(--dark);margin-bottom:12px;font-size:17px;}
+    .faq-item p{margin:0;color:var(--mid);}
+    
+    @media (max-width:768px){
+      .tool-card-body{padding:28px 20px;}
+      .info-section{padding:28px 20px;}
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container-fluid px-4">
+      <a href="index.html" class="navbar-brand logo">🛠️ WebAITool</a>
+      <button class="navbar-toggler hamburger" type="button" id="hamburgerBtn">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-center" id="menuList">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="page-wrapper">
+    <div class="container" style="max-width:1400px;">
+      <!-- Share Section (Moved to Top) -->
+      <div class="share-section" style="margin-bottom:40px;">
+        <h3>✨ Found this tool helpful? Share the magic!</h3>
+        <p>Share with 5 friends and help them discover this amazing tool! 🚀<br>
+        If you face any issues or want a new feature, contact us—we'll fix it and build it for you!</p>
+        
+        <div class="contact-info">
+          <a href="mailto:shahidjamshaid@live.com" class="contact-btn">📧 shahidjamshaid@live.com</a>
+          <a href="mailto:vislamic1984@gmail.com" class="contact-btn">📧 vislamic1984@gmail.com</a>
+        </div>
+
+        <div class="share-buttons">
+          <a href="https://api.whatsapp.com/send?text=Check%20out%20this%20amazing%20AI%20Background%20Remover!%20Remove%20backgrounds%20from%20images%20instantly%20for%20FREE%20→%20https://webaitool.net/bg-remover.php" 
+             target="_blank" class="share-btn">
+            💬 Share on WhatsApp
+          </a>
+          <a href="https://twitter.com/intent/tweet?text=Remove%20image%20backgrounds%20instantly%20with%20AI!%20100%25%20Free%20%26%20No%20Signup%20Required%20🎨&url=https://webaitool.net/bg-remover.php" 
+             target="_blank" class="share-btn">
+            🐦 Share on Twitter
+          </a>
+          <a href="https://www.facebook.com/sharer/sharer.php?u=https://webaitool.net/bg-remover.php" 
+             target="_blank" class="share-btn">
+            📘 Share on Facebook
+          </a>
+        </div>
+      </div>
+
+      <div class="tool-hero">
+        <div class="hero-badge">🤖 AI-Powered Tool</div>
+        <h1>Remove Image Background <em>Instantly</em></h1>
+        <p class="hero-sub">Upload any photo and download a clean transparent PNG in seconds — powered by AI, no signup required</p>
+        <div class="hero-pills">
+          <span class="hero-pill">✓ 100% Free Forever</span>
+          <span class="hero-pill">✓ No Registration</span>
+          <span class="hero-pill">✓ Transparent PNG Output</span>
+          <span class="hero-pill">✓ AI-Powered Precision</span>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-header">
+          <div class="tool-icon">🎨</div>
+          <div>
+            <h2>AI Background Remover</h2>
+            <p>Upload JPG, PNG, or WebP (max 10MB) • Get Transparent PNG</p>
+          </div>
+        </div>
+        <div class="tool-card-body">
+          <div class="upload-zone" id="uploadZone">
+            <input type="file" id="image" accept="image/jpeg,image/png,image/webp" capture="environment">
+            <div class="upload-ico">📤</div>
+            <div class="upload-title">Click Anywhere to Browse or Drag & Drop</div>
+            <div class="upload-hint">Supports JPG, PNG, WebP • Maximum 10 MB • Camera Supported 📷</div>
+          </div>
+
+          <div class="tool-actions">
+            <button class="btn-process" id="processBtn">✨ Remove Background with AI</button>
+            <span id="status"></span>
+          </div>
+
+          <div id="preview"></div>
+
+          <button id="download-btn">⬇️ Download Transparent PNG</button>
+        </div>
+      </div>
+
+      <!-- Comprehensive SEO Content -->
+      <div class="info-section">
+        <h2>📖 Complete Guide: How to Remove Image Backgrounds with AI</h2>
+        
+        <h3>🚀 How to Use This AI Background Remover (3 Easy Steps)</h3>
+        <ol>
+          <li><strong>Step 1 - Upload Your Image:</strong> Click the upload area or drag and drop your image. Supports JPG, PNG, and WebP formats up to 10MB. The tool works with portraits, products, logos, graphics, and any type of image where you need a transparent background.</li>
+          <li><strong>Step 2 - AI Processing:</strong> Click "Remove Background with AI" and our advanced AI algorithm will automatically detect the main subject and remove the background in seconds. The AI uses machine learning to precisely identify edges, hair, fur, and complex details.</li>
+          <li><strong>Step 3 - Download Transparent PNG:</strong> Preview the before/after comparison, then download your image with transparent background as a PNG file. Use it for designs, presentations, e-commerce, or any project requiring clean transparent images.</li>
+        </ol>
+
+        <h3>✨ Why Choose Our AI Background Remover?</h3>
+        <div class="feature-grid">
+          <div class="feature-item">
+            <h4>⚡ Lightning Fast</h4>
+            <p>AI removes backgrounds in 3-5 seconds. No waiting, instant professional results powered by advanced machine learning.</p>
+          </div>
+          <div class="feature-item">
+            <h4>🔒 100% Secure</h4>
+            <p>Your images are processed securely and deleted immediately after conversion. We never store or access your files.</p>
+          </div>
+          <div class="feature-item">
+            <h4>🆓 Completely Free</h4>
+            <p>No hidden costs, no subscriptions, no watermarks. Remove unlimited backgrounds absolutely free forever.</p>
+          </div>
+          <div class="feature-item">
+            <h4>🚫 No Registration</h4>
+            <p>No sign-up, no email required, no account creation. Start removing backgrounds immediately.</p>
+          </div>
+          <div class="feature-item">
+            <h4>🤖 AI-Powered</h4>
+            <p>Advanced AI technology precisely detects subjects and removes backgrounds, even with complex edges and fine details.</p>
+          </div>
+          <div class="feature-item">
+            <h4>📱 Works Anywhere</h4>
+            <p>Use on desktop, laptop, tablet, or mobile. Works on Windows, Mac, Linux, iOS, and Android.</p>
+          </div>
+          <div class="feature-item">
+            <h4>🎯 Professional Quality</h4>
+            <p>Get studio-quality transparent PNGs perfect for e-commerce, design work, presentations, and marketing.</p>
+          </div>
+          <div class="feature-item">
+            <h4>🖼️ Multiple Formats</h4>
+            <p>Supports JPG, PNG, and WebP input. Always outputs high-quality transparent PNG files.</p>
+          </div>
+          <div class="feature-item">
+            <h4>🌐 Privacy Guaranteed</h4>
+            <p>No tracking, no data collection, no cloud storage. Your images stay private and secure.</p>
+          </div>
+          <div class="feature-item">
+            <h4>⚙️ Automatic Processing</h4>
+            <p>No manual editing required. AI handles everything automatically with perfect precision.</p>
+          </div>
+        </div>
+
+        <h3>💡 Professional Tips for Best Results</h3>
+        <ul>
+          <li><strong>Use Good Lighting:</strong> Images with clear subject separation and good lighting produce the best results. Avoid heavily shadowed or dark images.</li>
+          <li><strong>High Resolution Works Best:</strong> Higher resolution images (1000px+) allow the AI to detect edges more precisely, especially for hair and fur.</li>
+          <li><strong>Center Your Subject:</strong> Position the main subject in the center of the frame for optimal AI detection and processing.</li>
+          <li><strong>Avoid Complex Backgrounds:</strong> While our AI handles complex backgrounds well, simpler backgrounds (solid colors, minimal patterns) process fastest.</li>
+          <li><strong>Check File Size:</strong> Keep images under 10MB. If larger, resize or compress before uploading for faster processing.</li>
+          <li><strong>Save as PNG:</strong> Always download as PNG to preserve transparency. Don't convert to JPG as it doesn't support transparent backgrounds.</li>
+          <li><strong>Portraits Work Great:</strong> Our AI excels at removing backgrounds from portraits, detecting even fine hair details accurately.</li>
+        </ul>
+
+        <h3>❓ Frequently Asked Questions (FAQ)</h3>
+        
+        <div class="faq-item">
+          <h4>Is this background remover really free?</h4>
+          <p>Yes, 100% free forever! Remove unlimited image backgrounds with no hidden costs, no watermarks, no premium features. Everything is completely free including transparent PNG downloads.</p>
+        </div>
+
+        <div class="faq-item">
+          <h4>How does AI background removal work?</h4>
+          <p>Our AI uses advanced machine learning models trained on millions of images to automatically detect the main subject and separate it from the background. It analyzes edges, colors, depth, and patterns to create a precise cutout with transparent background.</p>
+        </div>
+
+        <div class="faq-item">
+          <h4>Is my data secure?</h4>
+          <p>Absolutely! Your images are processed securely on our servers and immediately deleted after conversion. We never store, view, or share your images. All connections are encrypted with HTTPS/SSL.</p>
+        </div>
+
+        <div class="faq-item">
+          <h4>What image formats are supported?</h4>
+          <p>We support JPG, JPEG, PNG, and WebP image formats as input. The output is always a transparent PNG file which preserves transparency and maintains high quality.</p>
+        </div>
+
+        <div class="faq-item">
+          <h4>What is the maximum file size?</h4>
+          <p>Maximum file size is 10 MB per image. This covers most photos and graphics. If your image is larger, resize it to under 10MB before uploading.</p>
+        </div>
+
+        <div class="faq-item">
+          <h4>Can I remove backgrounds from product photos?</h4>
+          <p>Yes! Our AI works perfectly for product photos, making it ideal for e-commerce sellers on Amazon, eBay, Shopify, or Etsy. Get professional white background product images instantly.</p>
+        </div>
+
+        <div class="faq-item">
+          <h4>Does it work with portraits and people?</h4>
+          <p>Yes! The AI is specially trained to detect people and portraits accurately, preserving fine details like hair strands, jewelry, and clothing edges perfectly.</p>
+        </div>
+
+        <div class="faq-item">
+          <h4>Do I need to install any software?</h4>
+          <p>No! This is a completely online tool that works in your web browser. No downloads, no installations, no Photoshop required. Just upload and process.</p>
+        </div>
+
+        <div class="faq-item">
+          <h4>Can I use removed backgrounds commercially?</h4>
+          <p>Yes! Images you process with our tool are yours to use commercially. We don't claim any rights to your images or their derivatives.</p>
+        </div>
+
+        <div class="faq-item">
+          <h4>Does it work on mobile devices?</h4>
+          <p>Yes! The tool works perfectly on smartphones and tablets using iOS Safari, Android Chrome, or any modern mobile browser. Upload from your camera roll or take new photos.</p>
+        </div>
+
+        <h3>🔧 Common Use Cases</h3>
+        <ul>
+          <li><strong>E-commerce Product Photos:</strong> Create professional white background product images for Amazon, eBay, Shopify, Etsy listings</li>
+          <li><strong>Graphic Design Projects:</strong> Remove backgrounds from images for logos, posters, flyers, social media graphics, and marketing materials</li>
+          <li><strong>Profile Pictures:</strong> Create professional profile photos for LinkedIn, resumes, business cards, and social media</li>
+          <li><strong>Presentations:</strong> Clean up images for PowerPoint, Keynote, or Google Slides presentations without distracting backgrounds</li>
+          <li><strong>Photo Editing:</strong> Composite multiple images, change backgrounds, or create collages with transparent elements</li>
+          <li><strong>Real Estate:</strong> Remove distracting backgrounds from property photos for better listings</li>
+          <li><strong>Marketing Materials:</strong> Create clean product shots for brochures, catalogs, advertisements, and promotional content</li>
+          <li><strong>Social Media Content:</strong> Prepare images for Instagram, Facebook, Twitter posts with custom backgrounds</li>
+          <li><strong>ID Photos:</strong> Create passport-style photos with white or colored backgrounds</li>
+        </ul>
+
+        <h3>🌟 Key Features</h3>
+        <ul>
+          <li>✅ AI-powered background removal</li>
+          <li>✅ Transparent PNG output</li>
+          <li>✅ Supports JPG, PNG, WebP formats</li>
+          <li>✅ Maximum 10MB file size</li>
+          <li>✅ 3-5 second processing time</li>
+          <li>✅ No watermarks on downloads</li>
+          <li>✅ Unlimited free conversions</li>
+          <li>✅ No registration required</li>
+          <li>✅ Mobile and desktop compatible</li>
+          <li>✅ Before/after preview</li>
+          <li>✅ One-click download</li>
+          <li>✅ Secure HTTPS processing</li>
+          <li>✅ Automatic file deletion</li>
+          <li>✅ Professional quality results</li>
+          <li>✅ Perfect for e-commerce</li>
+        </ul>
+
+        <h3>📱 Browser & Device Compatibility</h3>
+        <p>Works flawlessly on all modern browsers and devices:</p>
+        <ul>
+          <li><strong>Desktop Browsers:</strong> Chrome 90+, Firefox 88+, Safari 14+, Edge 90+, Opera 76+, Brave</li>
+          <li><strong>Mobile Browsers:</strong> Safari (iOS 14+), Chrome (Android), Samsung Internet, Firefox Mobile</li>
+          <li><strong>Operating Systems:</strong> Windows 10/11, macOS 10.15+, Linux, iOS 14+, Android 8+</li>
+          <li><strong>Devices:</strong> Desktop computers, laptops, tablets (iPad, Android), smartphones (iPhone, Android)</li>
+        </ul>
+
+        <h3>🔐 Privacy & Security Commitment</h3>
+        <p>Your privacy and security are our absolute top priorities:</p>
+        <ul>
+          <li>🔒 All connections protected with HTTPS/SSL encryption</li>
+          <li>🗑️ Automatic image deletion within seconds after processing</li>
+          <li>🚫 Zero image storage - we never save your photos</li>
+          <li>👁️ We never view, access, or analyze your images</li>
+          <li>📊 No tracking or analytics on uploaded images</li>
+          <li>🔐 Secure server-side AI processing</li>
+          <li>🛡️ Regular security updates and monitoring</li>
+          <li>💯 100% privacy guaranteed - no data selling</li>
+          <li>📝 No cookies required for basic functionality</li>
+          <li>🌍 GDPR and privacy law compliant</li>
+        </ul>
+
+        <h3>⚙️ Technical Specifications</h3>
+        <ul>
+          <li><strong>AI Technology:</strong> Advanced machine learning background removal</li>
+          <li><strong>Supported Input:</strong> JPG, JPEG, PNG, WebP</li>
+          <li><strong>Output Format:</strong> PNG with transparency</li>
+          <li><strong>Maximum File Size:</strong> 10 MB</li>
+          <li><strong>Maximum Dimensions:</strong> 8000x8000 pixels</li>
+          <li><strong>Processing Time:</strong> 3-5 seconds average</li>
+          <li><strong>Image Quality:</strong> Original resolution preserved</li>
+          <li><strong>Transparency:</strong> 8-bit alpha channel support</li>
+          <li><strong>Color Space:</strong> RGB color</li>
+          <li><strong>API Provider:</strong> Cloudinary AI</li>
+        </ul>
+
+        <h3>🎯 Why Transparent Backgrounds Matter</h3>
+        <ul>
+          <li><strong>Professional Appearance:</strong> Clean images without distracting backgrounds look more professional in any context</li>
+          <li><strong>Design Flexibility:</strong> Place transparent images on any background color, pattern, or photo</li>
+          <li><strong>E-commerce Standard:</strong> Amazon, eBay require white backgrounds; transparent PNGs make this easy</li>
+          <li><strong>Print Ready:</strong> Transparent images work perfectly for print materials, merchandise, and promotional items</li>
+          <li><strong>Social Media:</strong> Create eye-catching social posts by compositing subjects on custom backgrounds</li>
+          <li><strong>Branding:</strong> Use logo and product shots with transparent backgrounds for consistent branding across materials</li>
+        </ul>
+
+        <h3>💼 Perfect For Professionals</h3>
+        <ul>
+          <li><strong>Graphic Designers:</strong> Quick background removal for design projects and client work</li>
+          <li><strong>E-commerce Sellers:</strong> Create product images that meet marketplace requirements</li>
+          <li><strong>Photographers:</strong> Speed up photo editing workflow with AI-powered background removal</li>
+          <li><strong>Marketing Teams:</strong> Prepare images for campaigns, ads, and promotional materials quickly</li>
+          <li><strong>Social Media Managers:</strong> Create engaging visual content for posts and stories</li>
+          <li><strong>Real Estate Agents:</strong> Clean up property photos for better listings</li>
+          <li><strong>Bloggers & Content Creators:</strong> Enhance blog post images and thumbnails</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <footer class="bg-dark text-white text-center py-4 mt-auto" id="footer">
+    <p class="mb-0">© 2024 WebAITool.net</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // GA4 tracking
+    function trackGA4Event(eventName,params={}){
+      if(typeof gtag==='function'){
+        gtag('event',eventName,params);
+      }
+    }
+    trackGA4Event('page_view',{page_title:'AI Background Remover',page_location:window.location.href,tool_name:'AI Background Remover'});
+
+    // API URL
+    const API_URL = '/bg-remove.php';
+
+    const input       = document.getElementById('image');
+    const uploadZone  = document.getElementById('uploadZone');
+    const processBtn  = document.getElementById('processBtn');
+    const statusEl    = document.getElementById('status');
+    const preview     = document.getElementById('preview');
+    const downloadBtn = document.getElementById('download-btn');
+
+    let originalObjectUrl = null;
+    let resultUrl = null;
+
+    // Make entire upload zone clickable
+    uploadZone.addEventListener('click', function(e) {
+      // Don't trigger if clicking the file input itself
+      if (e.target !== input) {
+        input.click();
+      }
+    });
+
+    // Drag and drop handlers
+    ['dragenter','dragover','dragleave','drop'].forEach(ev=>{
+      uploadZone.addEventListener(ev,e=>{e.preventDefault();e.stopPropagation();});
+      document.body.addEventListener(ev,e=>e.preventDefault());
+    });
+    ['dragenter','dragover'].forEach(ev=>uploadZone.addEventListener(ev,()=>uploadZone.classList.add('dragover')));
+    ['dragleave','drop'].forEach(ev=>uploadZone.addEventListener(ev,()=>uploadZone.classList.remove('dragover')));
+
+    uploadZone.addEventListener('drop',e=>{
+      input.files = e.dataTransfer.files;
+      handleFileSelect();
+    });
+    input.addEventListener('change',handleFileSelect);
+
+    function setStatus(msg,color){
+      statusEl.textContent = msg;
+      statusEl.style.color = color || '#3d3d5c';
+    }
+
+    function handleFileSelect(){
+      const file = input.files[0];
+      preview.innerHTML = '';
+      downloadBtn.style.display = 'none';
+      resultUrl = null;
+
+      if(!file){ setStatus(''); return; }
+
+      if(file.size > 10*1024*1024){
+        setStatus('⚠️ File too large. Maximum 10MB allowed.','#f44336');
+        input.value = '';
+        return;
+      }
+      if(!/^image\/(jpeg|png|webp)$/.test(file.type)){
+        setStatus('⚠️ Only JPG, PNG or WebP images are supported.','#f44336');
+        input.value = '';
+        return;
+      }
+
+      if(originalObjectUrl) URL.revokeObjectURL(originalObjectUrl);
+      originalObjectUrl = URL.createObjectURL(file);
+
+      const block = document.createElement('div');
+      block.className = 'prev-block';
+      block.innerHTML = '<p class="prev-label">Original Image</p><img src="'+originalObjectUrl+'" alt="Original image">';
+      preview.appendChild(block);
+
+      setStatus('✓ Image ready — click "Remove Background" to continue.','#00b894');
+      
+      trackGA4Event('image_uploaded',{tool_name:'AI Background Remover',file_size:file.size});
+    }
+
+    processBtn.addEventListener('click',async()=>{
+      const file = input.files[0];
+      if(!file){ alert('Please select an image first.'); return; }
+
+      const formData = new FormData();
+      formData.append('image',file);
+
+      processBtn.disabled = true;
+      processBtn.innerHTML = '<span class="spinner"></span>Processing…';
+      setStatus('⏳ AI is removing the background… please wait.','#ff9800');
+      downloadBtn.style.display = 'none';
+
+      try{
+        const res  = await fetch(API_URL, { method:'POST', body:formData });
+        const text = await res.text();
+        console.log('RAW RESPONSE:', text);
+
+        let data;
+        try{ data = JSON.parse(text); }catch(e){ throw new Error('Invalid server response: '+text.substring(0,120)); }
+        if(!data.success) throw new Error(data.error || 'Unknown server error');
+
+        resultUrl = data.url;
+        preview.innerHTML = '';
+
+        const orig = document.createElement('div');
+        orig.className = 'prev-block';
+        orig.innerHTML = '<p class="prev-label">Original Image</p><img src="'+originalObjectUrl+'" alt="Original">';
+
+        const result = document.createElement('div');
+        result.className = 'prev-block';
+        result.innerHTML = '<p class="prev-label">Background Removed ✨</p><img src="'+resultUrl+'" alt="Transparent PNG result">';
+
+        preview.appendChild(orig);
+        preview.appendChild(result);
+
+        downloadBtn.style.display = 'block';
+        setStatus('✓ Background removed successfully!','#00b894');
+        
+        trackGA4Event('background_removed',{tool_name:'AI Background Remover'});
+      }catch(err){
+        console.error(err);
+        setStatus('✗ Error: '+err.message,'#f44336');
+      }finally{
+        processBtn.disabled = false;
+        processBtn.innerHTML = '✨ Remove Background with AI';
+      }
+    });
+
+    downloadBtn.addEventListener('click',async()=>{
+      if(!resultUrl) return;
+      try{
+        const res = await fetch(resultUrl,{mode:'cors'});
+        if(!res.ok) throw new Error('Fetch failed');
+        const blob = await res.blob();
+        const url  = URL.createObjectURL(blob);
+        const a    = document.createElement('a');
+        a.href = url;
+        a.download = 'background-removed.png';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        
+        trackGA4Event('image_downloaded',{tool_name:'AI Background Remover'});
+      }catch(e){
+        alert('Download failed: '+e.message);
+      }
+    });
+
+    // Navbar & Footer loading
+    const hamburgerBtn=document.getElementById('hamburgerBtn');
+    const menuList=document.getElementById('menuList');
+    if(hamburgerBtn){
+      hamburgerBtn.addEventListener('click',function(e){
+        e.preventDefault();
+        menuList.classList.toggle('show');
+        hamburgerBtn.classList.toggle('active');
+      });
+    }
+
+    async function loadDynamicContent(){
+      try{
+        const [parents,subs,settings]=await Promise.all([
+          fetch('api.php?action=get_parent_menus').then(r=>r.json()).catch(()=>null),
+          fetch('api.php?action=get_sub_menus').then(r=>r.json()).catch(()=>null),
+          fetch('api.php?action=get_settings').then(r=>r.json()).catch(()=>null)
+        ]);
+
+        if(parents&&parents.length>0){
+          let menuHTML='<ul class="navbar-nav">';
+          parents.forEach(parent=>{
+            const children=subs?subs.filter(s=>s.parent_id==parent.id):[];
+            if(children.length>0){
+              menuHTML+=`<li class="nav-item dropdown" data-dropdown="${parent.id}">
+                <a class="nav-link dropdown-toggle dropbtn" href="#" onclick="toggleDropdown(${parent.id}, event)">${parent.name}</a>
+                <ul class="dropdown-menu dropdown-content">
+                  ${children.map(child=>`<li><a class="dropdown-item" href="${child.link}">${child.name}</a></li>`).join('')}
+                </ul></li>`;
+            }else{
+              menuHTML+=`<li class="nav-item"><a class="nav-link" href="${parent.link}">${parent.name}</a></li>`;
+            }
+          });
+          menuHTML+='</ul>';
+          document.getElementById('menuList').innerHTML=menuHTML;
+        }
+
+        if(settings&&settings.footer_text){
+          document.getElementById('footer').innerHTML=`<p class="mb-0">${settings.footer_text}</p>`;
+        }
+      }catch(e){console.error(e);}
+    }
+
+    window.toggleDropdown=function(id,event){
+      event.preventDefault();
+      event.stopPropagation();
+      const clickedDropdown=document.querySelector(`[data-dropdown="${id}"]`);
+      const allDropdowns=document.querySelectorAll('.dropdown');
+      allDropdowns.forEach(dropdown=>{
+        if(dropdown!==clickedDropdown)dropdown.classList.remove('active');
+      });
+      clickedDropdown?.classList.toggle('active');
+    }
+
+    if(document.readyState==='loading'){
+      document.addEventListener('DOMContentLoaded',loadDynamicContent);
+    }else{
+      loadDynamicContent();
+    }
+
+    const style=document.createElement('style');
+    style.textContent=`.dropdown-menu{display:none!important;}.dropdown.active .dropdown-menu{display:block!important;}`;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>
