@@ -5,19 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebAITool - Free Online Tools</title>
     
+    <!-- Preconnect for faster loading -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
     
+    <!-- Inline Critical CSS for instant render -->
+    <style>
+        /* Skeleton Loading Animation */
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+        
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 1000px 100%;
+            animation: shimmer 2s infinite;
+            border-radius: 8px;
+        }
+        
+        .skeleton-text {
+            height: 16px;
+            margin: 8px 0;
+        }
+        
+        .skeleton-card {
+            height: 300px;
+            margin-bottom: 20px;
+        }
+        
+        .skeleton-nav {
+            height: 20px;
+            width: 100px;
+            display: inline-block;
+            margin: 0 10px;
+        }
+    </style>
     
-      <!--Google adsense  code start here-->
+    <!--Google adsense code start here-->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4467977670160507"
      crossorigin="anonymous"></script>
-    
-      <!--Google adsense code finished here-->
+    <!--Google adsense code finished here-->
     
     <!--Google Analytics code start here-->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-S323MFXTYL"></script>
@@ -30,7 +64,7 @@
     <!--Google Analytics code finished here-->
 </head>
 <body>
-    <!-- Navigation -->
+    <!-- Navigation with Instant Skeleton -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm" id="navbar">
         <div class="container-fluid px-4">
             <a href="index.html" class="navbar-brand logo">🛠️ WebAITool</a>
@@ -42,7 +76,11 @@
             </button>
             
             <div class="collapse navbar-collapse justify-content-center" id="menuList">
-                <div class="text-center p-3 text-muted">Loading...</div>
+                <ul class="navbar-nav">
+                    <li class="nav-item"><div class="skeleton skeleton-nav"></div></li>
+                    <li class="nav-item"><div class="skeleton skeleton-nav"></div></li>
+                    <li class="nav-item"><div class="skeleton skeleton-nav"></div></li>
+                </ul>
             </div>
         </div>
     </nav>
@@ -59,7 +97,7 @@
         </div>
     </div>
 
-    <!-- Hero Section -->
+    <!-- Hero Section - Shows Immediately -->
     <div class="hero">
         <div class="container">
             <h1 class="display-4 fw-bold">Complete AI Toolkit</h1>
@@ -67,31 +105,73 @@
         </div>
     </div>
 
-    <!-- Tools Section -->
+    <!-- Tools Section with Skeleton -->
     <div class="container tools-section">
         <h2 class="section-title text-center mb-5">Explore Tool Categories</h2>
         <div class="row g-4" id="tools-container">
-            <div class="col-12 text-center p-5 text-muted">Loading tools...</div>
+            <!-- Skeleton Cards - Show instantly -->
+            <div class="col-xl-3 col-lg-4 col-md-6"><div class="skeleton skeleton-card"></div></div>
+            <div class="col-xl-3 col-lg-4 col-md-6"><div class="skeleton skeleton-card"></div></div>
+            <div class="col-xl-3 col-lg-4 col-md-6"><div class="skeleton skeleton-card"></div></div>
+            <div class="col-xl-3 col-lg-4 col-md-6"><div class="skeleton skeleton-card"></div></div>
         </div>
     </div>
 
-    <!-- Dynamic Footer - Same ID as other pages -->
-    <footer class="bg-dark text-white text-center py-4 mt-auto" id="site-footer">
-        <p class="mb-0">Loading...</p>
+    <!-- Bootstrap Footer with Skeleton -->
+    <footer id="site-footer">
+        <div class="container">
+            <div class="footer-row">
+                <div class="footer-col">
+                    <div class="skeleton skeleton-text" style="width: 80%; height: 20px; margin-bottom: 15px;"></div>
+                    <div class="skeleton skeleton-text" style="width: 100%;"></div>
+                    <div class="skeleton skeleton-text" style="width: 90%;"></div>
+                </div>
+                <div class="footer-col">
+                    <div class="skeleton skeleton-text" style="width: 80%; height: 20px; margin-bottom: 15px;"></div>
+                    <div class="skeleton skeleton-text" style="width: 100%;"></div>
+                    <div class="skeleton skeleton-text" style="width: 90%;"></div>
+                </div>
+                <div class="footer-col">
+                    <div class="skeleton skeleton-text" style="width: 80%; height: 20px; margin-bottom: 15px;"></div>
+                    <div class="skeleton skeleton-text" style="width: 100%;"></div>
+                    <div class="skeleton skeleton-text" style="width: 90%;"></div>
+                </div>
+                <div class="footer-col">
+                    <div class="skeleton skeleton-text" style="width: 80%; height: 20px; margin-bottom: 15px;"></div>
+                    <div class="skeleton skeleton-text" style="width: 100%;"></div>
+                    <div class="skeleton skeleton-text" style="width: 90%;"></div>
+                </div>
+                <div class="footer-col">
+                    <div class="skeleton skeleton-text" style="width: 80%; height: 20px; margin-bottom: 15px;"></div>
+                    <div class="skeleton skeleton-text" style="width: 100%;"></div>
+                    <div class="skeleton skeleton-text" style="width: 90%;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="skeleton skeleton-text mx-auto" style="width: 300px;"></div>
+            </div>
+        </div>
     </footer>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS with defer for faster loading -->
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Custom JS -->
+    <!-- Optimized Custom JS with Progressive Loading -->
     <script>
         const API = 'api.php';
         let allToolsData = [];
 
-        async function apiCall(action) {
+        // Optimized API call with timeout
+        async function apiCall(action, timeout = 5000) {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), timeout);
+            
             try {
                 const timestamp = new Date().getTime();
                 const response = await fetch(`${API}?action=${action}&_t=${timestamp}`, {
+                    signal: controller.signal,
                     cache: 'no-store',
                     headers: {
                         'Cache-Control': 'no-cache, no-store, must-revalidate',
@@ -99,14 +179,19 @@
                         'Expires': '0'
                     }
                 });
+                clearTimeout(timeoutId);
                 const text = await response.text();
                 return JSON.parse(text);
             } catch(error) {
-                console.error('API Error:', error);
-                throw error;
+                clearTimeout(timeoutId);
+                if (error.name === 'AbortError') {
+                    console.warn(`${action} timed out`);
+                }
+                return null;
             }
         }
 
+        // Hamburger menu
         document.addEventListener('DOMContentLoaded', function() {
             const hamburgerBtn = document.getElementById('hamburgerBtn');
             const menuList = document.getElementById('menuList');
@@ -177,6 +262,7 @@
                                     <img src="${tool.image}" class="card-img-top rounded mb-3" 
                                          style="height:150px; object-fit:cover;" 
                                          alt="${displayName}"
+                                         loading="lazy"
                                          onerror="this.style.display='none'">
                                 ` : `<div class="tool-icon">${tool.icon}</div>`}
                                 <h3 class="card-title h5">${displayName}</h3>
@@ -198,22 +284,19 @@
             }
         }
 
-        async function loadWebsite() {
+        // PROGRESSIVE LOADING - Load parts independently and fast
+        async function loadMenu() {
             try {
-                const [parents, subs, tools, settings, footerSections] = await Promise.all([
+                const [parents, subs] = await Promise.all([
                     apiCall('get_parent_menus'),
-                    apiCall('get_sub_menus'),
-                    apiCall('get_tools'),
-                    apiCall('get_settings'),
-                    apiCall('get_footer_sections')
+                    apiCall('get_sub_menus')
                 ]);
 
-                // Build Navigation
                 let menuHTML = '<ul class="navbar-nav">';
                 
                 if(parents && parents.length > 0) {
                     parents.forEach(parent => {
-                        const children = subs.filter(s => s.parent_id == parent.id);
+                        const children = subs ? subs.filter(s => s.parent_id == parent.id) : [];
                         
                         if (children.length > 0) {
                             menuHTML += `
@@ -235,30 +318,55 @@
                 
                 menuHTML += '</ul>';
                 document.getElementById('menuList').innerHTML = menuHTML;
+            } catch(error) {
+                console.error('Menu Load Error:', error);
+                document.getElementById('menuList').innerHTML = `
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    </ul>
+                `;
+            }
+        }
 
-                // Build Tools
+        async function loadTools() {
+            try {
+                const tools = await apiCall('get_tools');
                 const mainTools = tools && tools.length > 0 
                     ? tools.filter(t => !t.parent_id) 
                     : [];
                 
                 allToolsData = mainTools;
                 displayTools(mainTools);
+            } catch(error) {
+                console.error('Tools Load Error:', error);
+                document.getElementById('tools-container').innerHTML = `
+                    <div class="col-12 text-center py-5">
+                        <div style="font-size:64px; margin-bottom:20px;">⚠️</div>
+                        <h3>Failed to Load Tools</h3>
+                        <button onclick="loadTools()" class="btn btn-primary mt-3">🔄 Retry</button>
+                    </div>
+                `;
+            }
+        }
 
-                // Build Footer - Load sections if available
+        async function loadFooter() {
+            try {
+                const [settings, footerSections] = await Promise.all([
+                    apiCall('get_settings'),
+                    apiCall('get_footer_sections')
+                ]);
+
                 const footerElement = document.getElementById('site-footer');
                 
                 if(footerSections && footerSections.length > 0) {
-                    // Has footer sections - build multi-section footer
-                    const colClass = footerSections.length === 1 ? 'col-12' :
-                                    footerSections.length === 2 ? 'col-md-6' :
-                                    footerSections.length === 3 ? 'col-md-4' :
-                                    footerSections.length === 4 ? 'col-md-3' :
-                                    'col-md-2';
+                    let footerHTML = `
+                        <div class="container">
+                            <div class="footer-row">
+                    `;
                     
-                    let footerHTML = `<div class="container py-5"><div class="row g-4">`;
                     footerSections.forEach(section => {
                         footerHTML += `
-                            <div class="${colClass}">
+                            <div class="footer-col">
                                 <div class="footer-section">
                                     <h5 class="footer-title">${section.title}</h5>
                                     <div class="footer-content">${section.content}</div>
@@ -266,44 +374,46 @@
                             </div>
                         `;
                     });
-                    footerHTML += `</div></div>`;
+                    
+                    footerHTML += `
+                            </div>
+                        </div>
+                    `;
                     
                     if(settings && settings.footer_text) {
-                        footerHTML += `<div class="footer-bottom text-center py-3 border-top border-secondary"><p class="mb-0">${settings.footer_text}</p></div>`;
+                        footerHTML += `
+                            <div class="footer-bottom">
+                                <div class="container">
+                                    <p class="mb-0">${settings.footer_text}</p>
+                                </div>
+                            </div>
+                        `;
                     }
                     
                     footerElement.innerHTML = footerHTML;
                 } else {
-                    // No sections - just simple copyright like resume page
                     if (settings && settings.footer_text) {
-                        footerElement.innerHTML = `<p class="mb-0">${settings.footer_text}</p>`;
+                        footerElement.innerHTML = `
+                            <div class="footer-bottom">
+                                <div class="container">
+                                    <p class="mb-0">${settings.footer_text}</p>
+                                </div>
+                            </div>
+                        `;
                     }
                 }
-
-                console.log('✅ Website loaded!');
-
             } catch(error) {
-                console.error('Load Error:', error);
-                
-                document.getElementById('menuList').innerHTML = `
-                    <div class="alert alert-danger">❌ Error loading menu</div>
-                `;
-                
-                document.getElementById('tools-container').innerHTML = `
-                    <div class="col-12 text-center py-5">
-                        <div style="font-size:64px; margin-bottom:20px;">⚠️</div>
-                        <h3>Failed to Load</h3>
-                        <p class="text-danger">${error.message}</p>
-                        <button onclick="location.reload()" class="btn btn-primary mt-3">🔄 Refresh</button>
-                    </div>
-                `;
-                
-                document.getElementById('site-footer').innerHTML = `<p class="mb-0">Error loading footer</p>`;
+                console.error('Footer Load Error:', error);
             }
         }
 
-        // Load immediately without waiting for DOMContentLoaded
-        loadWebsite();
+        // LOAD EVERYTHING INDEPENDENTLY - Fastest part shows first!
+        // This makes page appear instantly
+        loadMenu();    // Load menu independently
+        loadTools();   // Load tools independently  
+        loadFooter();  // Load footer independently
+        
+        console.log('✅ Progressive loading started!');
     </script>
 </body>
 </html>
