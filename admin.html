@@ -1,266 +1,1245 @@
-<?php
-header('Content-Type: application/json; charset=utf-8');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type');
-header('Cache-Control: no-store, no-cache, must-revalidate');
-header('Pragma: no-cache');
-header('Expires: 0');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Admin Panel — WebAITool</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0d1117;color:#e6edf3;padding:20px;line-height:1.5;font-size:14px}
+.hdr{text-align:center;padding-bottom:20px;border-bottom:1px solid #21262d;margin-bottom:26px}
+.hdr h1{font-size:22px;color:#3fb950;margin-bottom:3px}
+.hdr p{color:#8b949e;font-size:12px}
+.st{
+  position:fixed;bottom:24px;right:24px;z-index:99999;
+  padding:12px 20px;border-radius:10px;
+  font-weight:700;font-size:14px;
+  box-shadow:0 4px 20px rgba(0,0,0,.4);
+  opacity:0;transform:translateY(16px);
+  transition:opacity .25s,transform .25s;
+  pointer-events:none;min-width:200px;text-align:center;
+}
+.st.show{opacity:1;transform:translateY(0)}
+.ok{background:#0d4429;color:#3fb950;border:1px solid #3fb950}
+.er{background:#490202;color:#f85149;border:1px solid #f85149}
+.inf{background:#0d2149;color:#58a6ff;border:1px solid #58a6ff}
+.box{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:18px 20px;margin-bottom:20px}
+.box-h{display:flex;align-items:center;gap:9px;margin-bottom:3px}
+.box-h h2{font-size:14px;color:#3fb950;margin:0}
+.hint{color:#8b949e;font-size:11px;margin-bottom:14px}
+.ticker-box{border-top:3px solid #6c5ce7}
+.cards-box{border-top:3px solid #3fb950}
+input[type=text],input[type=url],textarea,select{background:#0d1117;color:#e6edf3;border:1px solid #30363d;border-radius:7px;padding:7px 10px;font-size:13px;transition:border-color .2s}
+input:focus,textarea:focus,select:focus{outline:none;border-color:#3fb950}
+textarea{resize:vertical;min-height:80px}
+input[type=checkbox]{accent-color:#3fb950;width:14px;height:14px;cursor:pointer;vertical-align:middle}
+input[type=color]{padding:2px 3px;height:30px;width:44px;border-radius:5px;cursor:pointer;border:1px solid #30363d;background:#0d1117}
+input[type=range]{cursor:pointer;accent-color:#6c5ce7;width:130px;vertical-align:middle}
+input[type=number]{background:#0d1117;color:#e6edf3;border:1px solid #30363d;border-radius:7px;padding:6px 8px;font-size:13px;text-align:center;width:64px}
+input[type=number]:focus{outline:none;border-color:#3fb950}
+.fr{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-bottom:9px}
+.lbl{color:#8b949e;font-size:12px;white-space:nowrap}
+.w25{width:calc(25% - 4px)}.w30{width:calc(30% - 4px)}.w35{width:calc(35% - 4px)}
+.w40{width:calc(40% - 4px)}.w50{width:calc(50% - 4px)}.w55{width:calc(55% - 4px)}
+.btn{padding:7px 14px;border:none;border-radius:7px;cursor:pointer;font-weight:700;font-size:12px;transition:all .18s}
+.btn:hover{filter:brightness(1.15);transform:translateY(-1px)}
+.bg{background:#3fb950;color:#0d1117}.bb{background:#58a6ff;color:#0d1117}
+.bp{background:#6c5ce7;color:#fff}.br{background:#f85149;color:#fff}.bx{background:#30363d;color:#e6edf3}
+.bsm{padding:5px 10px;font-size:11px}
+.sp{background:#0d1117;border:1px solid #21262d;border-radius:9px;padding:13px 15px;margin:11px 0}
+.sp h3{font-size:13px;color:#a29bfe;margin-bottom:10px;font-weight:700}
+.sp.gr h3{color:#3fb950}
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { http_response_code(200); exit(); }
+/* Control row for sliders */
+.ctrl{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:8px 0;padding:7px 0;border-bottom:1px solid #1a1f27}
+.ctrl:last-child{border-bottom:none}
+.ctrl-lbl{color:#e6edf3;font-size:12px;font-weight:600;min-width:150px}
+.ctrl-hint{color:#484f58;font-size:10px;margin-top:2px}
+.ctrl-val{font-size:14px;font-weight:800;color:#a29bfe;min-width:42px;text-align:center}
 
-$action = $_POST['action'] ?? $_GET['action'] ?? '';
+/* Live preview */
+.tk-prev{background:linear-gradient(90deg,#5f27cd,#6c5ce7);padding:10px 18px;border-radius:8px;color:#fff;margin:12px 0;display:flex;align-items:center;gap:12px;flex-wrap:wrap;overflow:hidden}
+.tk-prev-lbl{font-size:10px;font-weight:900;letter-spacing:1.5px;opacity:.7;text-transform:uppercase;white-space:nowrap;background:rgba(0,0,0,.25);padding:2px 8px;border-radius:4px}
 
-// Helper: bump data_version timestamp whenever any data changes
-// index.html checks this version — if changed, fetches fresh data
-function bumpVersion($pdo){
-    $v = time(); // unix timestamp as version
-    $pdo->prepare("INSERT INTO site_settings(setting_key,setting_value) VALUES('data_version',?) ON DUPLICATE KEY UPDATE setting_value=?")
-        ->execute([$v,$v]);
+/* Card live preview */
+.card-prev-outer{margin:14px 0;background:#f0eeff;border-radius:10px;padding:16px;display:inline-block}
+.card-prev{background:#fff;border-radius:12px;border:1.5px solid #e5e1ff;overflow:hidden;box-shadow:0 3px 14px rgba(108,92,231,.15);display:inline-flex;flex-direction:column;transition:width .2s}
+.cp-bar{height:4px;width:100%;display:block;background:#ef4444}
+.cp-head{padding:10px 12px 8px;border-bottom:1px solid #f0eeff;display:flex;align-items:center;justify-content:space-between}
+.cp-hl{display:flex;align-items:center;gap:6px}
+.cp-cnt{font-size:9px;font-weight:700;color:#a29bfe;background:#f3f0ff;border-radius:20px;padding:2px 6px}
+.cp-body{padding:8px 10px 12px;display:flex;flex-direction:column;gap:5px}
+.cp-link{display:flex;align-items:center;gap:6px;padding:6px 8px;background:#f8f7ff;border:1px solid #ede9ff;border-radius:8px}
+.cp-arrow{color:#c4b5fd;font-size:10px;margin-left:auto;flex-shrink:0}
+
+.tw{overflow-x:auto;margin-top:10px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:#21262d;color:#8b949e;padding:7px 9px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.4px;font-weight:700}
+td{padding:7px 9px;border-bottom:1px solid #1a1f27;vertical-align:middle}
+tr.dr{cursor:move}
+tr.dr:hover td{background:#1c2128}
+tr.dr.drag{opacity:.3}
+tr.dr.over{border-top:2px solid #3fb950}
+.emp{text-align:center;padding:20px;color:#484f58}
+.bdg{display:inline-block;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:800}
+.b-hot{background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff}
+.b-on{background:#0d4429;color:#3fb950;border:1px solid #3fb950}
+.b-off{background:#490202;color:#f85149;border:1px solid #f85149}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;border:1px solid #30363d;vertical-align:middle}
+.csl{color:#3fb950;font-size:12px;font-weight:700;margin-bottom:8px;padding:6px 10px;background:#0d4429;border-radius:6px;display:inline-block}
+.lmt{width:100%;border-collapse:collapse;font-size:12px;margin-top:5px}
+.lmt th{background:#0d1117;color:#8b949e;padding:4px 7px;font-size:10px}
+.lmt td{padding:4px 7px;border-bottom:1px solid #1a1f27}
+.ebar{display:flex;flex-wrap:wrap;gap:3px;padding:6px;background:#0d1117;border:1px solid #30363d;border-radius:7px;margin-bottom:5px}
+.eb{padding:4px 8px;background:#21262d;border:1px solid #30363d;color:#e6edf3;cursor:pointer;border-radius:5px;font-size:11px}
+.eb:hover{background:#30363d}
+.ebody{min-height:85px;padding:10px;border:1px solid #30363d;border-radius:7px;background:#0d1117;color:#e6edf3;outline:none;overflow-y:auto}
+.ebody:focus{border-color:#3fb950}
+
+@media(max-width:768px){
+  .w25,.w30,.w35,.w40,.w50,.w55{width:100%}
+  .btn{width:100%;margin:3px 0}
+  .ctrl-lbl{min-width:auto;width:100%}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <h1>🔐 WebAITool Admin Panel</h1>
+  <p>Complete Content Management System</p>
+</div>
+<!-- Fixed Toast — always visible even when scrolled down -->
+<div id="gSt" class="st"></div>
+
+<!-- CONNECTION -->
+<div class="box">
+  <div class="box-h"><h2>🔌 Database Connection</h2></div>
+  <button class="btn bg" onclick="testConn()" id="testBtn">Test Connection</button>
+  <div id="cSt" class="st"></div>
+</div>
+
+<!-- 1. PARENT MENUS -->
+<div class="box">
+  <div class="box-h"><h2>1️⃣ Parent Menu</h2></div>
+  <input type="hidden" id="ePId">
+  <div class="fr">
+    <input class="w35" type="text" id="pName" placeholder="Menu Name *">
+    <input class="w35" type="text" id="pLink" value="#" placeholder="Link">
+    <button class="btn bg bsm" onclick="saveParent()" id="pBtn">➕ Add</button>
+    <button class="btn bx bsm" id="pCan" onclick="cancelParent()" style="display:none">✕</button>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>Name</th><th>Link</th><th>Actions</th></tr></thead>
+    <tbody id="pTb"><tr><td colspan="3" class="emp">No data</td></tr></tbody>
+  </table></div>
+</div>
+
+<!-- 2. SUB MENUS -->
+<div class="box">
+  <div class="box-h"><h2>2️⃣ Sub-Menu</h2></div>
+  <input type="hidden" id="eSId">
+  <div class="fr">
+    <input class="w25" type="text" id="sName" placeholder="Name *">
+    <input class="w30" type="text" id="sLink" placeholder="Link URL *">
+    <select class="w25" id="sPar"><option value="">Select Parent</option></select>
+    <button class="btn bg bsm" onclick="saveSub()" id="sBtn">➕ Add</button>
+    <button class="btn bx bsm" id="sCan" onclick="cancelSub()" style="display:none">✕</button>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>Name</th><th>Link</th><th>Parent</th><th>Actions</th></tr></thead>
+    <tbody id="sTb"><tr><td colspan="4" class="emp">No data</td></tr></tbody>
+  </table></div>
+</div>
+
+<!-- 3. TOOLS -->
+<div class="box">
+  <div class="box-h"><h2>3️⃣ Tool Categories</h2></div>
+  <input type="hidden" id="eTId">
+  <div class="fr">
+    <input class="w30" type="text" id="tName" placeholder="Tool Name *">
+    <input style="width:50px" type="text" id="tIcon" value="🔧" placeholder="Icon">
+    <input class="w25" type="text" id="tLink" placeholder="Link URL *">
+    <input class="w25" type="file" id="tImg" accept="image/*" onchange="prevImg()">
+  </div>
+  <label class="lbl" style="margin:5px 0 8px;color:#8b949e"><input type="checkbox" id="rmImg"> Remove existing image</label>
+  <textarea id="tDesc" placeholder="Description *" class="w55" style="margin-bottom:8px"></textarea>
+  <div class="fr">
+    <select class="w30" id="tPar"><option value="">Main Category</option></select>
+    <button class="btn bg bsm" onclick="saveTool()" id="tBtn">➕ Add Tool</button>
+    <button class="btn bx bsm" id="tCan" onclick="cancelTool()" style="display:none">✕</button>
+  </div>
+  <div id="imgPrv" style="margin:6px 0"></div>
+  <div id="toolTbl" class="tw"></div>
+</div>
+
+<!-- 4. DISPLAY SETTINGS -->
+<div class="box">
+  <div class="box-h"><h2>4️⃣ Display & Hero Settings</h2></div>
+
+  <!-- ══ NAVBAR CONTROLS ══ -->
+  <div class="sp" style="border-top:3px solid #6c5ce7;margin-bottom:14px">
+    <h3 style="color:#6c5ce7">🧭 Navbar — Poora Control</h3>
+    <p class="hint">Yahan se navbar ki har cheez set karo — brand, menu items, spacing sab.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px">
+
+      <!-- Brand / Logo -->
+      <div style="grid-column:1/-1;font-weight:700;color:#a29bfe;font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px">🏷️ Brand / Logo</div>
+
+      <div class="ctrl">
+        <span class="ctrl-lbl">🔤 Brand Font Size</span>
+        <input type="range" id="navBrFR" min="14" max="32" value="20" oninput="navSync('navBrFR','navBrFN','navBrFV','px')">
+        <input type="number" id="navBrFN" value="20" min="14" max="32" style="width:56px" oninput="navSync('navBrFN','navBrFR','navBrFV','px')">
+        <span class="ctrl-val" id="navBrFV">20px</span>
+      </div>
+
+      <div class="ctrl">
+        <span class="ctrl-lbl">↔️ Brand → Menu Space</span>
+        <input type="range" id="navBrMR" min="0" max="60" value="10" oninput="navSync('navBrMR','navBrMN','navBrMV','px')">
+        <input type="number" id="navBrMN" value="10" min="0" max="60" style="width:56px" oninput="navSync('navBrMN','navBrMR','navBrMV','px')">
+        <span class="ctrl-val" id="navBrMV">10px</span>
+      </div>
+
+      <!-- Navbar bar itself -->
+      <div style="grid-column:1/-1;font-weight:700;color:#a29bfe;font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-top:8px;margin-bottom:2px">📏 Navbar Bar</div>
+
+      <div class="ctrl">
+        <span class="ctrl-lbl">📏 Navbar Height</span>
+        <input type="range" id="navHtR" min="40" max="90" value="58" oninput="navSync('navHtR','navHtN','navHtV','px')">
+        <input type="number" id="navHtN" value="58" min="40" max="90" style="width:56px" oninput="navSync('navHtN','navHtR','navHtV','px')">
+        <span class="ctrl-val" id="navHtV">58px</span>
+      </div>
+
+      <div class="ctrl">
+        <span class="ctrl-lbl">📐 Left/Right Padding</span>
+        <input type="range" id="navSPR" min="0" max="60" value="20" oninput="navSync('navSPR','navSPN','navSPV','px')">
+        <input type="number" id="navSPN" value="20" min="0" max="60" style="width:56px" oninput="navSync('navSPN','navSPR','navSPV','px')">
+        <span class="ctrl-val" id="navSPV">20px</span>
+      </div>
+
+      <!-- Menu Items -->
+      <div style="grid-column:1/-1;font-weight:700;color:#a29bfe;font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-top:8px;margin-bottom:2px">🔘 Menu Items</div>
+
+      <div class="ctrl">
+        <span class="ctrl-lbl">↔️ Items ke Beech Gap</span>
+        <input type="range" id="navGapR" min="0" max="40" value="2" oninput="navSync('navGapR','navGapN','navGapV','px')">
+        <input type="number" id="navGapN" value="2" min="0" max="40" style="width:56px" oninput="navSync('navGapN','navGapR','navGapV','px')">
+        <span class="ctrl-val" id="navGapV">2px</span>
+      </div>
+
+      <div class="ctrl">
+        <span class="ctrl-lbl">🔤 Menu Font Size</span>
+        <input type="range" id="navFtR" min="10" max="22" value="13" oninput="navSync('navFtR','navFtN','navFtV','px')">
+        <input type="number" id="navFtN" value="13" min="10" max="22" style="width:56px" oninput="navSync('navFtN','navFtR','navFtV','px')">
+        <span class="ctrl-val" id="navFtV">13px</span>
+      </div>
+
+      <div class="ctrl">
+        <span class="ctrl-lbl">📦 Item Andar Padding (TB)</span>
+        <input type="range" id="navPdTR" min="2" max="20" value="6" oninput="navSync('navPdTR','navPdTN','navPdTV','px')">
+        <input type="number" id="navPdTN" value="6" min="2" max="20" style="width:56px" oninput="navSync('navPdTN','navPdTR','navPdTV','px')">
+        <span class="ctrl-val" id="navPdTV">6px</span>
+      </div>
+
+      <div class="ctrl">
+        <span class="ctrl-lbl">📦 Item Andar Padding (LR)</span>
+        <input type="range" id="navPdLR" min="4" max="30" value="11" oninput="navSync('navPdLR','navPdLN','navPdLV','px')">
+        <input type="number" id="navPdLN" value="11" min="4" max="30" style="width:56px" oninput="navSync('navPdLN','navPdLR','navPdLV','px')">
+        <span class="ctrl-val" id="navPdLV">11px</span>
+      </div>
+
+      <div class="ctrl">
+        <span class="ctrl-lbl">🔵 Item Border Radius</span>
+        <input type="range" id="navRdR" min="0" max="30" value="7" oninput="navSync('navRdR','navRdN','navRdV','px')">
+        <input type="number" id="navRdN" value="7" min="0" max="30" style="width:56px" oninput="navSync('navRdN','navRdR','navRdV','px')">
+        <span class="ctrl-val" id="navRdV">7px</span>
+      </div>
+
+      <div class="ctrl">
+        <span class="ctrl-lbl">🎨 Item Hover Color</span>
+        <input type="color" id="navHovC" value="#6c5ce7" style="width:50px;height:32px;border:none;cursor:pointer">
+        <span style="font-size:11px;color:#666">hover background</span>
+      </div>
+
+    </div>
+
+    <button class="btn bp" onclick="saveNavSettings()" style="margin-top:14px;width:100%">💾 Save All Navbar Settings</button>
+
+    <!-- Page Layout -->
+    <div style="margin-top:16px;padding:12px;background:#f0fdf4;border-radius:10px;border:1px solid #bbf7d0">
+      <div style="font-weight:700;color:#16a34a;font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">📐 Page Layout — Poori Page ki Left/Right Space</div>
+      <p style="font-size:11px;color:#555;margin-bottom:10px">Yeh ek setting navbar, cards, tools, footer — sab ki left/right space ek saath control karti hai</p>
+
+      <div class="ctrl">
+        <span class="ctrl-lbl">↔️ Left/Right Space</span>
+        <input type="range" id="pagePadR" min="0" max="80" value="20" oninput="navSync('pagePadR','pagePadN','pagePadV','px')">
+        <input type="number" id="pagePadN" value="20" min="0" max="80" style="width:56px" oninput="navSync('pagePadN','pagePadR','pagePadV','px')">
+        <span class="ctrl-val" id="pagePadV">20px</span>
+        <div class="ctrl-hint" style="width:100%;margin-top:4px">0 = bilkul edge | 8 = thoda space | 20 = normal | 60 = zyada</div>
+      </div>
+
+      <div class="ctrl" style="margin-top:8px">
+        <span class="ctrl-lbl">📏 Page Max Width</span>
+        <input type="range" id="pageMaxR" min="800" max="1800" value="1280" step="40" oninput="navSync('pageMaxR','pageMaxN','pageMaxV','px')">
+        <input type="number" id="pageMaxN" value="1280" min="800" max="1800" style="width:68px" oninput="navSync('pageMaxN','pageMaxR','pageMaxV','px')">
+        <span class="ctrl-val" id="pageMaxV">1280px</span>
+        <div class="ctrl-hint" style="width:100%;margin-top:4px">800=chhota | 1280=normal | 1600=wide</div>
+      </div>
+
+      <button class="btn" style="margin-top:10px;background:#16a34a;color:#fff;padding:7px 18px;border-radius:8px;border:none;cursor:pointer;font-weight:700" onclick="savePageLayout()">💾 Save Page Layout</button>
+    </div>
+  </div>
+
+  <!-- ══ COLOR CONTROLS ══ -->
+  <div class="sp" style="border-top:3px solid #f59e0b;margin-bottom:14px">
+    <h3 style="color:#f59e0b">🎨 Color Controls</h3>
+
+    <!-- Tool Cards (18 cards) -->
+    <div style="background:#1a1f2e;border-radius:10px;padding:12px;margin-bottom:12px">
+      <div style="font-weight:700;color:#fbbf24;font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">🃏 Tool Cards (18 cards grid)</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div class="ctrl">
+          <span class="ctrl-lbl">🎨 Card Background</span>
+          <div style="display:flex;align-items:center;gap:8px">
+            <input type="color" id="tcBg1" value="#ffffff" oninput="previewToolCard()" style="width:44px;height:32px;border:none;cursor:pointer;border-radius:6px">
+            <input type="color" id="tcBg2" value="#ffffff" oninput="previewToolCard()" style="width:44px;height:32px;border:none;cursor:pointer;border-radius:6px">
+            <label style="font-size:11px;color:#aaa;display:flex;align-items:center;gap:4px">
+              <input type="checkbox" id="tcGrad" onchange="previewToolCard()"> Gradient
+            </label>
+          </div>
+          <div class="ctrl-hint" style="margin-top:4px">2nd color sirf Gradient on hone par lagega</div>
+        </div>
+
+        <div class="ctrl">
+          <span class="ctrl-lbl">📝 Title Color</span>
+          <input type="color" id="tcTitle" value="#1e1b4b" oninput="previewToolCard()" style="width:44px;height:32px;border:none;cursor:pointer;border-radius:6px">
+        </div>
+
+        <div class="ctrl">
+          <span class="ctrl-lbl">📄 Description Color</span>
+          <input type="color" id="tcDesc" value="#64748b" oninput="previewToolCard()" style="width:44px;height:32px;border:none;cursor:pointer;border-radius:6px">
+        </div>
+
+        <div class="ctrl">
+          <span class="ctrl-lbl">🔘 Button Color</span>
+          <input type="color" id="tcBtn" value="#6c5ce7" oninput="previewToolCard()" style="width:44px;height:32px;border:none;cursor:pointer;border-radius:6px">
+        </div>
+      </div>
+
+      <!-- Live Preview -->
+      <div style="margin-top:12px">
+        <span style="font-size:11px;color:#aaa">👁️ Live Preview:</span>
+        <div id="tcPreview" style="margin-top:6px;border-radius:10px;padding:12px;border:2px solid #333;background:#fff;max-width:220px">
+          <div id="tcPvTitle" style="font-size:14px;font-weight:700;color:#1e1b4b;margin-bottom:4px">Resume Builder</div>
+          <div id="tcPvDesc" style="font-size:11px;color:#64748b;margin-bottom:8px">Build professional resume free...</div>
+          <div id="tcPvBtn" style="background:#6c5ce7;color:#fff;font-size:12px;font-weight:700;padding:6px 12px;border-radius:7px;text-align:center;cursor:pointer">Open Tool →</div>
+        </div>
+      </div>
+
+      <button class="btn" style="margin-top:10px;background:#f59e0b;color:#000;padding:7px 18px;border-radius:8px;border:none;cursor:pointer;font-weight:700;width:100%" onclick="saveToolCardColors()">💾 Save Tool Card Colors</button>
+    </div>
+
+    <!-- Cards Strip (floating cards) -->
+    <div style="background:#1a1f2e;border-radius:10px;padding:12px">
+      <div style="font-weight:700;color:#a29bfe;font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">🃏 Cards Strip (floating cards section)</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div class="ctrl">
+          <span class="ctrl-lbl">🎨 Strip Background</span>
+          <div style="display:flex;align-items:center;gap:8px">
+            <input type="color" id="csBg1" value="#ffffff" oninput="previewCardStrip()" style="width:44px;height:32px;border:none;cursor:pointer;border-radius:6px">
+            <input type="color" id="csBg2" value="#ffffff" oninput="previewCardStrip()" style="width:44px;height:32px;border:none;cursor:pointer;border-radius:6px">
+            <label style="font-size:11px;color:#aaa;display:flex;align-items:center;gap:4px">
+              <input type="checkbox" id="csGrad" onchange="previewCardStrip()"> Gradient
+            </label>
+          </div>
+        </div>
+
+        <div class="ctrl">
+          <span class="ctrl-lbl">📝 Section Title Color</span>
+          <input type="color" id="csTitle" value="#2d3436" oninput="previewCardStrip()" style="width:44px;height:32px;border:none;cursor:pointer;border-radius:6px">
+        </div>
+
+        <div class="ctrl">
+          <span class="ctrl-lbl">🃏 Individual Card BG</span>
+          <div style="display:flex;align-items:center;gap:8px">
+            <input type="color" id="fcBg1" value="#ffffff" oninput="previewCardStrip()" style="width:44px;height:32px;border:none;cursor:pointer;border-radius:6px">
+            <input type="color" id="fcBg2" value="#ffffff" oninput="previewCardStrip()" style="width:44px;height:32px;border:none;cursor:pointer;border-radius:6px">
+            <label style="font-size:11px;color:#aaa;display:flex;align-items:center;gap:4px">
+              <input type="checkbox" id="fcGrad" onchange="previewCardStrip()"> Gradient
+            </label>
+          </div>
+        </div>
+
+        <div class="ctrl">
+          <span class="ctrl-lbl">📝 Card Title Color</span>
+          <input type="color" id="fcTitle" value="#1e1b4b" oninput="previewCardStrip()" style="width:44px;height:32px;border:none;cursor:pointer;border-radius:6px">
+        </div>
+      </div>
+
+      <!-- Live Preview -->
+      <div style="margin-top:12px">
+        <span style="font-size:11px;color:#aaa">👁️ Live Preview:</span>
+        <div id="csPreview" style="margin-top:6px;border-radius:10px;padding:10px;border:2px solid #333;background:#fff">
+          <div id="csPvTitle" style="font-size:14px;font-weight:700;color:#2d3436;margin-bottom:8px;text-align:center">⚡ Featured Tool Categories</div>
+          <div style="display:flex;gap:8px;overflow:hidden">
+            <div id="fcPvCard" style="background:#fff;border-radius:8px;border:1.5px solid #e5e1ff;padding:8px;min-width:120px;flex-shrink:0">
+              <div style="font-size:12px;font-weight:700" id="fcPvTitle" style="color:#1e1b4b">📄 PDF Tools</div>
+              <div style="font-size:10px;color:#888;margin-top:4px">PDF Merger, Splitter...</div>
+            </div>
+            <div style="background:#fff;border-radius:8px;border:1.5px solid #e5e1ff;padding:8px;min-width:120px;flex-shrink:0" id="fcPvCard2">
+              <div style="font-size:12px;font-weight:700;color:#1e1b4b">🖼️ Image Tools</div>
+              <div style="font-size:10px;color:#888;margin-top:4px">Compressor, Resizer...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn" style="margin-top:10px;background:#a29bfe;color:#000;padding:7px 18px;border-radius:8px;border:none;cursor:pointer;font-weight:700;width:100%" onclick="saveCardStripColors()">💾 Save Cards Strip Colors</button>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <div class="sp" style="border-top:2px solid #a29bfe;margin-bottom:14px">
+    <h3 style="color:#a29bfe">🦸 Hero Section (Top Banner)</h3>
+
+    <div class="ctrl">
+      <span class="ctrl-lbl">📌 Main Title</span>
+      <input type="text" id="heroTitle" style="width:260px" value="Complete AI Toolkit" placeholder="Complete AI Toolkit">
+      <button class="btn bp bsm" onclick="saveHero()">💾 Save</button>
+    </div>
+
+    <div class="ctrl" style="margin-top:8px">
+      <span class="ctrl-lbl">🔤 Title Font (px)</span>
+      <input type="range" id="heroTFR" min="16" max="60" value="38"
+             oninput="G('heroTFN').value=this.value;G('heroTFV').textContent=this.value+'px'">
+      <input type="number" id="heroTFN" value="38" min="16" max="60" style="width:62px"
+             oninput="G('heroTFR').value=this.value;G('heroTFV').textContent=this.value+'px'">
+      <span class="ctrl-val" id="heroTFV">38px</span>
+    </div>
+
+    <div class="ctrl" style="margin-top:10px">
+      <span class="ctrl-lbl">📝 Tagline / Subtitle</span>
+      <span style="color:#484f58;font-size:11px">Enter dabao = naya line</span>
+    </div>
+    <textarea id="heroSub" rows="3" style="width:100%;margin-top:5px;resize:vertical"
+              placeholder="40+ Free Tools | No Registration | 100% Private&#10;No Signup Required">40+ Free Tools | No Registration | 100% Private</textarea>
+
+    <div class="ctrl" style="margin-top:8px">
+      <span class="ctrl-lbl">🔤 Subtitle Font (px)</span>
+      <input type="range" id="heroSFR" min="10" max="32" value="18"
+             oninput="G('heroSFN').value=this.value;G('heroSFV').textContent=this.value+'px'">
+      <input type="number" id="heroSFN" value="18" min="10" max="32" style="width:62px"
+             oninput="G('heroSFR').value=this.value;G('heroSFV').textContent=this.value+'px'">
+      <span class="ctrl-val" id="heroSFV">18px</span>
+    </div>
+    <button class="btn bp bsm" onclick="saveHero()" style="margin-top:10px">💾 Save Hero Settings</button>
+  </div>
+
+  <div class="fr">
+    <span class="lbl">Tools Grid — Cards Per Row:</span>
+    <select id="cpr" onchange="saveCPR()">
+      <option value="2">2 per row</option><option value="3">3 per row</option>
+      <option value="4">4 per row</option><option value="5">5 per row</option>
+    </select>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     5. TICKER STRIP
+═══════════════════════════════ -->
+<div class="box ticker-box">
+  <div class="box-h">
+    <h2>📢 Ticker Strip</h2>
+    <span style="background:#6c5ce7;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px">TICKER</span>
+  </div>
+  <p class="hint">Purple scrolling bar below hero. Sab settings yahan se control karo.</p>
+
+  <div class="sp">
+    <h3>⚙️ Ticker Settings</h3>
+
+    <div class="ctrl">
+      <span class="ctrl-lbl">📝 Label Text</span>
+      <input type="text" id="tkLbl" value="🔥 Popular" style="width:160px" placeholder="🔥 Popular" oninput="updateTkPrev()">
+      <label class="lbl" style="margin-left:8px"><input type="checkbox" id="tkLblShow" checked onchange="saveSetting('ticker_label_show',this.checked?'1':'0','Label Visibility')"> Label Dikhao</label>
+      <button class="btn bp bsm" onclick="saveSetting('ticker_label',G('tkLbl').value,'Label')">💾 Save</button>
+    </div>
+
+    <div class="ctrl">
+      <span class="ctrl-lbl">⚡ Scroll Speed</span>
+      <input type="range" id="tkSpR" min="5" max="60" value="25"
+             oninput="G('tkSpN').value=this.value;G('tkSpV').textContent=this.value+'s'">
+      <input type="number" id="tkSpN" value="25" min="5" max="60"
+             oninput="G('tkSpR').value=this.value;G('tkSpV').textContent=this.value+'s'">
+      <span class="ctrl-val" id="tkSpV">25s</span>
+      <button class="btn bp bsm" onclick="saveSetting('ticker_speed',G('tkSpN').value,'Speed')">💾 Save</button>
+      <div class="ctrl-hint" style="width:100%">5s = fast | 25s = normal | 60s = slow</div>
+    </div>
+
+    <div class="ctrl">
+      <span class="ctrl-lbl">🔤 Ticker Text Size</span>
+      <input type="range" id="tkFtR" min="10" max="22" value="14"
+             oninput="G('tkFtN').value=this.value;G('tkFtV').textContent=this.value+'px';updateTkPrev()">
+      <input type="number" id="tkFtN" value="14" min="10" max="22"
+             oninput="G('tkFtR').value=this.value;G('tkFtV').textContent=this.value+'px';updateTkPrev()">
+      <span class="ctrl-val" id="tkFtV">14px</span>
+      <button class="btn bp bsm" onclick="saveSetting('ticker_font_size',G('tkFtN').value,'Ticker Font')">💾 Save</button>
+    </div>
+
+    <div class="ctrl" style="background:#1e293b;border-radius:8px;padding:10px;border:1px solid #6c5ce7">
+      <span class="ctrl-lbl" style="color:#a29bfe">💬 "Click me!" Tooltip Size</span>
+      <input type="range" id="tipFtR2" min="8" max="20" value="11"
+             oninput="G('tipFtN2').value=this.value;G('tipFtV2').textContent=this.value+'px';G('tipFtR').value=this.value;G('tipFtN').value=this.value;G('tipFtV').textContent=this.value+'px'">
+      <input type="number" id="tipFtN2" value="11" min="8" max="20" style="width:58px"
+             oninput="G('tipFtR2').value=this.value;G('tipFtV2').textContent=this.value+'px';G('tipFtR').value=this.value;G('tipFtN').value=this.value;G('tipFtV').textContent=this.value+'px'">
+      <span class="ctrl-val" id="tipFtV2">11px</span>
+      <button class="btn bsm" style="background:#6c5ce7;color:#fff" onclick="saveSetting('tooltip_font_size',G('tipFtN2').value,'Click me Font')">💾 Save</button>
+      <div class="ctrl-hint">Ticker aur Cards dono k "Click me!" tooltip ka size</div>
+    </div>
+
+    <!-- Live preview -->
+    <div class="tk-prev" id="tkPrev">
+      <span class="tk-prev-lbl" id="tkPrevLbl">🔥 POPULAR</span>
+      <span id="tkP1" style="font-size:14px;font-weight:600">🖼️ Image Compressor</span>
+      <span id="tkP2" style="font-size:14px;font-weight:600">📄 PDF Merger</span>
+      <span id="tkP3" style="font-size:14px;font-weight:600">📱 QR Generator</span>
+    </div>
+  </div>
+
+  <!-- Add/Edit item -->
+  <div class="sp">
+    <h3>➕ Add / Edit Ticker Item</h3>
+    <input type="hidden" id="eTkId">
+    <div class="fr">
+      <input class="w30" type="text" id="tkName" placeholder="Name *">
+      <input style="width:48px" type="text" id="tkIcon" placeholder="🔧">
+      <input class="w30" type="text" id="tkLink" placeholder="Link URL *">
+      <input style="width:80px" type="text" id="tkBdg" placeholder="Badge">
+    </div>
+    <label class="lbl" style="margin:6px 0;color:#8b949e"><input type="checkbox" id="tkOn" checked> Show in ticker</label>
+    <div class="fr" style="margin-top:5px">
+      <button class="btn bp bsm" onclick="saveTicker()" id="tkBtn">➕ Add</button>
+      <button class="btn bx bsm" id="tkCan" onclick="cancelTicker()" style="display:none">✕ Cancel</button>
+    </div>
+  </div>
+  <div class="tw" id="tkTbl"><table><tbody><tr><td class="emp">Loading…</td></tr></tbody></table></div>
+</div>
+
+<!-- ═══════════════════════════════
+     6. FLOATING CARDS
+═══════════════════════════════ -->
+<div class="box cards-box">
+  <div class="box-h">
+    <h2>🃏 Cards Strip</h2>
+    <span style="background:#3fb950;color:#0d1117;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px">CARDS</span>
+  </div>
+  <p class="hint">Ticker ke neeche white auto-scrolling strip. Hover karo to pause. Sab sizes yahan se control karo — live preview bhi dakhta hai!</p>
+
+  <!-- Cards Section Title Control -->
+  <div class="sp">
+    <h3>📋 Cards Section Title & Display</h3>
+
+    <div class="ctrl">
+      <span class="ctrl-lbl">📝 Section Title</span>
+      <input type="text" id="cardSecTitle" value="⚡ Featured Tool Categories" style="width:260px" placeholder="⚡ Featured Tool Categories">
+      <button class="btn bg bsm" onclick="saveCardTitle()">💾 Save</button>
+    </div>
+
+    <div class="ctrl" style="margin-top:8px">
+      <span class="ctrl-lbl">🔤 Title Font (px)</span>
+      <input type="range" id="cStFR" min="12" max="36" value="20"
+             oninput="G('cStFN').value=this.value;G('cStFV').textContent=this.value+'px'">
+      <input type="number" id="cStFN" value="20" min="12" max="36" style="width:62px"
+             oninput="G('cStFR').value=this.value;G('cStFV').textContent=this.value+'px'">
+      <span class="ctrl-val" id="cStFV">20px</span>
+    </div>
+
+    <!-- Icon show/hide controls -->
+    <div style="margin-top:14px;padding:12px;background:#f8f7ff;border-radius:10px;border:1px solid #ede9ff">
+      <div style="font-weight:700;color:#6c5ce7;margin-bottom:10px;font-size:13px">👁️ Icons Show / Hide Controls</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <label class="lbl" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:7px 10px;background:#fff;border-radius:8px;border:1px solid #e5e1ff">
+          <input type="checkbox" id="showCardIcon" checked onchange="saveSetting('show_card_icon',this.checked?'1':'0','Card Icon')">
+          <span>🛠️ Card Icon (card ke upar)</span>
+        </label>
+        <label class="lbl" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:7px 10px;background:#fff;border-radius:8px;border:1px solid #e5e1ff">
+          <input type="checkbox" id="showLinkIcon" checked onchange="saveSetting('show_link_icon',this.checked?'1':'0','Link Icon')">
+          <span>🔗 Link Icon (link ke aage)</span>
+        </label>
+        <label class="lbl" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:7px 10px;background:#fff;border-radius:8px;border:1px solid #e5e1ff">
+          <input type="checkbox" id="showLinkArrow" checked onchange="saveSetting('show_link_arrow',this.checked?'1':'0','Arrow')">
+          <span>› Arrow (link ke baad)</span>
+        </label>
+        <label class="lbl" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:7px 10px;background:#fff;border-radius:8px;border:1px solid #e5e1ff">
+          <input type="checkbox" id="showTickerIcon" checked onchange="saveSetting('show_ticker_icon',this.checked?'1':'0','Ticker Icon')">
+          <span>🔧 Ticker Icon (item ke aage)</span>
+        </label>
+      </div>
+
+      <!-- Tooltip font size -->
+      <div class="ctrl" style="margin-top:12px;border-top:1px solid #ede9ff;padding-top:10px">
+        <span class="ctrl-lbl">💬 "Click me" Font Size</span>
+        <input type="range" id="tipFtR" min="8" max="20" value="11"
+               oninput="G('tipFtN').value=this.value;G('tipFtV').textContent=this.value+'px'">
+        <input type="number" id="tipFtN" value="11" min="8" max="20" style="width:58px"
+               oninput="G('tipFtR').value=this.value;G('tipFtV').textContent=this.value+'px'">
+        <span class="ctrl-val" id="tipFtV">11px</span>
+        <button class="btn bp bsm" onclick="saveSetting('tooltip_font_size',G('tipFtN').value,'Tooltip Font')">💾 Save</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sp">
+    <h3>📐 Size &amp; Font Controls</h3>
+
+    <div class="ctrl">
+      <span class="ctrl-lbl">📏 Card Width</span>
+      <input type="range" id="cWR" min="160" max="340" value="220"
+             oninput="G('cWN').value=this.value;G('cWV').textContent=this.value+'px';updateCardPrev()">
+      <input type="number" id="cWN" value="220" min="160" max="340"
+             oninput="G('cWR').value=this.value;G('cWV').textContent=this.value+'px';updateCardPrev()">
+      <span class="ctrl-val" id="cWV">220px</span>
+    </div>
+
+    <div class="ctrl">
+      <span class="ctrl-lbl">⚡ Scroll Speed</span>
+      <input type="range" id="csR" min="10" max="90" value="35"
+             oninput="G('csN').value=this.value;G('csV').textContent=this.value+'s'">
+      <input type="number" id="csN" value="35" min="10" max="90"
+             oninput="G('csR').value=this.value;G('csV').textContent=this.value+'s'">
+      <span class="ctrl-val" id="csV">35s</span>
+      <div class="ctrl-hint" style="width:100%">10s = fast | 35s = normal | 90s = slow</div>
+    </div>
+
+    <div class="ctrl">
+      <span class="ctrl-lbl">🔤 Card Title Font</span>
+      <input type="range" id="cTR" min="9" max="20" value="13"
+             oninput="G('cTN').value=this.value;G('cTV').textContent=this.value+'px';updateCardPrev()">
+      <input type="number" id="cTN" value="13" min="9" max="20"
+             oninput="G('cTR').value=this.value;G('cTV').textContent=this.value+'px';updateCardPrev()">
+      <span class="ctrl-val" id="cTV">13px</span>
+    </div>
+
+    <div class="ctrl">
+      <span class="ctrl-lbl">🔤 Link Text Font</span>
+      <input type="range" id="cLR" min="9" max="18" value="12"
+             oninput="G('cLN').value=this.value;G('cLV').textContent=this.value+'px';updateCardPrev()">
+      <input type="number" id="cLN" value="12" min="9" max="18"
+             oninput="G('cLR').value=this.value;G('cLV').textContent=this.value+'px';updateCardPrev()">
+      <span class="ctrl-val" id="cLV">12px</span>
+    </div>
+
+    <div class="ctrl" style="background:#1e293b;border-radius:8px;padding:10px;border:1px solid #6c5ce7">
+      <span class="ctrl-lbl" style="color:#a29bfe">💬 "Click me!" Tooltip Size</span>
+      <input type="range" id="tipFtR3" min="8" max="20" value="11"
+             oninput="G('tipFtN3').value=this.value;G('tipFtV3').textContent=this.value+'px';G('tipFtR').value=this.value;G('tipFtN').value=this.value;G('tipFtV').textContent=this.value+'px';G('tipFtR2').value=this.value;G('tipFtN2').value=this.value;G('tipFtV2').textContent=this.value+'px'">
+      <input type="number" id="tipFtN3" value="11" min="8" max="20" style="width:58px"
+             oninput="G('tipFtR3').value=this.value;G('tipFtV3').textContent=this.value+'px';G('tipFtR').value=this.value;G('tipFtN').value=this.value;G('tipFtV').textContent=this.value+'px';G('tipFtR2').value=this.value;G('tipFtN2').value=this.value;G('tipFtV2').textContent=this.value+'px'">
+      <span class="ctrl-val" id="tipFtV3">11px</span>
+      <button class="btn bsm" style="background:#6c5ce7;color:#fff" onclick="saveSetting('tooltip_font_size',G('tipFtN3').value,'Click me Font')">💾 Save</button>
+      <div class="ctrl-hint">Ticker aur Cards dono k "Click me!" tooltip ka size</div>
+    </div>
+
+    <div class="ctrl">
+      <span class="ctrl-lbl">🎨 Card Icon Size</span>
+      <input type="range" id="cIR" min="12" max="32" value="20"
+             oninput="G('cIN').value=this.value;G('cIV').textContent=this.value+'px';updateCardPrev()">
+      <input type="number" id="cIN" value="20" min="12" max="32"
+             oninput="G('cIR').value=this.value;G('cIV').textContent=this.value+'px';updateCardPrev()">
+      <span class="ctrl-val" id="cIV">20px</span>
+    </div>
+
+    <div class="ctrl">
+      <span class="ctrl-lbl">🎨 Link Icon Size</span>
+      <input type="range" id="cLiR" min="10" max="24" value="15"
+             oninput="G('cLiN').value=this.value;G('cLiV').textContent=this.value+'px';updateCardPrev()">
+      <input type="number" id="cLiN" value="15" min="10" max="24"
+             oninput="G('cLiR').value=this.value;G('cLiV').textContent=this.value+'px';updateCardPrev()">
+      <span class="ctrl-val" id="cLiV">15px</span>
+    </div>
+
+    <!-- LIVE CARD PREVIEW -->
+    <div style="margin-top:16px">
+      <div style="color:#8b949e;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Live Preview ↓ (changes instantly as you drag sliders)</div>
+      <div class="card-prev-outer">
+        <div class="card-prev" id="cardPrev">
+          <span class="cp-bar" id="cpBar" style="background:#ef4444"></span>
+          <div class="cp-head">
+            <div class="cp-hl">
+              <span id="cpIcon" style="font-size:20px;line-height:1">📄</span>
+              <span id="cpTitle" style="font-size:13px;font-weight:800;color:#1e1b4b">PDF Tools</span>
+            </div>
+            <span class="cp-cnt">5</span>
+          </div>
+          <div class="cp-body">
+            <div class="cp-link">
+              <span id="cpLi1" style="font-size:15px;line-height:1">📦</span>
+              <span id="cpLn1" style="font-size:12px;font-weight:600;color:#3730a3;flex:1">PDF Compressor</span>
+              <span class="cp-arrow">›</span>
+            </div>
+            <div class="cp-link">
+              <span id="cpLi2" style="font-size:15px;line-height:1">📝</span>
+              <span id="cpLn2" style="font-size:12px;font-weight:600;color:#3730a3;flex:1">PDF to Word</span>
+              <span class="cp-arrow">›</span>
+            </div>
+            <div class="cp-link">
+              <span id="cpLi3" style="font-size:15px;line-height:1">✂️</span>
+              <span id="cpLn3" style="font-size:12px;font-weight:600;color:#3730a3;flex:1">PDF Splitter</span>
+              <span class="cp-arrow">›</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn bg" onclick="saveCardSizes()" style="margin-top:14px">💾 Save All Card Settings</button>
+  </div>
+
+  <!-- Add/Edit Card -->
+  <div class="sp">
+    <h3>📦 Add / Edit Card</h3>
+    <input type="hidden" id="eCId">
+    <div class="fr">
+      <input class="w40" type="text" id="cTitle" placeholder="Card Title *">
+      <input style="width:48px" type="text" id="cIconF" placeholder="📄">
+      <label class="lbl" style="color:#8b949e">Accent: <input type="color" id="cAcc" value="#6c5ce7"></label>
+    </div>
+    <div class="fr" style="margin-top:4px">
+      <button class="btn bg bsm" onclick="saveCard()" id="cBtn">➕ Add Card</button>
+      <button class="btn bx bsm" id="cCan" onclick="cancelCard()" style="display:none">✕ Cancel</button>
+    </div>
+  </div>
+
+  <div class="tw" id="cardsTbl"><table><tbody><tr><td colspan="4" class="emp">Loading…</td></tr></tbody></table></div>
+
+  <!-- Add/Edit Link -->
+  <div class="sp gr" id="linkPanel" style="margin-top:16px">
+    <h3>🔗 Add / Edit Link Inside a Card</h3>
+    <div id="cSelLbl" class="csl">👆 Upar kisi card ka "Add Link" dabao</div>
+    <input type="hidden" id="eLkId">
+    <input type="hidden" id="lkCId">
+    <div class="fr">
+      <input class="w30" type="text" id="lkName" placeholder="Link Name *">
+      <input style="width:48px" type="text" id="lkIcon" placeholder="🔗">
+      <input class="w35" type="text" id="lkLink" placeholder="URL *">
+      <input style="width:80px" type="text" id="lkBdg" placeholder="Badge">
+    </div>
+    <div class="fr" style="margin-top:5px">
+      <button class="btn bg bsm" onclick="saveLink()" id="lkBtn">➕ Add Link</button>
+      <button class="btn bx bsm" id="lkCan" onclick="cancelLink()" style="display:none">✕ Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- 7. FOOTER -->
+<div class="box">
+  <div class="box-h"><h2>7️⃣ Footer</h2></div>
+  <label class="lbl" style="font-weight:700;color:#e6edf3;margin-bottom:5px;display:block">Copyright Text:</label>
+  <textarea id="ftTxt" rows="2" class="w55" placeholder="© 2024 WebAITool.net"></textarea>
+  <button class="btn bg bsm" onclick="saveFtTxt()" style="margin:6px 0 16px">💾 Save</button>
+  <label class="lbl" style="font-weight:700;color:#e6edf3;margin:0 0 7px;display:block">Footer Sections:</label>
+  <input type="hidden" id="eFsId">
+  <input class="w50" type="text" id="fsTitle" placeholder="Section Title *" style="margin-bottom:7px">
+  <div class="ebar">
+    <button type="button" class="eb" onclick="fmt('bold')"><b>B</b></button>
+    <button type="button" class="eb" onclick="fmt('italic')"><i>I</i></button>
+    <button type="button" class="eb" onclick="fmt('underline')"><u>U</u></button>
+    <button type="button" class="eb" onclick="fmt('fontSize','5')">A+</button>
+    <button type="button" class="eb" onclick="fmt('fontSize','3')">A</button>
+    <button type="button" class="eb" onclick="fmt('fontSize','1')">A-</button>
+    <button type="button" class="eb" onclick="insLnk()">🔗</button>
+    <button type="button" class="eb" onclick="fmt('insertUnorderedList')">•</button>
+    <button type="button" class="eb" onclick="fmt('removeFormat')">✕</button>
+  </div>
+  <div id="fsBody" class="ebody" contenteditable="true"></div>
+  <div class="fr" style="margin-top:8px">
+    <button class="btn bg bsm" onclick="saveFtSec()" id="fsBtn">➕ Add Section</button>
+    <button class="btn bx bsm" id="fsCan" onclick="cancelFt()" style="display:none">✕</button>
+  </div>
+  <div class="tw" id="fsTbl"></div>
+</div>
+
+<div style="display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin:26px 0 14px">
+  <button class="btn bb" onclick="window.open('index.html','_blank')">👁️ Preview Site</button>
+  <button class="btn bx" onclick="loadAll()">🔄 Refresh</button>
+</div>
+
+<script>
+const API='api.php';
+let allPar=[],allTools=[],allTk=[],allCards=[];
+let ePId=null,eSId=null,eTId=null,eTkId=null,eCId=null,eLkId=null,eFsId=null;
+let imgB64='';
+const G=id=>document.getElementById(id);
+function esc(t){const d=document.createElement('div');d.textContent=t||'';return d.innerHTML}
+function showSt(msg,type,el){
+  el=el||'gSt';const e=G(el);e.textContent=msg;
+  e.className='st show '+(type==='success'?'ok':type==='error'?'er':'inf');
+  setTimeout(()=>e.classList.remove('show'),5000);
+}
+async function api(action,data){
+  const fd=new FormData();fd.append('action',action);
+  if(data)Object.entries(data).forEach(([k,v])=>fd.append(k,v));
+  const r=await fetch(API,{method:'POST',body:fd});
+  return JSON.parse(await r.text());
+}
+async function saveSetting(key,value,name){
+  try{
+    await api('update_setting',{key,value});
+    // Clear index.html localStorage cache → next visit loads fresh data
+    try{localStorage.removeItem('wat_cache');localStorage.removeItem('wat_ver');}catch{}
+    showSt('✅ '+name+' saved!','success');
+  }
+  catch(e){showSt('❌ '+e.message,'error')}
 }
 
-require_once 'db_config.php';
-$action = $_POST['action'] ?? $_GET['action'] ?? '';
-
-try { switch($action) {
-
-// ==================== PARENT MENUS ====================
-case 'get_parent_menus':
-    echo json_encode($pdo->query("SELECT * FROM parent_menus ORDER BY position,id")->fetchAll()); break;
-
-case 'add_parent_menu':
-    $name = trim($_POST['name']??''); $link = trim($_POST['link']??'#');
-    if(!$name) throw new Exception('Name required');
-    $pos = $pdo->query("SELECT COALESCE(MAX(position),-1)+1 as p FROM parent_menus")->fetch()['p'];
-    $pdo->prepare("INSERT INTO parent_menus(name,link,position) VALUES(?,?,?)")->execute([$name,$link,$pos]);
-    bumpVersion($pdo);
-    echo json_encode(['success'=>true,'id'=>$pdo->lastInsertId()]); break;
-
-case 'update_parent_menu':
-    $id=$_POST['id']??0; $name=trim($_POST['name']??''); $link=trim($_POST['link']??'#');
-    if(!$id||!$name) throw new Exception('Invalid data');
-    $pdo->prepare("UPDATE parent_menus SET name=?,link=? WHERE id=?")->execute([$name,$link,$id]);
-    bumpVersion($pdo);
-    echo json_encode(['success'=>true]); break;
-
-case 'delete_parent_menu':
-    $id=$_POST['id']??0; if(!$id) throw new Exception('Invalid ID');
-    $pdo->prepare("DELETE FROM sub_menus WHERE parent_id=?")->execute([$id]);
-    $pdo->prepare("DELETE FROM parent_menus WHERE id=?")->execute([$id]);
-    bumpVersion($pdo);
-    echo json_encode(['success'=>true]); break;
-
-// ==================== SUB MENUS ====================
-case 'get_sub_menus':
-    echo json_encode($pdo->query("SELECT * FROM sub_menus ORDER BY parent_id,id")->fetchAll()); break;
-
-case 'add_sub_menu':
-    $name=trim($_POST['name']??''); $link=trim($_POST['link']??''); $parent=$_POST['parent']??0;
-    if(!$name||!$link||!$parent) throw new Exception('All fields required');
-    $pdo->prepare("INSERT INTO sub_menus(name,link,parent_id) VALUES(?,?,?)")->execute([$name,$link,$parent]);
-    bumpVersion($pdo);
-    echo json_encode(['success'=>true,'id'=>$pdo->lastInsertId()]); break;
-
-case 'update_sub_menu':
-    $id=$_POST['id']??0; $name=trim($_POST['name']??''); $link=trim($_POST['link']??''); $parent=$_POST['parent']??0;
-    if(!$id||!$name||!$link||!$parent) throw new Exception('Invalid data');
-    $pdo->prepare("UPDATE sub_menus SET name=?,link=?,parent_id=? WHERE id=?")->execute([$name,$link,$parent,$id]);
-    bumpVersion($pdo);
-    echo json_encode(['success'=>true]); break;
-
-case 'delete_sub_menu':
-    $id=$_POST['id']??0; if(!$id) throw new Exception('Invalid ID');
-    $pdo->prepare("DELETE FROM sub_menus WHERE id=?")->execute([$id]);
-    bumpVersion($pdo);
-    echo json_encode(['success'=>true]); break;
-
-// ==================== TOOL ITEMS ====================
-case 'get_tools':
-    echo json_encode($pdo->query("SELECT * FROM tool_items ORDER BY position,id")->fetchAll()); break;
-
-case 'add_tool':
-    $name=trim($_POST['name']??''); $icon=trim($_POST['icon']??'🔧'); $link=trim($_POST['link']??'');
-    $desc=trim($_POST['description']??''); $image=$_POST['image']??''; $parent=!empty($_POST['parent'])?$_POST['parent']:null;
-    if(!$name||!$link||!$desc) throw new Exception('Name, link, description required');
-    $pos=$pdo->query("SELECT COALESCE(MAX(position),-1)+1 as p FROM tool_items")->fetch()['p'];
-    $pdo->prepare("INSERT INTO tool_items(name,icon,link,description,image,parent_id,position) VALUES(?,?,?,?,?,?,?)")->execute([$name,$icon,$link,$desc,$image,$parent,$pos]);
-    bumpVersion($pdo);
-    echo json_encode(['success'=>true,'id'=>$pdo->lastInsertId()]); break;
-
-case 'update_tool':
-    $id=$_POST['id']??0; $name=trim($_POST['name']??''); $icon=trim($_POST['icon']??'🔧'); $link=trim($_POST['link']??'');
-    $desc=trim($_POST['description']??''); $image=$_POST['image']??''; $parent=!empty($_POST['parent'])?$_POST['parent']:null;
-    if(!$id||!$name||!$link||!$desc) throw new Exception('Invalid data');
-    $pdo->prepare("UPDATE tool_items SET name=?,icon=?,link=?,description=?,image=?,parent_id=? WHERE id=?")->execute([$name,$icon,$link,$desc,$image,$parent,$id]);
-    bumpVersion($pdo);
-    echo json_encode(['success'=>true]); break;
-
-case 'delete_tool':
-    $id=$_POST['id']??0; if(!$id) throw new Exception('Invalid ID');
-    $pdo->prepare("DELETE FROM tool_items WHERE id=?")->execute([$id]);
-    bumpVersion($pdo);
-    echo json_encode(['success'=>true]); break;
-
-case 'reorder_tools':
-    $order=json_decode($_POST['order']??'[]',true);
-    foreach($order as $i=>$id) $pdo->prepare("UPDATE tool_items SET position=? WHERE id=?")->execute([$i,$id]);
-    bumpVersion($pdo);
-    echo json_encode(['success'=>true]); break;
-
-// ==================== SETTINGS ====================
-case 'get_data_version':
-    // Lightweight check — returns just the version timestamp
-    // index.html calls this first; if version changed, fetches fresh data
-    $rows=$pdo->query("SELECT setting_value FROM site_settings WHERE setting_key='data_version'")->fetchAll();
-    $v = $rows ? $rows[0]['setting_value'] : '0';
-    echo json_encode(['version'=>$v]); break;
-
-case 'get_settings':
-    $rows=$pdo->query("SELECT setting_key,setting_value FROM site_settings")->fetchAll();
-    $s=[]; foreach($rows as $r) $s[$r['setting_key']]=$r['setting_value'];
-    echo json_encode($s); break;
-
-case 'update_setting':
-    $key=$_POST['key']??''; $val=$_POST['value']??'';
-    if(!$key) throw new Exception('Key required');
-    $pdo->prepare("INSERT INTO site_settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=?")->execute([$key,$val,$val]);
-    bumpVersion($pdo);
-    echo json_encode(['success'=>true]); break;
-
-// ==================== FOOTER ====================
-case 'get_footer_sections':
-    echo json_encode($pdo->query("SELECT * FROM footer_sections ORDER BY position,id")->fetchAll()); break;
-
-case 'add_footer_section':
-    $title=trim($_POST['title']??''); $content=$_POST['content']??'';
-    if(!$title) throw new Exception('Title required');
-    $pos=$pdo->query("SELECT COALESCE(MAX(position),-1)+1 as p FROM footer_sections")->fetch()['p'];
-    $pdo->prepare("INSERT INTO footer_sections(title,content,position) VALUES(?,?,?)")->execute([$title,$content,$pos]);
-    bumpVersion($pdo);
-    echo json_encode(['success'=>true,'id'=>$pdo->lastInsertId()]); break;
-
-case 'update_footer_section':
-    $id=$_POST['id']??0; $title=trim($_POST['title']??''); $content=$_POST['content']??'';
-    if(!$id||!$title) throw new Exception('Invalid data');
-    $pdo->prepare("UPDATE footer_sections SET title=?,content=? WHERE id=?")->execute([$title,$content,$id]);
-    bumpVersion($pdo);
-    echo json_encode(['success'=>true]); break;
-
-case 'delete_footer_section':
-    $id=$_POST['id']??0; if(!$id) throw new Exception('Invalid ID');
-    $pdo->prepare("DELETE FROM footer_sections WHERE id=?")->execute([$id]);
-    bumpVersion($pdo);
-    echo json_encode(['success'=>true]); break;
-
-case 'reorder_footer_sections':
-    $order=json_decode($_POST['order']??'[]',true);
-    foreach($order as $i=>$id) $pdo->prepare("UPDATE footer_sections SET position=? WHERE id=?")->execute([$i,$id]);
-    bumpVersion($pdo);
-    echo json_encode(['success'=>true]); break;
-
-// ==================== TICKER ITEMS ====================
-case 'get_ticker_items':
-    echo json_encode($pdo->query("SELECT * FROM ticker_items ORDER BY position,id")->fetchAll()); break;
-
-case 'add_ticker_item':
-    $name=trim($_POST['name']??''); $icon=trim($_POST['icon']??'🔧'); $link=trim($_POST['link']??'');
-    $badge=trim($_POST['badge']??''); $active=(int)($_POST['is_active']??1);
-    if(!$name||!$link) throw new Exception('Name and link required');
-    $pos=$pdo->query("SELECT COALESCE(MAX(position),-1)+1 as p FROM ticker_items")->fetch()['p'];
-    $pdo->prepare("INSERT INTO ticker_items(name,icon,link,badge,is_active,position) VALUES(?,?,?,?,?,?)")->execute([$name,$icon,$link,$badge,$active,$pos]);
-    bumpVersion($pdo);
-    echo json_encode(['success'=>true,'id'=>$pdo->lastInsertId()]); break;
-
-case 'update_ticker_item':
-    $id=$_POST['id']??0; $name=trim($_POST['name']??''); $icon=trim($_POST['icon']??'🔧');
-    $link=trim($_POST['link']??''); $badge=trim($_POST['badge']??''); $active=(int)($_POST['is_active']??1);
-    if(!$id||!$name||!$link) throw new Exception('Invalid data');
-    $pdo->prepare("UPDATE ticker_items SET name=?,icon=?,link=?,badge=?,is_active=? WHERE id=?")->execute([$name,$icon,$link,$badge,$active,$id]);
-    bumpVersion($pdo);
-    echo json_encode(['success'=>true]); break;
-
-case 'delete_ticker_item':
-    $id=$_POST['id']??0; if(!$id) throw new Exception('Invalid ID');
-    $pdo->prepare("DELETE FROM ticker_items WHERE id=?")->execute([$id]);
-    bumpVersion($pdo);
-    echo json_encode(['success'=>true]); break;
-
-case 'reorder_ticker_items':
-    $order=json_decode($_POST['order']??'[]',true);
-    foreach($order as $i=>$id) $pdo->prepare("UPDATE ticker_items SET position=? WHERE id=?")->execute([$i,$id]);
-    bumpVersion($pdo);
-    echo json_encode(['success'=>true]); break;
-
-// ==================== FLOATING CARDS ====================
-case 'get_floating_cards':
-    $cards=$pdo->query("SELECT * FROM floating_cards ORDER BY position,id")->fetchAll();
-    foreach($cards as &$card){
-        $card['links']=$pdo->prepare("SELECT * FROM floating_card_links WHERE card_id=? ORDER BY position,id");
-        $card['links']->execute([$card['id']]);
-        $card['links']=$card['links']->fetchAll();
-    }
-    echo json_encode($cards); break;
-
-case 'add_floating_card':
-    $title=trim($_POST['title']??''); $icon=trim($_POST['icon']??'🛠️');
-    $cf=trim($_POST['color_from']??'#1a1a2e'); $ct=trim($_POST['color_to']??'#0f3460');
-    $acc=trim($_POST['accent']??'#6c5ce7');
-    if(!$title) throw new Exception('Title required');
-    $pos=$pdo->query("SELECT COALESCE(MAX(position),-1)+1 as p FROM floating_cards")->fetch()['p'];
-    $pdo->prepare("INSERT INTO floating_cards(title,icon,color_from,color_to,accent,position) VALUES(?,?,?,?,?,?)")->execute([$title,$icon,$cf,$ct,$acc,$pos]);
-    bumpVersion($pdo);
-    echo json_encode(['success'=>true,'id'=>$pdo->lastInsertId()]); break;
-
-case 'update_floating_card':
-    $id=$_POST['id']??0; $title=trim($_POST['title']??''); $icon=trim($_POST['icon']??'🛠️');
-    $cf=trim($_POST['color_from']??'#1a1a2e'); $ct=trim($_POST['color_to']??'#0f3460');
-    $acc=trim($_POST['accent']??'#6c5ce7');
-    if(!$id||!$title) throw new Exception('Invalid data');
-    $pdo->prepare("UPDATE floating_cards SET title=?,icon=?,color_from=?,color_to=?,accent=? WHERE id=?")->execute([$title,$icon,$cf,$ct,$acc,$id]);
-    bumpVersion($pdo);
-    echo json_encode(['success'=>true]); break;
-
-case 'delete_floating_card':
-    $id=$_POST['id']??0; if(!$id) throw new Exception('Invalid ID');
-    $pdo->prepare("DELETE FROM floating_card_links WHERE card_id=?")->execute([$id]);
-    $pdo->prepare("DELETE FROM floating_cards WHERE id=?")->execute([$id]);
-    bumpVersion($pdo);
-    echo json_encode(['success'=>true]); break;
-
-case 'reorder_floating_cards':
-    $order=json_decode($_POST['order']??'[]',true);
-    foreach($order as $i=>$id) $pdo->prepare("UPDATE floating_cards SET position=? WHERE id=?")->execute([$i,$id]);
-    bumpVersion($pdo);
-    echo json_encode(['success'=>true]); break;
-
-// ==================== CARD LINKS ====================
-case 'add_card_link':
-    $cid=$_POST['card_id']??0; $name=trim($_POST['name']??''); $icon=trim($_POST['icon']??'🔗');
-    $link=trim($_POST['link']??''); $badge=trim($_POST['badge']??'');
-    if(!$cid||!$name||!$link) throw new Exception('card_id, name, link required');
-    $pos=$pdo->prepare("SELECT COALESCE(MAX(position),-1)+1 as p FROM floating_card_links WHERE card_id=?");
-    $pos->execute([$cid]); $pos=$pos->fetch()['p'];
-    $pdo->prepare("INSERT INTO floating_card_links(card_id,name,icon,link,badge,position) VALUES(?,?,?,?,?,?)")->execute([$cid,$name,$icon,$link,$badge,$pos]);
-    bumpVersion($pdo);
-    echo json_encode(['success'=>true,'id'=>$pdo->lastInsertId()]); break;
-
-case 'update_card_link':
-    $id=$_POST['id']??0; $name=trim($_POST['name']??''); $icon=trim($_POST['icon']??'🔗');
-    $link=trim($_POST['link']??''); $badge=trim($_POST['badge']??'');
-    if(!$id||!$name||!$link) throw new Exception('Invalid data');
-    $pdo->prepare("UPDATE floating_card_links SET name=?,icon=?,link=?,badge=? WHERE id=?")->execute([$name,$icon,$link,$badge,$id]);
-    bumpVersion($pdo);
-    echo json_encode(['success'=>true]); break;
-
-case 'delete_card_link':
-    $id=$_POST['id']??0; if(!$id) throw new Exception('Invalid ID');
-    $pdo->prepare("DELETE FROM floating_card_links WHERE id=?")->execute([$id]);
-    bumpVersion($pdo);
-    echo json_encode(['success'=>true]); break;
-
-default: throw new Exception('Invalid action: '.$action);
-}} catch(Exception $e) {
-    http_response_code(400);
-    echo json_encode(['error'=>$e->getMessage(),'success'=>false]);
+/* ── Live previews ── */
+function updateTkPrev(){
+  const sz=parseInt(G('tkFtN').value)||14;
+  const lbl=(G('tkLbl').value||'🔥 Popular').toUpperCase();
+  G('tkPrevLbl').textContent=lbl;
+  ['tkP1','tkP2','tkP3'].forEach(id=>{G(id).style.fontSize=sz+'px'});
 }
-?>
+
+function updateCardPrev(){
+  const w  =parseInt(G('cWN').value)||220;
+  const tf =parseInt(G('cTN').value)||13;
+  const lf =parseInt(G('cLN').value)||12;
+  const ci =parseInt(G('cIN').value)||20;
+  const li =parseInt(G('cLiN').value)||15;
+  G('cardPrev').style.width=w+'px';
+  G('cpIcon').style.fontSize=ci+'px';
+  G('cpTitle').style.fontSize=tf+'px';
+  ['cpLi1','cpLi2','cpLi3'].forEach(id=>{G(id).style.fontSize=li+'px'});
+  ['cpLn1','cpLn2','cpLn3'].forEach(id=>{G(id).style.fontSize=lf+'px'});
+}
+
+/* drag-drop */
+function initDrag(sel,reorderAction,fetchFn){
+  let dId=null;
+  document.querySelectorAll(sel).forEach(row=>{
+    row.draggable=true;
+    row.ondragstart=()=>{dId=row.dataset.id;row.classList.add('drag')};
+    row.ondragend=()=>{row.classList.remove('drag');document.querySelectorAll(sel).forEach(r=>r.classList.remove('over'))};
+    row.ondragover=e=>{e.preventDefault();row.classList.add('over')};
+    row.ondragleave=()=>row.classList.remove('over');
+    row.ondrop=async e=>{
+      e.preventDefault();row.classList.remove('over');
+      if(dId===row.dataset.id)return;
+      const items=await fetchFn();
+      const di=items.findIndex(x=>x.id==dId),ei=items.findIndex(x=>x.id==row.dataset.id);
+      const[item]=items.splice(di,1);items.splice(ei,0,item);
+      await api(reorderAction,{order:JSON.stringify(items.map(x=>x.id))});
+      showSt('✅ Reordered!','success');loadAll();
+    };
+  });
+}
+
+/* ── LOAD ALL ── */
+async function loadAll(){
+  try{
+    const[par,sub,tools,settings,ftSec,tk,cards]=await Promise.all([
+      api('get_parent_menus'),api('get_sub_menus'),api('get_tools'),
+      api('get_settings'),api('get_footer_sections'),
+      api('get_ticker_items'),api('get_floating_cards'),
+    ]);
+    allPar=par;allTools=tools;allTk=tk;allCards=cards;
+    renderParents(par,sub);renderSubs(par,sub);renderTools(tools);
+    renderTk(tk);renderCards(cards);renderFtSecs(ftSec);
+    G('cpr').value=settings.cards_per_row||'3';
+    G('ftTxt').value=settings.footer_text||'';
+
+    // Hero settings
+    G('heroTitle').value = settings.hero_title    || 'Complete AI Toolkit';
+    const ng=parseInt(settings.nav_gap)||2;       G('navGapR').value=ng; G('navGapN').value=ng; G('navGapV').textContent=ng+'px';
+    const nf=parseInt(settings.nav_font)||13;      G('navFtR').value=nf;  G('navFtN').value=nf;  G('navFtV').textContent=nf+'px';
+    const nbf=parseInt(settings.nav_brand_font)||20;  G('navBrFR').value=nbf; G('navBrFN').value=nbf; G('navBrFV').textContent=nbf+'px';
+    const nbm=parseInt(settings.nav_brand_margin)||10; G('navBrMR').value=nbm; G('navBrMN').value=nbm; G('navBrMV').textContent=nbm+'px';
+    const nht=parseInt(settings.nav_height)||58;   G('navHtR').value=nht;  G('navHtN').value=nht;  G('navHtV').textContent=nht+'px';
+    const nsp=parseInt(settings.nav_side_pad)||20; G('navSPR').value=nsp;  G('navSPN').value=nsp;  G('navSPV').textContent=nsp+'px';
+    const npt=parseInt(settings.nav_pad_tb)||6;    G('navPdTR').value=npt; G('navPdTN').value=npt; G('navPdTV').textContent=npt+'px';
+    const npl=parseInt(settings.nav_pad_lr)||11;   G('navPdLR').value=npl; G('navPdLN').value=npl; G('navPdLV').textContent=npl+'px';
+    const nrd=parseInt(settings.nav_radius)||7;    G('navRdR').value=nrd;  G('navRdN').value=nrd;  G('navRdV').textContent=nrd+'px';
+    G('navHovC').value = settings.nav_hover_color||'#6c5ce7';
+    // page layout
+    const pp=parseInt(settings.page_side_pad)||20;  G('pagePadR').value=pp; G('pagePadN').value=pp; G('pagePadV').textContent=pp+'px';
+    const pm=parseInt(settings.page_max_width)||1280; G('pageMaxR').value=pm; G('pageMaxN').value=pm; G('pageMaxV').textContent=pm+'px';
+    G('heroSub').value   = settings.hero_subtitle || '40+ Free Tools | No Registration | 100% Private';
+    const htf = parseInt(settings.hero_title_font) || 38;
+    G('heroTFR').value=htf; G('heroTFN').value=htf; G('heroTFV').textContent=htf+'px';
+    const hsf = parseInt(settings.hero_sub_font) || 18;
+    G('heroSFR').value=hsf; G('heroSFN').value=hsf; G('heroSFV').textContent=hsf+'px';
+
+    // Cards section title + font + arrow toggle
+    G('cardSecTitle').value  = settings.cards_section_title || '⚡ Featured Tool Categories';
+    const csf = parseInt(settings.cards_title_font) || 20;
+    G('cStFR').value=csf; G('cStFN').value=csf; G('cStFV').textContent=csf+'px';
+    G('showLinkArrow').checked  = (settings.show_link_arrow  || '1') === '1';
+    G('showCardIcon').checked   = (settings.show_card_icon   || '1') === '1';
+    G('showLinkIcon').checked   = (settings.show_link_icon   || '1') === '1';
+    G('showTickerIcon').checked = (settings.show_ticker_icon || '1') === '1';
+    const tpf = parseInt(settings.tooltip_font_size)||11;
+    G('tipFtR').value=tpf; G('tipFtN').value=tpf; G('tipFtV').textContent=tpf+'px';
+
+    // Ticker label show/hide
+    G('tkLblShow').checked = (settings.ticker_label_show || '1') === '1';
+
+    // Load ticker settings
+    const tsp=parseInt(settings.ticker_speed)||25;
+    G('tkSpR').value=tsp;G('tkSpN').value=tsp;G('tkSpV').textContent=tsp+'s';
+    const tft=parseInt(settings.ticker_font_size)||14;
+    G('tkFtR').value=tft;G('tkFtN').value=tft;G('tkFtV').textContent=tft+'px';
+    G('tkLbl').value=settings.ticker_label||'🔥 Popular';
+    updateTkPrev();
+
+    // Load card settings
+    const cw =parseInt(settings.card_width)||220;
+    const csp=parseInt(settings.cards_speed)||35;
+    const ctf=parseInt(settings.card_title_font)||13;
+    const clf=parseInt(settings.card_link_font)||12;
+    const cis=parseInt(settings.card_icon_size)||20;
+    const cli=parseInt(settings.card_link_icon)||15;
+    G('cWR').value=cw; G('cWN').value=cw; G('cWV').textContent=cw+'px';
+    G('csR').value=csp;G('csN').value=csp;G('csV').textContent=csp+'s';
+    G('cTR').value=ctf;G('cTN').value=ctf;G('cTV').textContent=ctf+'px';
+    G('cLR').value=clf;G('cLN').value=clf;G('cLV').textContent=clf+'px';
+    G('cIR').value=cis;G('cIN').value=cis;G('cIV').textContent=cis+'px';
+    G('cLiR').value=cli;G('cLiN').value=cli;G('cLiV').textContent=cli+'px';
+    updateCardPrev();
+
+    // Load color settings into pickers
+    loadColorSettings(settings);
+
+    showSt('✅ Data loaded!','success');
+  }catch(e){showSt('❌ '+e.message,'error')}
+}
+
+/* ── CONNECTION ── */
+async function testConn(){
+  G('testBtn').disabled=true;G('testBtn').textContent='Testing…';
+  try{
+    const r=await api('get_parent_menus');
+    G('cSt').textContent='✅ Connected! '+r.length+' parent menus.';G('cSt').className='st show ok';loadAll();
+  }catch(e){G('cSt').textContent='❌ '+e.message;G('cSt').className='st show er';}
+  finally{G('testBtn').disabled=false;G('testBtn').textContent='Test Connection'}
+}
+
+/* ═══ PARENT MENUS ═══ */
+function renderParents(par,sub){
+  G('pTb').innerHTML=par.length
+    ?par.map(p=>`<tr class="dr p-row" data-id="${p.id}"><td><strong>${esc(p.name)}</strong></td><td style="color:#8b949e">${esc(p.link)}</td>
+      <td><button class="btn bb bsm" onclick="editP(${p.id},'${esc(p.name).replace(/'/g,"\\'")}','${esc(p.link).replace(/'/g,"\\'")}')">✏️</button>
+      <button class="btn br bsm" onclick="delP(${p.id})">🗑️</button></td></tr>`).join('')
+    :'<tr><td colspan="3" class="emp">No menus</td></tr>';
+  G('sPar').innerHTML='<option value="">Select Parent</option>'+par.map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join('');
+}
+async function saveParent(){const n=G('pName').value.trim(),l=G('pLink').value.trim()||'#';if(!n)return showSt('⚠️ Name required!','error');try{ePId?await api('update_parent_menu',{id:ePId,name:n,link:l}):await api('add_parent_menu',{name:n,link:l});showSt('✅ Saved!','success');cancelParent();loadAll();}catch(e){showSt('❌ '+e.message,'error')}}
+function editP(id,n,l){ePId=id;G('pName').value=n;G('pLink').value=l;G('pBtn').textContent='💾 Update';G('pCan').style.display='inline-block'}
+function cancelParent(){ePId=null;G('pName').value='';G('pLink').value='#';G('pBtn').textContent='➕ Add';G('pCan').style.display='none'}
+async function delP(id){if(!confirm('Delete?'))return;await api('delete_parent_menu',{id});showSt('✅ Deleted!','success');loadAll()}
+
+/* ═══ SUB MENUS ═══ */
+function renderSubs(par,sub){
+  G('sTb').innerHTML=sub.length
+    ?sub.map(s=>{const p=par.find(x=>x.id==s.parent_id);return`<tr class="dr s-row" data-id="${s.id}">
+      <td>↳ ${esc(s.name)}</td><td style="color:#8b949e">${esc(s.link)}</td><td>${p?esc(p.name):'—'}</td>
+      <td><button class="btn bb bsm" onclick="editS(${s.id},'${esc(s.name).replace(/'/g,"\\'")}','${esc(s.link).replace(/'/g,"\\'")}',${s.parent_id})">✏️</button>
+      <button class="btn br bsm" onclick="delS(${s.id})">🗑️</button></td></tr>`}).join('')
+    :'<tr><td colspan="4" class="emp">No sub-menus</td></tr>';
+}
+async function saveSub(){const n=G('sName').value.trim(),l=G('sLink').value.trim(),p=G('sPar').value;if(!n||!l||!p)return showSt('⚠️ Fill all!','error');try{eSId?await api('update_sub_menu',{id:eSId,name:n,link:l,parent:p}):await api('add_sub_menu',{name:n,link:l,parent:p});showSt('✅ Saved!','success');cancelSub();loadAll();}catch(e){showSt('❌ '+e.message,'error')}}
+function editS(id,n,l,p){eSId=id;G('sName').value=n;G('sLink').value=l;G('sPar').value=p;G('sBtn').textContent='💾 Update';G('sCan').style.display='inline-block'}
+function cancelSub(){eSId=null;['sName','sLink'].forEach(i=>G(i).value='');G('sPar').value='';G('sBtn').textContent='➕ Add';G('sCan').style.display='none'}
+async function delS(id){if(!confirm('Delete?'))return;await api('delete_sub_menu',{id});showSt('✅ Deleted!','success');loadAll()}
+
+/* ═══ TOOLS ═══ */
+function prevImg(){const f=G('tImg').files[0];if(!f)return;const r=new FileReader();r.onload=e=>{imgB64=e.target.result;G('imgPrv').innerHTML=`<img src="${imgB64}" style="max-width:130px;border-radius:7px;margin-top:5px">`};r.readAsDataURL(f)}
+function renderTools(tools){
+  const main=tools.filter(t=>!t.parent_id);
+  G('tPar').innerHTML='<option value="">Main Category</option>'+main.map(t=>`<option value="${t.id}">${esc(t.name)}</option>`).join('');
+  if(!tools.length){G('toolTbl').innerHTML='<table><tbody><tr><td class="emp">No tools</td></tr></tbody></table>';return}
+  G('toolTbl').innerHTML=`<table><thead><tr><th>☰</th><th>Img</th><th>Icon</th><th>Name</th><th>Link</th><th>Act</th></tr></thead>
+  <tbody>${tools.map(t=>`<tr class="dr t-row" data-id="${t.id}">
+    <td>☰</td><td>${t.image?`<img src="${t.image}" style="width:34px;height:34px;object-fit:cover;border-radius:5px">`:'-'}</td>
+    <td>${t.parent_id?'↳ ':''}${esc(t.icon)}</td>
+    <td>${esc(t.name.replace(/[\u{1F300}-\u{1F9FF}]/gu,'').trim())}</td>
+    <td style="color:#8b949e;font-size:11px">${esc(t.link)}</td>
+    <td><button class="btn bb bsm" onclick="editTool(${t.id})">✏️</button><button class="btn br bsm" onclick="delTool(${t.id})">🗑️</button></td>
+  </tr>`).join('')}</tbody></table>`;
+  initDrag('.t-row','reorder_tools',()=>api('get_tools'));
+}
+async function saveTool(){const n=G('tName').value.trim(),ic=G('tIcon').value.trim()||'🔧',l=G('tLink').value.trim(),d=G('tDesc').value.trim(),p=G('tPar').value||null,img=G('rmImg').checked?'':imgB64;if(!n||!l||!d)return showSt('⚠️ Name, link, description required!','error');try{eTId?await api('update_tool',{id:eTId,name:n,icon:ic,link:l,description:d,image:img,parent:p}):await api('add_tool',{name:n,icon:ic,link:l,description:d,image:img,parent:p});showSt('✅ Saved!','success');cancelTool();loadAll();}catch(e){showSt('❌ '+e.message,'error')}}
+function editTool(id){const t=allTools.find(x=>x.id==id);if(!t)return;eTId=t.id;imgB64=t.image||'';G('tName').value=t.name;G('tIcon').value=t.icon;G('tLink').value=t.link;G('tDesc').value=t.description||'';G('tPar').value=t.parent_id||'';G('rmImg').checked=false;G('imgPrv').innerHTML=imgB64?`<img src="${imgB64}" style="max-width:130px;border-radius:7px">`:'' ;G('tBtn').textContent='💾 Update';G('tCan').style.display='inline-block';G('tName').scrollIntoView({behavior:'smooth',block:'center'})}
+function cancelTool(){eTId=null;imgB64='';['tName','tLink','tDesc'].forEach(i=>G(i).value='');G('tIcon').value='🔧';G('tImg').value='';G('tPar').value='';G('rmImg').checked=false;G('imgPrv').innerHTML='';G('tBtn').textContent='➕ Add Tool';G('tCan').style.display='none'}
+async function delTool(id){if(!confirm('Delete?'))return;await api('delete_tool',{id});showSt('✅ Deleted!','success');loadAll()}
+async function saveCPR(){await api('update_setting',{key:'cards_per_row',value:G('cpr').value});showSt('✅ Saved!','success')}
+
+/* ══════════════════════════════════════
+   TOOL CARD COLOR FUNCTIONS
+══════════════════════════════════════ */
+function previewToolCard(){
+  const bg1  = G('tcBg1').value;
+  const bg2  = G('tcBg2').value;
+  const grad = G('tcGrad').checked;
+  const title= G('tcTitle').value;
+  const desc = G('tcDesc').value;
+  const btn  = G('tcBtn').value;
+
+  const bg = grad ? `linear-gradient(135deg,${bg1},${bg2})` : bg1;
+  const pv = G('tcPreview');
+  if(pv) pv.style.background = bg;
+  const pvT = G('tcPvTitle'); if(pvT) pvT.style.color = title;
+  const pvD = G('tcPvDesc');  if(pvD) pvD.style.color = desc;
+  const pvB = G('tcPvBtn');   if(pvB) pvB.style.background = btn;
+}
+
+async function saveToolCardColors(){
+  const bg1  = G('tcBg1').value;
+  const bg2  = G('tcBg2').value;
+  const grad = G('tcGrad').checked;
+  const bg   = grad ? `linear-gradient(135deg,${bg1},${bg2})` : bg1;
+  try{
+    await Promise.all([
+      api('update_setting',{key:'tc_bg',    value:bg}),
+      api('update_setting',{key:'tc_bg1',   value:bg1}),
+      api('update_setting',{key:'tc_bg2',   value:bg2}),
+      api('update_setting',{key:'tc_grad',  value:grad?'1':'0'}),
+      api('update_setting',{key:'tc_title', value:G('tcTitle').value}),
+      api('update_setting',{key:'tc_desc',  value:G('tcDesc').value}),
+      api('update_setting',{key:'tc_btn',   value:G('tcBtn').value}),
+    ]);
+    try{localStorage.removeItem('wat_cache');localStorage.removeItem('wat_ver');}catch{}
+    showSt('✅ Tool card colors saved!','success');
+  }catch(e){ showSt('❌ Error saving','error'); }
+}
+
+/* ══════════════════════════════════════
+   CARDS STRIP COLOR FUNCTIONS
+══════════════════════════════════════ */
+function previewCardStrip(){
+  const csBg1 = G('csBg1').value;
+  const csBg2 = G('csBg2').value;
+  const csGrd = G('csGrad').checked;
+  const csT   = G('csTitle').value;
+  const fcBg1 = G('fcBg1').value;
+  const fcBg2 = G('fcBg2').value;
+  const fcGrd = G('fcGrad').checked;
+  const fcT   = G('fcTitle').value;
+
+  const csBg = csGrd ? `linear-gradient(135deg,${csBg1},${csBg2})` : csBg1;
+  const fcBg = fcGrd ? `linear-gradient(135deg,${fcBg1},${fcBg2})` : fcBg1;
+
+  const pv = G('csPreview'); if(pv) pv.style.background = csBg;
+  const pvT = G('csPvTitle'); if(pvT) pvT.style.color = csT;
+  ['fcPvCard','fcPvCard2'].forEach(id=>{
+    const el=G(id); if(el) el.style.background = fcBg;
+  });
+  const fvT = G('fcPvTitle'); if(fvT) fvT.style.color = fcT;
+}
+
+async function saveCardStripColors(){
+  const csBg1 = G('csBg1').value;
+  const csBg2 = G('csBg2').value;
+  const csGrd = G('csGrad').checked;
+  const fcBg1 = G('fcBg1').value;
+  const fcBg2 = G('fcBg2').value;
+  const fcGrd = G('fcGrad').checked;
+  const csBg  = csGrd ? `linear-gradient(135deg,${csBg1},${csBg2})` : csBg1;
+  const fcBg  = fcGrd ? `linear-gradient(135deg,${fcBg1},${fcBg2})` : fcBg1;
+  try{
+    await Promise.all([
+      api('update_setting',{key:'cs_bg',    value:csBg}),
+      api('update_setting',{key:'cs_bg1',   value:csBg1}),
+      api('update_setting',{key:'cs_bg2',   value:csBg2}),
+      api('update_setting',{key:'cs_grad',  value:csGrd?'1':'0'}),
+      api('update_setting',{key:'cs_title', value:G('csTitle').value}),
+      api('update_setting',{key:'fc_bg',    value:fcBg}),
+      api('update_setting',{key:'fc_bg1',   value:fcBg1}),
+      api('update_setting',{key:'fc_bg2',   value:fcBg2}),
+      api('update_setting',{key:'fc_grad',  value:fcGrd?'1':'0'}),
+      api('update_setting',{key:'fc_title', value:G('fcTitle').value}),
+    ]);
+    try{localStorage.removeItem('wat_cache');localStorage.removeItem('wat_ver');}catch{}
+    showSt('✅ Cards strip colors saved!','success');
+  }catch(e){ showSt('❌ Error saving','error'); }
+}
+
+/* ══════════════════════════════════════
+   LOAD SAVED COLORS INTO ADMIN PICKERS
+══════════════════════════════════════ */
+function loadColorSettings(s){
+  if(!s) return;
+  // Tool cards
+  if(s.tc_bg1)   { G('tcBg1').value  = s.tc_bg1; }
+  if(s.tc_bg2)   { G('tcBg2').value  = s.tc_bg2; }
+  if(s.tc_grad)  { G('tcGrad').checked = s.tc_grad==='1'; }
+  if(s.tc_title) { G('tcTitle').value = s.tc_title; }
+  if(s.tc_desc)  { G('tcDesc').value  = s.tc_desc; }
+  if(s.tc_btn)   { G('tcBtn').value   = s.tc_btn; }
+  // Card strip
+  if(s.cs_bg1)   { G('csBg1').value  = s.cs_bg1; }
+  if(s.cs_bg2)   { G('csBg2').value  = s.cs_bg2; }
+  if(s.cs_grad)  { G('csGrad').checked = s.cs_grad==='1'; }
+  if(s.cs_title) { G('csTitle').value = s.cs_title; }
+  if(s.fc_bg1)   { G('fcBg1').value  = s.fc_bg1; }
+  if(s.fc_bg2)   { G('fcBg2').value  = s.fc_bg2; }
+  if(s.fc_grad)  { G('fcGrad').checked = s.fc_grad==='1'; }
+  if(s.fc_title) { G('fcTitle').value = s.fc_title; }
+  // Sync duplicate tooltip controls (tipFtR2, tipFtR3)
+  const tv = parseInt(s.tooltip_font_size)||11;
+  ['tipFtR2','tipFtN2','tipFtR3','tipFtN3'].forEach(id=>{ const el=G(id); if(el) el.value=tv; });
+  ['tipFtV2','tipFtV3'].forEach(id=>{ const el=G(id); if(el) el.textContent=tv+'px'; });
+  // Refresh previews
+  previewToolCard();
+  previewCardStrip();
+}
+
+async function savePageLayout(){
+  try{
+    await Promise.all([
+      api('update_setting',{key:'page_side_pad', value:G('pagePadN').value}),
+      api('update_setting',{key:'page_max_width',value:G('pageMaxN').value}),
+    ]);
+    try{localStorage.removeItem('wat_cache');localStorage.removeItem('wat_ver');}catch{}
+    showSt('✅ Page layout saved!','success');
+  }catch(e){showSt('❌ '+e.message,'error')}
+}
+
+function navSync(src, dest, disp, unit){
+  const v = G(src).value;
+  G(dest).value = v;
+  G(disp).textContent = v + unit;
+}
+
+async function saveNavSettings(){
+  try{
+    await Promise.all([
+      api('update_setting',{key:'nav_brand_font',  value:G('navBrFN').value}),
+      api('update_setting',{key:'nav_brand_margin', value:G('navBrMN').value}),
+      api('update_setting',{key:'nav_height',      value:G('navHtN').value}),
+      api('update_setting',{key:'nav_side_pad',    value:G('navSPN').value}),
+      api('update_setting',{key:'nav_gap',         value:G('navGapN').value}),
+      api('update_setting',{key:'nav_font',        value:G('navFtN').value}),
+      api('update_setting',{key:'nav_pad_tb',      value:G('navPdTN').value}),
+      api('update_setting',{key:'nav_pad_lr',      value:G('navPdLN').value}),
+      api('update_setting',{key:'nav_radius',      value:G('navRdN').value}),
+      api('update_setting',{key:'nav_hover_color', value:G('navHovC').value}),
+    ]);
+    showSt('✅ Navbar saved!','success');
+  }catch(e){showSt('❌ '+e.message,'error')}
+}
+
+async function saveHero(){
+  try{
+    await Promise.all([
+      api('update_setting',{key:'hero_title',       value:G('heroTitle').value}),
+      api('update_setting',{key:'hero_subtitle',    value:G('heroSub').value}),
+      api('update_setting',{key:'hero_title_font',  value:G('heroTFN').value}),
+      api('update_setting',{key:'hero_sub_font',    value:G('heroSFN').value}),
+    ]);
+    showSt('✅ Hero settings saved!','success');
+  }catch(e){showSt('❌ '+e.message,'error')}
+}
+
+async function saveCardTitle(){
+  try{
+    await Promise.all([
+      api('update_setting',{key:'cards_section_title', value:G('cardSecTitle').value}),
+      api('update_setting',{key:'cards_title_font',    value:G('cStFN').value}),
+    ]);
+    showSt('✅ Cards title saved!','success');
+  }catch(e){showSt('❌ '+e.message,'error')}
+}
+
+/* ═══════════ TICKER ═══════════ */
+function renderTk(items){
+  if(!items||!items.length){G('tkTbl').innerHTML='<table><tbody><tr><td class="emp">No items yet</td></tr></tbody></table>';return}
+  G('tkTbl').innerHTML=`<table><thead><tr><th>☰</th><th>Icon</th><th>Name</th><th>Link</th><th>Badge</th><th>Status</th><th>Actions</th></tr></thead>
+  <tbody>${items.map(t=>`<tr class="dr tk-row" data-id="${t.id}">
+    <td>☰</td><td style="font-size:17px">${esc(t.icon)}</td><td><strong>${esc(t.name)}</strong></td>
+    <td style="color:#8b949e;font-size:11px;max-width:130px;overflow:hidden;text-overflow:ellipsis">${esc(t.link)}</td>
+    <td>${t.badge?`<span class="bdg b-hot">${esc(t.badge)}</span>`:'-'}</td>
+    <td><span class="${t.is_active=='1'?'bdg b-on':'bdg b-off'}">${t.is_active=='1'?'✅ On':'❌ Off'}</span></td>
+    <td><button class="btn bb bsm" onclick="editTk(${t.id})">✏️ Edit</button>
+    <button class="btn br bsm" onclick="delTk(${t.id})">🗑️</button></td>
+  </tr>`).join('')}</tbody></table>`;
+  initDrag('.tk-row','reorder_ticker_items',()=>api('get_ticker_items'));
+}
+async function saveTicker(){const n=G('tkName').value.trim(),ic=G('tkIcon').value.trim()||'🔧',l=G('tkLink').value.trim(),b=G('tkBdg').value.trim(),on=G('tkOn').checked?1:0;if(!n||!l)return showSt('⚠️ Name aur Link required!','error');try{eTkId?await api('update_ticker_item',{id:eTkId,name:n,icon:ic,link:l,badge:b,is_active:on}):await api('add_ticker_item',{name:n,icon:ic,link:l,badge:b,is_active:on});showSt('✅ Saved!','success');cancelTicker();loadAll();}catch(e){showSt('❌ '+e.message,'error')}}
+function editTk(id){const t=allTk.find(x=>x.id==id);if(!t)return;eTkId=t.id;G('tkName').value=t.name;G('tkIcon').value=t.icon;G('tkLink').value=t.link;G('tkBdg').value=t.badge||'';G('tkOn').checked=t.is_active=='1';G('tkBtn').textContent='💾 Update';G('tkCan').style.display='inline-block';G('tkName').scrollIntoView({behavior:'smooth',block:'center'})}
+function cancelTicker(){eTkId=null;G('tkName').value='';G('tkIcon').value='';G('tkLink').value='';G('tkBdg').value='';G('tkOn').checked=true;G('tkBtn').textContent='➕ Add';G('tkCan').style.display='none'}
+async function delTk(id){if(!confirm('Delete?'))return;await api('delete_ticker_item',{id});showSt('✅ Deleted!','success');loadAll()}
+
+/* ═══════════ CARDS ═══════════ */
+async function saveCardSizes(){
+  try{
+    await Promise.all([
+      api('update_setting',{key:'card_width',      value:G('cWN').value}),
+      api('update_setting',{key:'cards_speed',     value:G('csN').value}),
+      api('update_setting',{key:'card_title_font', value:G('cTN').value}),
+      api('update_setting',{key:'card_link_font',  value:G('cLN').value}),
+      api('update_setting',{key:'card_icon_size',  value:G('cIN').value}),
+      api('update_setting',{key:'card_link_icon',  value:G('cLiN').value}),
+    ]);
+    try{localStorage.removeItem('wat_cache');localStorage.removeItem('wat_ver');}catch{}
+    showSt('✅ Card settings saved!','success');
+  }catch(e){showSt('❌ '+e.message,'error')}
+}
+
+function renderCards(cards){
+  if(!cards||!cards.length){G('cardsTbl').innerHTML='<table><tbody><tr><td colspan="4" class="emp">No cards</td></tr></tbody></table>';return}
+  G('cardsTbl').innerHTML=`<table><thead><tr><th>☰</th><th>Card</th><th>Links</th><th>Actions</th></tr></thead>
+  <tbody>${cards.map(c=>`<tr class="dr c-row" data-id="${c.id}">
+    <td>☰</td>
+    <td><span style="font-size:17px">${esc(c.icon)}</span> <strong>${esc(c.title)}</strong><br>
+    <span class="sw" style="background:${c.accent||'#6c5ce7'}"></span> <span style="color:#8b949e;font-size:10px">${esc(c.accent||'#6c5ce7')}</span></td>
+    <td><details><summary style="cursor:pointer;color:#a29bfe;font-size:12px">${(c.links||[]).length} links ▾</summary>
+      <table class="lmt"><thead><tr><th>Icon</th><th>Name</th><th>Badge</th><th>Act</th></tr></thead>
+      <tbody>${(c.links||[]).map(l=>`<tr><td>${esc(l.icon)}</td><td>${esc(l.name)}</td>
+        <td>${l.badge?`<span class="bdg b-hot">${esc(l.badge)}</span>`:'-'}</td>
+        <td><button class="btn bb bsm" onclick="editLk(${l.id})">✏️</button>
+        <button class="btn br bsm" onclick="delLk(${l.id})">🗑️</button></td></tr>`).join('')}
+      </tbody></table></details></td>
+    <td><button class="btn bg bsm" onclick="selCard(${c.id},'${esc(c.title).replace(/'/g,"\\'")}')">🔗 Link</button>
+    <button class="btn bb bsm" onclick="editC(${c.id})">✏️</button>
+    <button class="btn br bsm" onclick="delC(${c.id})">🗑️</button></td>
+  </tr>`).join('')}</tbody></table>`;
+  initDrag('.c-row','reorder_floating_cards',()=>api('get_floating_cards'));
+}
+async function saveCard(){const t=G('cTitle').value.trim(),ic=G('cIconF').value.trim()||'🛠️',acc=G('cAcc').value;if(!t)return showSt('⚠️ Title required!','error');try{eCId?await api('update_floating_card',{id:eCId,title:t,icon:ic,color_from:'#ffffff',color_to:'#ffffff',accent:acc}):await api('add_floating_card',{title:t,icon:ic,color_from:'#ffffff',color_to:'#ffffff',accent:acc});showSt('✅ Card saved!','success');cancelCard();loadAll();}catch(e){showSt('❌ '+e.message,'error')}}
+function editC(id){const c=allCards.find(x=>x.id==id);if(!c)return;eCId=c.id;G('cTitle').value=c.title;G('cIconF').value=c.icon;G('cAcc').value=c.accent||'#6c5ce7';G('cBtn').textContent='💾 Update';G('cCan').style.display='inline-block';G('cTitle').scrollIntoView({behavior:'smooth',block:'center'})}
+function cancelCard(){eCId=null;G('cTitle').value='';G('cIconF').value='';G('cAcc').value='#6c5ce7';G('cBtn').textContent='➕ Add Card';G('cCan').style.display='none'}
+async function delC(id){if(!confirm('Delete card + all links?'))return;await api('delete_floating_card',{id});showSt('✅ Deleted!','success');loadAll()}
+
+function selCard(cid,ct){G('lkCId').value=cid;G('eLkId').value='';eLkId=null;G('cSelLbl').textContent='➕ Adding to: '+ct;['lkName','lkIcon','lkLink','lkBdg'].forEach(i=>G(i).value='');G('lkBtn').textContent='➕ Add Link';G('lkCan').style.display='none';G('linkPanel').scrollIntoView({behavior:'smooth',block:'center'})}
+async function saveLink(){const cid=G('lkCId').value,n=G('lkName').value.trim(),ic=G('lkIcon').value.trim()||'🔗',l=G('lkLink').value.trim(),b=G('lkBdg').value.trim();if(!cid)return showSt('⚠️ Pehle card select karo!','error');if(!n||!l)return showSt('⚠️ Name aur Link required!','error');try{eLkId?await api('update_card_link',{id:eLkId,name:n,icon:ic,link:l,badge:b}):await api('add_card_link',{card_id:cid,name:n,icon:ic,link:l,badge:b});showSt('✅ Link saved!','success');cancelLink();loadAll();}catch(e){showSt('❌ '+e.message,'error')}}
+function editLk(id){const card=allCards.find(c=>(c.links||[]).some(l=>l.id==id));if(!card)return;const l=card.links.find(x=>x.id==id);if(!l)return;eLkId=l.id;G('lkCId').value=card.id;G('cSelLbl').textContent='✏️ Editing in: '+card.title;G('lkName').value=l.name;G('lkIcon').value=l.icon;G('lkLink').value=l.link;G('lkBdg').value=l.badge||'';G('lkBtn').textContent='💾 Update';G('lkCan').style.display='inline-block';G('linkPanel').scrollIntoView({behavior:'smooth',block:'center'})}
+function cancelLink(){eLkId=null;G('lkCId').value='';G('cSelLbl').textContent='👆 Upar kisi card ka "Add Link" dabao';['lkName','lkIcon','lkLink','lkBdg'].forEach(i=>G(i).value='');G('lkBtn').textContent='➕ Add Link';G('lkCan').style.display='none'}
+async function delLk(id){if(!confirm('Delete?'))return;await api('delete_card_link',{id});showSt('✅ Deleted!','success');loadAll()}
+
+/* ═══ FOOTER ═══ */
+function fmt(cmd,v){document.execCommand(cmd,false,v||null);G('fsBody').focus()}
+function insLnk(){const s=window.getSelection();if(!s.toString().trim()){alert('Text select karo!');return}const u=prompt('URL:','https://');if(u&&u!='https://'){document.execCommand('createLink',false,u);G('fsBody').focus()}}
+async function saveFtTxt(){await api('update_setting',{key:'footer_text',value:G('ftTxt').value});showSt('✅ Saved!','success')}
+function renderFtSecs(secs){
+  if(!secs||!secs.length){G('fsTbl').innerHTML='<table><tbody><tr><td class="emp">No sections</td></tr></tbody></table>';return}
+  G('fsTbl').innerHTML=`<table><thead><tr><th>☰</th><th>Title</th><th>Preview</th><th>Actions</th></tr></thead>
+  <tbody>${secs.map(s=>`<tr class="dr fs-row" data-id="${s.id}">
+    <td>☰</td><td><strong>${esc(s.title)}</strong></td>
+    <td style="color:#8b949e;font-size:11px">${s.content.replace(/<[^>]*>/g,'').substring(0,50)}…</td>
+    <td><button class="btn bb bsm" onclick="editFs(${s.id})">✏️</button>
+    <button class="btn br bsm" onclick="delFs(${s.id})">🗑️</button></td>
+  </tr>`).join('')}</tbody></table>`;
+  initDrag('.fs-row','reorder_footer_sections',()=>api('get_footer_sections'));
+}
+async function saveFtSec(){const t=G('fsTitle').value.trim(),c=G('fsBody').innerHTML.trim();if(!t||!c)return showSt('⚠️ Title aur content required!','error');try{eFsId?await api('update_footer_section',{id:eFsId,title:t,content:c}):await api('add_footer_section',{title:t,content:c});showSt('✅ Saved!','success');cancelFt();loadAll();}catch(e){showSt('❌ '+e.message,'error')}}
+function editFs(id){api('get_footer_sections').then(s=>{const sec=s.find(x=>x.id==id);if(!sec)return;eFsId=sec.id;G('fsTitle').value=sec.title;G('fsBody').innerHTML=sec.content;G('fsBtn').textContent='💾 Update';G('fsCan').style.display='inline-block';G('fsTitle').scrollIntoView({behavior:'smooth',block:'center'})})}
+function cancelFt(){eFsId=null;G('fsTitle').value='';G('fsBody').innerHTML='';G('fsBtn').textContent='➕ Add Section';G('fsCan').style.display='none'}
+async function delFs(id){if(!confirm('Delete?'))return;await api('delete_footer_section',{id});showSt('✅ Deleted!','success');loadAll()}
+
+window.addEventListener('DOMContentLoaded',testConn);
+</script>
+</body>
+</html>
