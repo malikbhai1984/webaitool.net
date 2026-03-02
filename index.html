@@ -1,419 +1,545 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebAITool - Free Online Tools</title>
-    
-    <!-- Preconnect for faster loading -->
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-    
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="style.css">
-    
-    <!-- Inline Critical CSS for instant render -->
-    <style>
-        /* Skeleton Loading Animation */
-        @keyframes shimmer {
-            0% { background-position: -1000px 0; }
-            100% { background-position: 1000px 0; }
-        }
-        
-        .skeleton {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 1000px 100%;
-            animation: shimmer 2s infinite;
-            border-radius: 8px;
-        }
-        
-        .skeleton-text {
-            height: 16px;
-            margin: 8px 0;
-        }
-        
-        .skeleton-card {
-            height: 300px;
-            margin-bottom: 20px;
-        }
-        
-        .skeleton-nav {
-            height: 20px;
-            width: 100px;
-            display: inline-block;
-            margin: 0 10px;
-        }
-    </style>
-    
-    <!--Google adsense code start here-->
- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4467977670160507"
-     crossorigin="anonymous"></script>
-    <!--Google adsense code finished here-->
-    
-    <!--Google Analytics code start here-->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-S323MFXTYL"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-S323MFXTYL');
-    </script>
-    <!--Google Analytics code finished here-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>WebAITool - Free Online Tools</title>
+<meta name="description" content="40+ Free Online Tools — No Registration, No Watermark. PDF, Image, QR, Resume, Invoice, and more tools at WebAITool.net">
+<link rel="canonical" href="https://webaitool.net/">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4467977670160507" crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-S323MFXTYL"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-S323MFXTYL')</script>
+
+<!-- ══ SCHEMA: WebSite + BreadcrumbList ══ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "WebAITool",
+  "url": "https://webaitool.net/",
+  "description": "40+ Free Online Tools — PDF, Image, QR, Resume, Invoice and more. No Registration Required.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://webaitool.net/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": "https://webaitool.net/"
+  }]
+}
+</script>
 </head>
 <body>
-    <!-- Navigation with Instant Skeleton -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm" id="navbar">
-        <div class="container-fluid px-4">
-            <a href="index.html" class="navbar-brand logo">🛠️ WebAITool</a>
-            
-            <button class="navbar-toggler hamburger" type="button" id="hamburgerBtn" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            
-            <div class="collapse navbar-collapse justify-content-center" id="menuList">
-                <ul class="navbar-nav">
-                    <li class="nav-item"><div class="skeleton skeleton-nav"></div></li>
-                    <li class="nav-item"><div class="skeleton skeleton-nav"></div></li>
-                    <li class="nav-item"><div class="skeleton skeleton-nav"></div></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
-    <!-- Search Bar -->
-    <div class="container search-container">
-        <div class="row justify-content-end">
-            <div class="col-lg-8 col-md-10">
-                <div class="search-box">
-                    <input type="text" class="form-control" id="searchInput" placeholder="Search tools, categories, features..." autocomplete="off">
-                    <div class="search-icon">🔍</div>
-                </div>
-            </div>
-        </div>
+<!-- ══ NAVBAR ══ -->
+<nav id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand-logo">🛠️ WebAITool</a>
+    <button id="navToggle" class="hamburger-btn">
+      <span></span><span></span><span></span>
+    </button>
+    <div id="navMenu" class="nav-menu">
+      <ul id="navList" class="nav-list">
+        <li><div class="skeleton skeleton-nav" style="height:14px;width:60px;border-radius:4px"></div></li>
+        <li><div class="skeleton skeleton-nav" style="height:14px;width:80px;border-radius:4px"></div></li>
+        <li><div class="skeleton skeleton-nav" style="height:14px;width:70px;border-radius:4px"></div></li>
+      </ul>
     </div>
+  </div>
+</nav>
 
-    <!-- Hero Section - Shows Immediately -->
-    <div class="hero">
-        <div class="container">
-            <h1 class="display-4 fw-bold">Complete AI Toolkit</h1>
-            <p class="lead">40+ Free Tools | No Registration | 100% Private</p>
-        </div>
+<!-- ══ SEARCH ══ -->
+<div class="search-wrap">
+  <div class="search-inner">
+    <input type="text" id="searchInput" class="search-input" placeholder="Search tools..." autocomplete="off">
+    <span class="search-ico">🔍</span>
+  </div>
+</div>
+
+<!-- ══ HERO — text controlled from admin ══ -->
+<div class="hero">
+  <div class="hero-inner">
+    <h1 id="heroTitle" class="hero-title">Complete AI Toolkit</h1>
+    <p  id="heroSub"  class="hero-sub">40+ Free Tools | No Registration | 100% Private</p>
+  </div>
+</div>
+
+<!-- ══ TICKER STRIP ══ -->
+<div class="ticker-wrap" id="tickerWrap">
+  <div class="ticker-label" id="tickerLabel">🔥 Popular</div>
+  <div class="ticker-inner" id="tickerInner">
+    <div class="ticker-track" id="tickerTrack">
+      <!-- filled by JS -->
     </div>
+  </div>
+</div>
 
-    <!-- Tools Section with Skeleton -->
-    <div class="container tools-section">
-        <h2 class="section-title text-center mb-5">Explore Tool Categories</h2>
-        <div class="row g-4" id="tools-container">
-            <!-- Skeleton Cards - Show instantly -->
-            <div class="col-xl-3 col-lg-4 col-md-6"><div class="skeleton skeleton-card"></div></div>
-            <div class="col-xl-3 col-lg-4 col-md-6"><div class="skeleton skeleton-card"></div></div>
-            <div class="col-xl-3 col-lg-4 col-md-6"><div class="skeleton skeleton-card"></div></div>
-            <div class="col-xl-3 col-lg-4 col-md-6"><div class="skeleton skeleton-card"></div></div>
-        </div>
+<!-- ══ CARDS SECTION ══ -->
+<div class="cards-section" id="cardsSectionWrap">
+  <h2 id="cardsSectionTitle" class="cards-title">⚡ Featured Tool Categories</h2>
+  <div class="cards-overflow">
+    <div class="cards-inner-wrap">
+      <div class="cards-track" id="cardsTrack">
+        <!-- filled by JS -->
+      </div>
     </div>
+  </div>
+</div>
 
-    <!-- Bootstrap Footer with Skeleton -->
-    <footer id="site-footer">
-        <div class="container">
-            <div class="footer-row">
-                <div class="footer-col">
-                    <div class="skeleton skeleton-text" style="width: 80%; height: 20px; margin-bottom: 15px;"></div>
-                    <div class="skeleton skeleton-text" style="width: 100%;"></div>
-                    <div class="skeleton skeleton-text" style="width: 90%;"></div>
-                </div>
-                <div class="footer-col">
-                    <div class="skeleton skeleton-text" style="width: 80%; height: 20px; margin-bottom: 15px;"></div>
-                    <div class="skeleton skeleton-text" style="width: 100%;"></div>
-                    <div class="skeleton skeleton-text" style="width: 90%;"></div>
-                </div>
-                <div class="footer-col">
-                    <div class="skeleton skeleton-text" style="width: 80%; height: 20px; margin-bottom: 15px;"></div>
-                    <div class="skeleton skeleton-text" style="width: 100%;"></div>
-                    <div class="skeleton skeleton-text" style="width: 90%;"></div>
-                </div>
-                <div class="footer-col">
-                    <div class="skeleton skeleton-text" style="width: 80%; height: 20px; margin-bottom: 15px;"></div>
-                    <div class="skeleton skeleton-text" style="width: 100%;"></div>
-                    <div class="skeleton skeleton-text" style="width: 90%;"></div>
-                </div>
-                <div class="footer-col">
-                    <div class="skeleton skeleton-text" style="width: 80%; height: 20px; margin-bottom: 15px;"></div>
-                    <div class="skeleton skeleton-text" style="width: 100%;"></div>
-                    <div class="skeleton skeleton-text" style="width: 90%;"></div>
-                </div>
-            </div>
+<!-- ══ TOOLS GRID ══ -->
+<div class="tools-wrap">
+  <h2 class="tools-heading">Explore Tool Categories</h2>
+  <div class="row g-4" id="tools-container">
+    <div class="col-xl-3 col-lg-4 col-md-6"><div class="skeleton" style="height:250px;border-radius:12px"></div></div>
+    <div class="col-xl-3 col-lg-4 col-md-6"><div class="skeleton" style="height:250px;border-radius:12px"></div></div>
+    <div class="col-xl-3 col-lg-4 col-md-6"><div class="skeleton" style="height:250px;border-radius:12px"></div></div>
+    <div class="col-xl-3 col-lg-4 col-md-6"><div class="skeleton" style="height:250px;border-radius:12px"></div></div>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer id="site-footer">
+  <div class="footer-inner"><div class="footer-row">
+    <div class="footer-col">
+      <div class="skeleton skeleton-text" style="width:60%;height:15px;margin-bottom:10px"></div>
+      <div class="skeleton skeleton-text"></div>
+      <div class="skeleton skeleton-text" style="width:80%"></div>
+    </div>
+    <div class="footer-col">
+      <div class="skeleton skeleton-text" style="width:60%;height:15px;margin-bottom:10px"></div>
+      <div class="skeleton skeleton-text"></div>
+    </div>
+  </div></div>
+  <div class="footer-btm"><div class="footer-inner">
+    <div class="skeleton skeleton-text" style="width:240px;margin:0 auto"></div>
+  </div></div>
+</footer>
+
+<script>
+/* ══════════════════════════════════════════════════
+   SETTINGS OBJECT — card/ticker display settings
+══════════════════════════════════════════════════ */
+const S = {
+  cardWidth:220, cardSpeed:30, titleFont:14, linkFont:13,
+  iconSize:20, linkIconSize:15,
+  showArrow:true, showCardIcon:true, showLinkIcon:true, showTickerIcon:true,
+  showTickerLabel:true,
+};
+
+function no0(v){ return String(v??'1').trim() !== '0'; }
+
+function applySettings(cfg){
+  if(!cfg) return;
+  S.cardWidth      = parseInt(cfg.card_width)     ||220;
+  S.cardSpeed      = parseInt(cfg.cards_speed)    ||30;
+  S.titleFont      = parseInt(cfg.card_title_font)||14;
+  S.linkFont       = parseInt(cfg.card_link_font) ||13;
+  S.iconSize       = parseInt(cfg.card_icon_size) ||20;
+  S.linkIconSize   = parseInt(cfg.card_link_icon) ||15;
+  S.showArrow      = no0(cfg.show_link_arrow);
+  S.showCardIcon   = no0(cfg.show_card_icon);
+  S.showLinkIcon   = no0(cfg.show_link_icon);
+  S.showTickerIcon = no0(cfg.show_ticker_icon);
+  S.showTickerLabel= no0(cfg.ticker_label_show);
+}
+
+/* ══════════════════════════════════════════════════
+   CSS VARIABLES — --page-pad controls all spacing
+   Single setting from admin controls entire layout
+══════════════════════════════════════════════════ */
+function applyCSSVars(cfg){
+  if(!cfg) return;
+  const R = document.documentElement.style;
+  // ── Single page padding — navbar + all sections ──
+  const pad = (parseInt(cfg.page_side_pad)||20)+'px';
+  R.setProperty('--page-pad', pad);
+  R.setProperty('--nav-side-pad', pad); // navbar uses same
+
+  // max-width
+  R.setProperty('--page-max', (parseInt(cfg.page_max_width)||1280)+'px');
+
+  // navbar vars
+  R.setProperty('--nav-brand-font',   (parseInt(cfg.nav_brand_font)  ||20)+'px');
+  R.setProperty('--nav-brand-margin', (parseInt(cfg.nav_brand_margin)||10)+'px');
+  R.setProperty('--nav-height',       (parseInt(cfg.nav_height)      ||58)+'px');
+  R.setProperty('--nav-gap',          (parseInt(cfg.nav_gap)         ||2) +'px');
+  R.setProperty('--nav-font',         (parseInt(cfg.nav_font)        ||13)+'px');
+  R.setProperty('--nav-pad-tb',       (parseInt(cfg.nav_pad_tb)      ||6) +'px');
+  R.setProperty('--nav-pad-lr',       (parseInt(cfg.nav_pad_lr)      ||11)+'px');
+  R.setProperty('--nav-radius',       (parseInt(cfg.nav_radius)      ||7) +'px');
+  R.setProperty('--nav-hover',        cfg.nav_hover_color||'#6c5ce7');
+
+  // ── Tooltip font size ──
+  const tipPx = (parseInt(cfg.tooltip_font_size)||11)+'px';
+  R.setProperty('--tip-size', tipPx);
+  // Also set directly on element (inline style doesn't inherit CSS vars)
+  const ft = document.getElementById('fixedTip');
+  if(ft) ft.style.fontSize = tipPx;
+
+  // ── Tool card colors ──
+  if(cfg.tc_bg)    R.setProperty('--tc-bg',       cfg.tc_bg);
+  if(cfg.tc_title) R.setProperty('--tc-title',    cfg.tc_title);
+  if(cfg.tc_desc)  R.setProperty('--tc-desc',     cfg.tc_desc);
+  if(cfg.tc_btn){
+    R.setProperty('--tc-btn', cfg.tc_btn);
+    // hover = slightly darker (use same color, opacity handled by CSS)
+    R.setProperty('--tc-btn-hover', cfg.tc_btn);
+  }
+
+  // ── Cards strip colors ──
+  if(cfg.cs_bg)    R.setProperty('--cs-bg',       cfg.cs_bg);
+  if(cfg.cs_title) R.setProperty('--cs-title',    cfg.cs_title);
+  if(cfg.fc_bg)    R.setProperty('--fc-bg',       cfg.fc_bg);
+  if(cfg.fc_title) R.setProperty('--fc-title',    cfg.fc_title);
+}
+
+function applyText(cfg){
+  if(!cfg) return;
+  const ht = document.getElementById('heroTitle');
+  if(ht){ ht.textContent = cfg.hero_title||'Complete AI Toolkit'; ht.style.fontSize=(parseInt(cfg.hero_title_font)||38)+'px'; }
+  const hs = document.getElementById('heroSub');
+  if(hs){ hs.innerHTML = (cfg.hero_subtitle||'40+ Free Tools | No Registration | 100% Private').replace(/\n/g,'<br>'); hs.style.fontSize=(parseInt(cfg.hero_sub_font)||18)+'px'; }
+  const ct = document.getElementById('cardsSectionTitle');
+  if(ct){ ct.textContent = cfg.cards_section_title||'⚡ Featured Tool Categories'; ct.style.fontSize=(parseInt(cfg.cards_title_font)||20)+'px'; }
+}
+
+/* ══════════════════════════════════════════════════
+   API — smart cache with version checking
+   Same version → localStorage (instant)
+   New version  → fresh fetch → update cache
+══════════════════════════════════════════════════ */
+const API = 'api.php';
+let allTools = [];
+
+/* ══════════════════════════════════════════════════
+   SMART CACHE — localStorage based
+   - Version check: sirf 1 lightweight call
+   - Agar version same → localStorage se data (instant)
+   - Agar version naya → fresh fetch + localStorage update
+================================================ */
+const CACHE_KEY = 'wat_cache';   // wat = WebAITool
+const VER_KEY   = 'wat_ver';
+
+async function fetchFresh(action){
+  const r = await fetch(API+'?action='+action+'&_='+Date.now(), {cache:'no-store'});
+  return JSON.parse(await r.text());
+}
+
+async function getVersion(){
+  try{
+    const r = await fetch(API+'?action=get_data_version&_='+Date.now(), {cache:'no-store'});
+    const d = JSON.parse(await r.text());
+    return d.version || '0';
+  }catch{ return '0'; }
+}
+
+async function loadAllData(){
+  // Step 1: Get current version from server (tiny fast call)
+  const serverVer = await getVersion();
+  const localVer  = localStorage.getItem(VER_KEY) || '0';
+  const cached    = localStorage.getItem(CACHE_KEY);
+
+  // Step 2: If version same AND cache exists → use cache instantly
+  if(serverVer !== '0' && serverVer === localVer && cached){
+    try{
+      return JSON.parse(cached); // instant — no API calls needed
+    }catch{} // if parse fails, fall through to fresh fetch
+  }
+
+  // Step 3: Version changed or no cache → fetch everything fresh
+  const [tkItems, cards, cfg, tools, parents, subs, footerSecs] = await Promise.all([
+    fetchFresh('get_ticker_items'),
+    fetchFresh('get_floating_cards'),
+    fetchFresh('get_settings'),
+    fetchFresh('get_tools'),
+    fetchFresh('get_parent_menus'),
+    fetchFresh('get_sub_menus'),
+    fetchFresh('get_footer_sections'),
+  ]);
+
+  const bundle = {tkItems, cards, cfg, tools, parents, subs, footerSecs};
+
+  // Save to localStorage with new version
+  try{
+    localStorage.setItem(CACHE_KEY, JSON.stringify(bundle));
+    localStorage.setItem(VER_KEY,   serverVer);
+  }catch{} // localStorage full or disabled — ignore
+
+  return bundle;
+}
+
+async function get(action){
+  try{
+    const r = await fetch(API+'?action='+action+'&_='+Date.now(), {cache:'no-store'});
+    return JSON.parse(await r.text());
+  }catch(e){ return null; }
+}
+
+/* ══════════════════════════════════════════════════
+   TICKER STRIP
+   - 2 copies in DOM → animation 0→-50% = seamless
+   - ticker_label_show: '0' = hide 🔥 Popular label
+   - Hover pauses animation
+══════════════════════════════════════════════════ */
+function renderTicker(items, speed, label, fsize, showLabel){
+  const wrap  = document.getElementById('tickerWrap');
+  const track = document.getElementById('tickerTrack');
+  const lbl   = document.getElementById('tickerLabel');
+  const inner = document.getElementById('tickerInner');
+  if(!wrap||!track) return;
+  if(!items||!items.length){ wrap.style.display='none'; return; }
+  wrap.style.display = '';
+
+  speed = parseInt(speed)||25;
+  fsize = parseInt(fsize)||14;
+  label = label||'🔥 Popular';
+
+  const show = (showLabel !== false && showLabel !== '0' && showLabel !== 0);
+  lbl.style.display  = show ? '' : 'none';
+  lbl.textContent    = label;
+  lbl.style.fontSize = Math.max(10, fsize-2)+'px';
+
+  requestAnimationFrame(()=>{
+    inner.style.paddingLeft = (show ? lbl.offsetWidth+4 : 16)+'px';
+  });
+
+  const html = items.map(t =>
+    `<a href="${t.link}" class="ticker-item" style="font-size:${fsize}px">
+      ${S.showTickerIcon ? `<span class="ti-icon" style="font-size:${fsize+2}px">${t.icon}</span>` : ''}
+      <span class="ti-name" style="font-size:${fsize}px">${t.name}</span>
+      ${t.badge ? `<span class="ti-badge">${t.badge}</span>` : ''}
+    </a>`
+  ).join('');
+
+  track.innerHTML = html + html; // 2x for seamless loop
+  track.style.animation = 'none';
+  void track.offsetWidth;
+  track.style.animation = `tickerScroll ${speed}s linear infinite`;
+  wrap.onmouseenter = ()=> track.classList.add('paused');
+  wrap.onmouseleave = ()=> track.classList.remove('paused');
+}
+
+/* ══════════════════════════════════════════════════
+   FLOATING CARDS
+   - S.showArrow controls › visibility
+   - S.showCardIcon controls 🛠️ in card header
+   - S.showLinkIcon controls 🔗 in card links
+   - CS must be updated BEFORE calling renderCards
+══════════════════════════════════════════════════ */
+function buildCard(c){
+  const acc   = c.accent||'#6c5ce7';
+  const arrow = S.showArrow ? '<span class="cl-arrow">›</span>' : '';
+  const links = (c.links||[]).map(l =>
+    `<a href="${l.link}" class="cl-link" data-tip="Click me!">
+      ${l.badge ? `<span class="cl-badge">${l.badge}</span>` : ''}
+      ${S.showLinkIcon ? `<span class="cl-emoji" style="font-size:${S.linkIconSize}px">${l.icon}</span>` : ''}
+      <span class="cl-name" style="font-size:${S.linkFont}px">${l.name}</span>
+      ${arrow}
+    </a>`
+  ).join('');
+  const ico = S.showCardIcon ? `<span class="ch-icon" style="font-size:${S.iconSize}px">${c.icon}</span>` : '';
+  return `<div class="fcard" style="width:${S.cardWidth}px;min-width:${S.cardWidth}px">
+    <span class="fcard-bar" style="background:${acc}"></span>
+    <div class="fcard-head">
+      <div class="fcard-hl">${ico}<span class="fcard-title" style="font-size:${S.titleFont}px">${c.title}</span></div>
+      <span class="fcard-cnt">${(c.links||[]).length}</span>
+    </div>
+    <div class="fcard-body">${links}</div>
+  </div>`;
+}
+
+function renderCards(cards){
+  const track = document.getElementById('cardsTrack');
+  const wrap  = document.getElementById('cardsSectionWrap');
+  if(!track||!wrap) return;
+  if(!cards||!cards.length){ wrap.style.display='none'; return; }
+  wrap.style.display = '';
+
+  track.innerHTML = cards.map(buildCard).join('') + cards.map(buildCard).join('');
+  track.style.animation = 'none';
+  void track.offsetWidth;
+  track.style.animation = `cardsScroll ${S.cardSpeed}s linear infinite`;
+  const ov = track.closest('.cards-overflow');
+  if(ov){
+    ov.onmouseenter = ()=> track.classList.add('paused');
+    ov.onmouseleave = ()=> track.classList.remove('paused');
+  }
+}
+
+/* ══════════════════════════════════════════════════
+   TOOLS GRID — main tool cards
+══════════════════════════════════════════════════ */
+function showTools(tools){
+  const c = document.getElementById('tools-container');
+  if(!c) return;
+  if(!tools||!tools.length){
+    c.innerHTML='<div class="col-12 text-center py-5"><div style="font-size:48px">🔍</div><h3 class="mt-3">No Results Found</h3></div>';
+    return;
+  }
+  c.innerHTML = tools.map(t=>{
+    const name = t.name.replace(/[\u{1F300}-\u{1F9FF}]/gu,'').trim();
+    const img  = t.image&&t.image.trim();
+    return `<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+      <div class="tool-card">
+        <div class="tool-body">
+          ${img?`<img src="${t.image}" class="tool-img" alt="${name}" loading="lazy" onerror="this.style.display='none'">`:
+               `<div class="tool-icon">${t.icon}</div>`}
+          <h3 class="tool-name">${name}</h3>
+          <p class="tool-desc">${t.description||'Explore this tool'}</p>
+          <a href="${t.link}" class="tool-btn">Open Tool →</a>
         </div>
-        <div class="footer-bottom">
-            <div class="container">
-                <div class="skeleton skeleton-text mx-auto" style="width: 300px;"></div>
-            </div>
-        </div>
-    </footer>
+      </div>
+    </div>`;
+  }).join('');
+}
+function searchTools(){
+  const q=document.getElementById('searchInput').value.toLowerCase().trim();
+  showTools(q?allTools.filter(t=>t.name.toLowerCase().includes(q)||(t.description||'').toLowerCase().includes(q)):allTools);
+}
 
-    <!-- Bootstrap JS with defer for faster loading -->
-    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+/* ══════════════════════════════════════════════════
+   HAMBURGER MENU + FIXED TOOLTIP
+   Tooltip uses position:fixed to escape overflow:hidden
+══════════════════════════════════════════════════ */
+/* ══ DROPDOWN TOGGLE ══ */
+function toggleDD(id, e){
+  e.preventDefault(); e.stopPropagation();
+  const li = document.getElementById('dd_'+id);
+  if(!li) return false;
+  const isOpen = li.classList.contains('open');
+  // close all
+  document.querySelectorAll('.has-dd.open').forEach(x => x.classList.remove('open'));
+  // open this one if it was closed
+  if(!isOpen) li.classList.add('open');
+  return false;
+}
 
-    <!-- Optimized Custom JS with Progressive Loading -->
-    <script>
-        const API = 'api.php';
-        let allToolsData = [];
+document.addEventListener('DOMContentLoaded',()=>{
+  const btn  = document.getElementById('navToggle');
+  const menu = document.getElementById('navMenu');
 
-        // Optimized API call with timeout
-        async function apiCall(action, timeout = 5000) {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), timeout);
-            
-            try {
-                const timestamp = new Date().getTime();
-                const response = await fetch(`${API}?action=${action}&_t=${timestamp}`, {
-                    signal: controller.signal,
-                    cache: 'no-store',
-                    headers: {
-                        'Cache-Control': 'no-cache, no-store, must-revalidate',
-                        'Pragma': 'no-cache',
-                        'Expires': '0'
-                    }
-                });
-                clearTimeout(timeoutId);
-                const text = await response.text();
-                return JSON.parse(text);
-            } catch(error) {
-                clearTimeout(timeoutId);
-                if (error.name === 'AbortError') {
-                    console.warn(`${action} timed out`);
-                }
-                return null;
-            }
-        }
+  btn.addEventListener('click',e=>{
+    e.stopPropagation();
+    const open=menu.classList.toggle('open');
+    btn.classList.toggle('open',open);
+    document.querySelectorAll('.has-dd.open').forEach(x=>x.classList.remove('open'));
+  });
+  document.addEventListener('click',e=>{
+    if(!e.target.closest('.has-dd'))
+      document.querySelectorAll('.has-dd.open').forEach(x=>x.classList.remove('open'));
+    if(!e.target.closest('#mainNav')){
+      menu.classList.remove('open');
+      btn.classList.remove('open');
+    }
+  });
+  document.getElementById('searchInput').addEventListener('input',searchTools);
 
-        // Hamburger menu
-        document.addEventListener('DOMContentLoaded', function() {
-            const hamburgerBtn = document.getElementById('hamburgerBtn');
-            const menuList = document.getElementById('menuList');
-            
-            if(hamburgerBtn) {
-                hamburgerBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    menuList.classList.toggle('show');
-                    hamburgerBtn.classList.toggle('active');
-                });
-            }
-        });
+  // Fixed tooltip (escapes all overflow:hidden parents)
+  const tip=document.createElement('div');
+  tip.id='fixedTip';
+  tip.style.cssText='position:fixed;background:rgba(0,0,0,.82);color:#fff;font-weight:700;padding:5px 13px;border-radius:20px;white-space:nowrap;pointer-events:none;z-index:999999;transition:opacity .15s;opacity:0;font-size:11px;transform:translateX(-50%)';
+  document.body.appendChild(tip);
 
-        function toggleDropdown(id, event) {
-            event.preventDefault();
-            event.stopPropagation();
-            
-            const clickedDropdown = document.querySelector(`[data-dropdown="${id}"]`);
-            const allDropdowns = document.querySelectorAll('.dropdown');
-            
-            allDropdowns.forEach(dropdown => {
-                if(dropdown !== clickedDropdown) {
-                    dropdown.classList.remove('active');
-                }
-            });
-            
-            clickedDropdown.classList.toggle('active');
-        }
+  document.addEventListener('mouseover',e=>{
+    const item=e.target.closest('.ticker-item');
+    if(item){
+      tip.textContent='Click me! 👆';
+      const r=item.getBoundingClientRect();
+      tip.style.left=(r.left+r.width/2)+'px';
+      tip.style.top =(r.top-36)+'px';
+      tip.style.opacity='1';
+    }
+  });
+  document.addEventListener('mouseout',e=>{
+    if(e.target.closest('.ticker-item')) tip.style.opacity='0';
+  });
+});
 
-        function searchTools() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
-            
-            if(!searchTerm) {
-                displayTools(allToolsData);
-                return;
-            }
-            
-            const filteredTools = allToolsData.filter(tool => {
-                return tool.name.toLowerCase().includes(searchTerm) ||
-                       (tool.description && tool.description.toLowerCase().includes(searchTerm)) ||
-                       (tool.icon && tool.icon.toLowerCase().includes(searchTerm));
-            });
-            
-            displayTools(filteredTools);
-        }
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            const searchInput = document.getElementById('searchInput');
-            if(searchInput) {
-                searchInput.addEventListener('keyup', searchTools);
-                searchInput.addEventListener('input', searchTools);
-            }
-        });
-        
-        function displayTools(tools) {
-            const container = document.getElementById('tools-container');
-            
-            if(tools.length > 0) {
-                container.innerHTML = tools.map(tool => {
-                    const hasImage = tool.image && tool.image.trim() !== '';
-                    let displayName = tool.name.replace(/[\u{1F300}-\u{1F9FF}]/gu, '').trim();
-                    
-                    return `
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-                        <div class="tool-card card h-100 border-0 shadow-sm">
-                            <div class="card-body text-center">
-                                ${hasImage ? `
-                                    <img src="${tool.image}" class="card-img-top rounded mb-3" 
-                                         style="height:150px; object-fit:cover;" 
-                                         alt="${displayName}"
-                                         loading="lazy"
-                                         onerror="this.style.display='none'">
-                                ` : `<div class="tool-icon">${tool.icon}</div>`}
-                                <h3 class="card-title h5">${displayName}</h3>
-                                <p class="card-text text-muted">${tool.description || 'Explore this tool'}</p>
-                                <a href="${tool.link}" class="btn btn-primary tool-btn">Open Tool →</a>
-                            </div>
-                        </div>
-                    </div>
-                    `;
-                }).join('');
-            } else {
-                container.innerHTML = `
-                    <div class="col-12 text-center py-5">
-                        <div style="font-size:64px; margin-bottom:20px;">🔍</div>
-                        <h3>No Results Found</h3>
-                        <p class="text-muted">Try searching with different keywords</p>
-                    </div>
-                `;
-            }
-        }
+/* ══════════════════════════════════════════════════
+   BOOT SEQUENCE — version-based smart cache
+   First visit : fetch all → save to localStorage
+   Repeat visit: check version (1 tiny call)
+                 → same version: localStorage (INSTANT)
+                 → new version:  fresh fetch + update
+══════════════════════════════════════════════════ */
+(async()=>{
 
-        // PROGRESSIVE LOADING - Load parts independently and fast
-        async function loadMenu() {
-            try {
-                const [parents, subs] = await Promise.all([
-                    apiCall('get_parent_menus'),
-                    apiCall('get_sub_menus')
-                ]);
+  const {tkItems, cards, cfg, tools, parents, subs, footerSecs} = await loadAllData() || {};
 
-                let menuHTML = '<ul class="navbar-nav">';
-                
-                if(parents && parents.length > 0) {
-                    parents.forEach(parent => {
-                        const children = subs ? subs.filter(s => s.parent_id == parent.id) : [];
-                        
-                        if (children.length > 0) {
-                            menuHTML += `
-                                <li class="nav-item dropdown" data-dropdown="${parent.id}">
-                                    <a class="nav-link dropdown-toggle dropbtn" href="#" onclick="toggleDropdown(${parent.id}, event)">${parent.name}</a>
-                                    <ul class="dropdown-menu dropdown-content">
-                                        ${children.map(child => `<li><a class="dropdown-item" href="${child.link}">${child.name}</a></li>`).join('')}
-                                    </ul>
-                                </li>
-                            `;
-                        } else {
-                            menuHTML += `<li class="nav-item"><a class="nav-link" href="${parent.link}">${parent.name}</a></li>`;
-                        }
-                    });
-                } else {
-                    menuHTML += '<li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>';
-                    menuHTML += '<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>';
-                }
-                
-                menuHTML += '</ul>';
-                document.getElementById('menuList').innerHTML = menuHTML;
-            } catch(error) {
-                console.error('Menu Load Error:', error);
-                document.getElementById('menuList').innerHTML = `
-                    <ul class="navbar-nav">
-                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                    </ul>
-                `;
-            }
-        }
+  // Apply CSS + text
+  applyCSSVars(cfg);
+  applyText(cfg);
+  applySettings(cfg);
 
-        async function loadTools() {
-            try {
-                const tools = await apiCall('get_tools');
-                const mainTools = tools && tools.length > 0 
-                    ? tools.filter(t => !t.parent_id) 
-                    : [];
-                
-                allToolsData = mainTools;
-                displayTools(mainTools);
-            } catch(error) {
-                console.error('Tools Load Error:', error);
-                document.getElementById('tools-container').innerHTML = `
-                    <div class="col-12 text-center py-5">
-                        <div style="font-size:64px; margin-bottom:20px;">⚠️</div>
-                        <h3>Failed to Load Tools</h3>
-                        <button onclick="loadTools()" class="btn btn-primary mt-3">🔄 Retry</button>
-                    </div>
-                `;
-            }
-        }
+  // Navbar
+  const list = document.getElementById('navList');
+  if(list && parents && parents.length){
+    list.innerHTML = parents.map(p=>{
+      const kids=(subs||[]).filter(s=>s.parent_id==p.id);
+      if(kids.length){
+        return `<li class="has-dd" id="dd_${p.id}">
+          <a class="nav-a" href="#" onclick="return toggleDD(${p.id},event)">
+            ${p.name}<span class="dd-caret">▾</span>
+          </a>
+          <ul class="dd-box" id="ddbox_${p.id}">
+            ${kids.map(k=>`<li><a class="dd-a" href="${k.link}">${k.name}</a></li>`).join('')}
+          </ul>
+        </li>`;
+      }
+      return `<li><a class="nav-a" href="${p.link}">${p.name}</a></li>`;
+    }).join('');
+  } else if(list){
+    list.innerHTML='<li><a href="index.html" class="nav-a">Home</a></li>';
+  }
 
-        async function loadFooter() {
-            try {
-                const [settings, footerSections] = await Promise.all([
-                    apiCall('get_settings'),
-                    apiCall('get_footer_sections')
-                ]);
+  // Footer
+  const f = document.getElementById('site-footer');
+  if(f){
+    let html='';
+    if(footerSecs&&footerSecs.length){
+      html+='<div class="footer-inner"><div class="footer-row">';
+      footerSecs.forEach(s=>{html+=`<div class="footer-col"><span class="ft-title">${s.title}</span><div class="ft-body">${s.content}</div></div>`;});
+      html+='</div></div>';
+    }
+    if(cfg&&cfg.footer_text) html+=`<div class="footer-btm"><div class="footer-inner"><p>${cfg.footer_text}</p></div></div>`;
+    if(html) f.innerHTML=html;
+  }
 
-                const footerElement = document.getElementById('site-footer');
-                
-                if(footerSections && footerSections.length > 0) {
-                    let footerHTML = `
-                        <div class="container">
-                            <div class="footer-row">
-                    `;
-                    
-                    footerSections.forEach(section => {
-                        footerHTML += `
-                            <div class="footer-col">
-                                <div class="footer-section">
-                                    <h5 class="footer-title">${section.title}</h5>
-                                    <div class="footer-content">${section.content}</div>
-                                </div>
-                            </div>
-                        `;
-                    });
-                    
-                    footerHTML += `
-                            </div>
-                        </div>
-                    `;
-                    
-                    if(settings && settings.footer_text) {
-                        footerHTML += `
-                            <div class="footer-bottom">
-                                <div class="container">
-                                    <p class="mb-0">${settings.footer_text}</p>
-                                </div>
-                            </div>
-                        `;
-                    }
-                    
-                    footerElement.innerHTML = footerHTML;
-                } else {
-                    if (settings && settings.footer_text) {
-                        footerElement.innerHTML = `
-                            <div class="footer-bottom">
-                                <div class="container">
-                                    <p class="mb-0">${settings.footer_text}</p>
-                                </div>
-                            </div>
-                        `;
-                    }
-                }
-            } catch(error) {
-                console.error('Footer Load Error:', error);
-            }
-        }
+  // Ticker
+  const activeTk = tkItems ? tkItems.filter(t=>String(t.is_active)==='1') : [];
+  if(activeTk.length){
+    renderTicker(activeTk, cfg?.ticker_speed, cfg?.ticker_label, cfg?.ticker_font_size, S.showTickerLabel);
+  } else {
+    document.getElementById('tickerWrap').style.display='none';
+  }
 
-        // LOAD EVERYTHING INDEPENDENTLY - Fastest part shows first!
-        // This makes page appear instantly
-        loadMenu();    // Load menu independently
-        loadTools();   // Load tools independently  
-        loadFooter();  // Load footer independently
-        
-        console.log('✅ Progressive loading started!');
-    </script>
+  // Cards
+  if(cards && cards.length){
+    renderCards(cards);
+  } else {
+    document.getElementById('cardsSectionWrap').style.display='none';
+  }
+
+  // Tools
+  allTools = tools ? tools.filter(t=>!t.parent_id) : [];
+  if(allTools.length){
+    showTools(allTools);
+  } else {
+    document.getElementById('tools-container').innerHTML =
+      '<div class="col-12 text-center py-5"><div style="font-size:48px">⚠️</div><h3 class="mt-3">No tools found in database</h3></div>';
+  }
+})();
+</script>
 </body>
 </html>
